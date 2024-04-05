@@ -8,7 +8,7 @@ import java.awt.event.KeyListener;
 import java.awt.event.KeyEvent;
 
  
-public class Project extends JPanel implements KeyListener{
+public class Main extends JPanel implements KeyListener{
     public static final int WIDTH = 320;
     public static final int HEIGHT = 768;
     public static final int FPS = 60;
@@ -45,7 +45,7 @@ public class Project extends JPanel implements KeyListener{
         requestFocus();
     }
  
-    public Project(){
+    public Main(){
         world = new World(WIDTH, HEIGHT);
         addKeyListener(this);
         this.setPreferredSize(new Dimension(WIDTH, HEIGHT));
@@ -56,7 +56,7 @@ public class Project extends JPanel implements KeyListener{
     public static void main(String[] args){
         JFrame frame = new JFrame("World...");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        Project mainInstance = new Project();
+        Main mainInstance = new Main();
         frame.setContentPane(mainInstance);
         frame.pack();
         frame.setVisible(true);
@@ -82,4 +82,3 @@ class World{
         height = initHeight;
     }
 }
-
