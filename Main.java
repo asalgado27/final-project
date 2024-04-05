@@ -70,15 +70,3 @@ public class Main extends JPanel implements KeyListener{
         g.fillRect(0, 0, WIDTH, HEIGHT);
     }
 }
-
-class World{
-    int height;
-    int width;
-    int pointsLeft = 0;
-    int pointsRight = 0;
- 
-    public World(int initWidth, int initHeight){
-        width = initWidth;
-        height = initHeight;
-    }
-}
