@@ -1,3 +1,5 @@
+import java.awt.Graphics;
+
 public class World{
     int height;
     int width;
