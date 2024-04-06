@@ -14,7 +14,7 @@ public class Main extends JPanel implements KeyListener{
     public static final int FPS = 60;
 
     public char c = '0';
-    World world;
+    World HB;
 
  
     class Runner implements Runnable{
@@ -46,7 +46,7 @@ public class Main extends JPanel implements KeyListener{
     }
  
     public Main(){
-        world = new World(WIDTH, HEIGHT);
+        HB = new World(WIDTH, HEIGHT);
         addKeyListener(this);
         this.setPreferredSize(new Dimension(WIDTH, HEIGHT));
         Thread mainThread = new Thread(new Runner());
