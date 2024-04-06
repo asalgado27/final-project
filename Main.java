@@ -9,7 +9,7 @@ import java.awt.event.KeyEvent;
 
  
 public class Main extends JPanel implements KeyListener{
-    public static final int WIDTH = 320;
+    public static final int WIDTH = 500;
     public static final int HEIGHT = 768;
     public static final int FPS = 60;
 
@@ -66,6 +66,6 @@ public class Main extends JPanel implements KeyListener{
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
 
-        HB.draw();
+        HB.draw(g);
     }
 }
