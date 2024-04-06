@@ -64,9 +64,8 @@ public class Main extends JPanel implements KeyListener{
  
  
     public void paintComponent(Graphics g) {
-        super.paintComponent(g);       
- 
-        g.setColor(new Color(140, 100, 20));
-        g.fillRect(0, 0, WIDTH, HEIGHT);
+        super.paintComponent(g);
+
+        HB.draw();
     }
 }
