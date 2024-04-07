@@ -6,11 +6,10 @@ public abstract class Item() {
 
 	public Item() {}
 
+	public void draw() {}
+
 	public void collect() {}
 		// item disappears (or pops, or does some motion) when the person collects it
-
-	public void reset() {}
-		// put back in the place it should be
 
 	public void use() {} 
 		// unleash powers of the item
