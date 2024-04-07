@@ -42,32 +42,6 @@ class Pair{
         return "(" + x + ", " + y + ")";
     }
 
-
-    // Returns new velocity value based on rebound
-    public Pair rebound(double radian) {
-        // Establish variables to keep track of proper signs
-        int posNegX = 1;
-        int posNegY = 1;
-
-        // Change sign of x
-        if (x > 0) {
-            posNegX *= -1;
-        }
-
-        // Change sign of y
-        if (radian < 0) {
-            posNegY *= -1;
-        }
-
-        // keep track of initial speed
-        double initSpeed = Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2));
-
-        double outputX = initSpeed * Math.cos(radian) * posNegX;
-        double outputY = initSpeed * Math.sin(Math.abs(radian)) * posNegY;
-
-        return new Pair(outputX, outputY);
-    }
-
     // Make a copy of Pair object
     public Pair copy() {
         return new Pair(this.x, this.y);
