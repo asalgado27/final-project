@@ -1,5 +1,6 @@
 // basic structure. Will work out the details when we need to create objects.
 
+/*
 public abstract class Item() {
 	Pair position = new Pair();
 	Color color = new Color();
@@ -15,3 +16,4 @@ public abstract class Item() {
 		// unleash powers of the item
 		// remove from inventory if item is inventory; or, if item is immediate-use, immediately use
 }
+*/
