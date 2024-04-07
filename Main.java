@@ -75,7 +75,7 @@ public class Main extends JPanel implements KeyListener{
  
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        homebase.drawPerson(g);
         homebase.draw(g);
+        homebase.drawPerson(g);
     }
 }
