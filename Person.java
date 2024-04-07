@@ -24,12 +24,14 @@ class Person{
         velocity = new Pair((double)(0), (double)(0));
         acceleration = new Pair(0,300);
         radius = 5;
+        
         try{
-            avatar = ImageIO.read(Pong.class.getResource("avatar.png"));
+            avatar = ImageIO.read(Main.class.getResource("avatar.png"));
         } catch (IOException e){
             System.err.println("IOException");
             System.exit(1);
         }
+        
     }
     
     public void update(World w, double time){
@@ -67,10 +69,8 @@ class Person{
     }
     
     public void draw(Graphics g){
-    //FROG
+        //FROG
         g.drawImage(avatar,  (int)position.x, (int)position.y, null);
-    
-
     }
 
     
