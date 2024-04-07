@@ -14,7 +14,7 @@ public class Main extends JPanel implements KeyListener{
     public static final int FPS = 60;
 
     public char c = '0';
-    World HB;
+    World homebase;
 
  
     class Runner implements Runnable{
@@ -31,13 +31,21 @@ public class Main extends JPanel implements KeyListener{
     }
  
     public void keyPressed(KeyEvent e) {
-        c = e.getKeyChar();
+        char c = e.getKeyChar();
+        homebase.person.movement(c);
     }
+    
 
     public void keyReleased(KeyEvent e) {
+        char c = e.getKeyChar();
+        homebase.person.antimovement(c);
     }
  
+ 
     public void keyTyped(KeyEvent e) {
+    	char c = e.getKeyChar();
+        
+        
     }
     
     public void addNotify() {
@@ -46,9 +54,11 @@ public class Main extends JPanel implements KeyListener{
     }
  
     public Main(){
-        HB = new World(WIDTH, HEIGHT);
-        addKeyListener(this);
+        homebase = new World(WIDTH, HEIGHT);
         this.setPreferredSize(new Dimension(WIDTH, HEIGHT));
+        this.addKeyListener(this); 
+        this.setFocusable(true); 
+        this.requestFocus(); 
         Thread mainThread = new Thread(new Runner());
         mainThread.start();
     }
@@ -65,7 +75,7 @@ public class Main extends JPanel implements KeyListener{
  
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-
-        HB.draw(g);
+        homebase.drawPerson(g);
+        homebase.draw(g);
     }
 }
