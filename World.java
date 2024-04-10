@@ -4,8 +4,6 @@ import java.awt.Color;
 class World{
     int height;
     int width;
-    int pointsLeft = 0;
-    int pointsRight = 0;
     Person person = new Person();
 
     Platform platform1;
