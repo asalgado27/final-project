@@ -20,7 +20,7 @@ public class Main extends JPanel implements KeyListener{
     class Runner implements Runnable{
         public void run() {
             while(true){
-                
+                homebase.updatePerson((double)1.0/FPS);
                 repaint();
             try{
                 Thread.sleep(1000/FPS);
@@ -64,7 +64,7 @@ public class Main extends JPanel implements KeyListener{
     }
      
     public static void main(String[] args){
-        JFrame frame = new JFrame("World...");
+        JFrame frame = new JFrame("GAME ON");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         Main mainInstance = new Main();
         frame.setContentPane(mainInstance);

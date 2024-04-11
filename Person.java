@@ -19,16 +19,19 @@ class Person{
     double radius;
     int animationCounter;
     boolean horizontalMotion;
+
+    Pair dimensions = new Pair(110, 180);
+
     private BufferedImage avatar = null;
     private BufferedImage walk1 = null;
     private BufferedImage walk2 = null;
     private BufferedImage walk3 = null;
     private BufferedImage walk4 = null;
 
-    public Person() {
-        position = new Pair(262.0, 384.0);
-        velocity = new Pair((double)(0), (double)(0));
-        acceleration = new Pair(0,300);
+    public Person(int x, int y) {
+        position = new Pair(x, y - dimensions.y);
+        velocity = new Pair(0, 0);
+        acceleration = new Pair(0,250);
         radius = 5;
         horizontalMotion = false;
         animationCounter = 0;
@@ -48,21 +51,26 @@ class Person{
     
     public void update(World w, double time){
         position = position.add(velocity.times(time));
-        if (position.y>=0){
+        if (position.y <= w.height - dimensions.y && position.y >= 0){
             velocity = velocity.add(acceleration.times(time));
         }
-        if (position.y>=786-170){
+        else if (position.y < 0) {
             setVelocityY(0);
+            this.setPosition(new Pair(position.x, 0));
         }
-        if (position.x <=-10){
+        else if (position.y > w.height - dimensions.y){
+            setVelocityY(0);
+            this.setPosition(new Pair(position.x, w.height - dimensions.y));
+        }
+        if (position.x <= 0){
             this.setVelocityX(0);
-            this.setPosition(new Pair(-9, position.y));
+            this.setPosition(new Pair(0, position.y));
             horizontalMotion = false;
             animationCounter = 0;
         }
-        if (position.x>= 1024-100){
+        if (position.x >= w.width - dimensions.x){
             this.setVelocityX(0);
-            this.setPosition(new Pair(1024-100-1, position.y));
+            this.setPosition(new Pair(w.width - dimensions.x, position.y));
             horizontalMotion = false;
             animationCounter = 0;
         }
@@ -76,6 +84,10 @@ class Person{
     }
     public void setVelocityY(int v){
     	velocity = new Pair(velocity.x, v);
+    }
+    public void setAcceleration(int a) {
+        acceleration = new Pair(acceleration.x, a);
+        System.out.println(acceleration);
     }
     public Pair getPosition(){
     	return position;
@@ -120,16 +132,16 @@ class Person{
             horizontalMotion = true;
         }
         if (c == 's'){
-            this.setVelocityY(200);
+            //don't change the velocity. can make the person duck
         }
         if (c == 'w'){
-            this.setVelocityY(-200);
+            this.setVelocityY(-800);
         }
         
     }
     //when keys are released, trigger this to stop moving
     public void antimovement(char c){
-        if (c == 'a' || c=='d'){
+        if (c == 'a' || c== 'd'){
             this.setVelocityX(0);
             horizontalMotion = false;
             animationCounter = 0;

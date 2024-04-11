@@ -3,10 +3,8 @@ import java.awt.Graphics;
 
 class Platform {
     // Fields indicating location and size of the platform
-    int xPos;
-    int yPos;
-    int width;
-    int height;
+    Pair position;
+    Pair dimensions;
 
     // Array of ints to keep track of where any ladders on this platform are
     int[] ladderPos;
@@ -16,10 +14,8 @@ class Platform {
 
     // Constructor for default platform
     public Platform(int xPos, int yPos, int width, int height) {
-        this.xPos = xPos;
-        this.yPos = yPos;
-        this.width = width;
-        this.height = height;
+        position = new Pair(xPos, yPos);
+        dimensions = new Pair(width, height);
         this.hasPerson = false;
     }
 
@@ -32,14 +28,14 @@ class Platform {
     // Draws the platform
     public void draw(Graphics g) {
         g.setColor(Color.white);
-        g.fillRect(xPos, yPos, width, height);
+        g.fillRect((int)position.x, (int)position.y, (int)dimensions.x, (int)dimensions.y);
 
         // Draw any ladders (if it's not null)
         if (ladderPos != null) {
             for (int x : this.ladderPos) {
                 // Draws line indicating ladder's location
                 g.setColor(Color.blue);
-                g.drawLine(x, this.yPos, x, this.yPos - 30);
+                g.drawLine(x, (int)position.x, x, (int)position.y - 30);
             }
         }
     }

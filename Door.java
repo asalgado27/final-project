@@ -3,21 +3,16 @@ import java.awt.Graphics;
 
 class Door {
     // Fields indicating location and size of the platform
-    int xPos;
-    int yPos;
-    int width;
-    int height;
+    Pair position;
+    static Pair dimensions = new Pair(90, 120);
 
     public Door(int xPos, int yPos) {
-        this.xPos = xPos;
-        this.yPos = yPos;
-        this.width = 100;
-        this.height = 125;
+        position = new Pair(xPos, yPos);
     }
 
     // Draws the platform
     public void draw(Graphics g) {
         g.setColor(new Color(150, 75, 0));
-        g.fillRect(xPos, yPos, width, height);
+        g.fillRect((int)position.x, (int)position.y, (int)dimensions.x, (int)dimensions.y);
     }
 }

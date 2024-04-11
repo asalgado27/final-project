@@ -4,7 +4,7 @@ import java.awt.Color;
 class World{
     int height;
     int width;
-    Person person = new Person();
+    Person person;
 
     Platform platform1;
     Platform platform2;
@@ -13,15 +13,16 @@ class World{
     public World(int initWidth, int initHeight){
         width = initWidth;
         height = initHeight;
+        person = new Person(50, height);
 
-        this.platform1 = new Platform(50, 250, 300, 20);
+        platform1 = new Platform(0, 250, width, 20);
         
         // Create array of ladder locations
         int[] ladderPos = new int[1];
         ladderPos[0] = 100;
 
-        this.platform2 = new Platform(50, 500, 300, 20, ladderPos);
-        this.door1 = new Door(300, 300);
+        platform2 = new Platform(0, 500, width, 20, ladderPos);
+        door1 = new Door((int)(platform2.position.x + Door.dimensions.x), (int)(platform2.position.y - Door.dimensions.y));
     }
 
     public void drawPerson(Graphics g){
