@@ -1,13 +1,15 @@
 // basic structure. Will work out the details when we need to create objects.
 
 /*
+import java.awt.Graphics;
+
 public abstract class Item() {
 	Pair position = new Pair();
 	Color color = new Color();
 
 	public Item() {}
 
-	public void draw() {}
+	public abstract void draw(Graphics g) {}
 
 	public void collect() {}
 		// item disappears (or pops, or does some motion) when the person collects it
