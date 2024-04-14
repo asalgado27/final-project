@@ -31,7 +31,7 @@ public class Key extends Item {
     		// hide? or set position = new Pair() ?
     }
 		
-	public Color use() {
+	public void use() {
 		// semantically: inventory.pop(this);
 		// person.velocity increases or something like that
 		// item needs to control person? otherwise return
