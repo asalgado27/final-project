@@ -1,5 +1,12 @@
-import java.awt.Graphics;
+
 import java.awt.Color;
+import java.awt.Graphics;
+
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
+
 
 class World{
     int width;
@@ -10,17 +17,24 @@ class World{
     Door[] doors;
 
     Main main;
+    private BufferedImage hbBackground = null;
     
     public World(Main main, int initWidth, int initHeight){
         this.width = initWidth;
         this.height = initHeight;
         this.main = main;
+        
     }
 
     // Create objects within homebase
     public void createHomebase() {
         person = new Person(main, this, 50, height);
-
+        try{
+            hbBackground = ImageIO.read(Main.class.getResource("hbBackground.png"));
+        } catch (IOException e){
+            System.err.println("IOException");
+            System.exit(1);
+        }
         // Create array of ladder locations
         int[] ladderPos = new int[1];
         ladderPos[0] = 100;
@@ -49,8 +63,7 @@ class World{
     // Draws the world
     public void draw(Graphics g) {
         // Draw the background of the world
-        g.setColor(new Color(135, 206, 235));
-        g.fillRect(0, 0, width, height);
+        g.drawImage(hbBackground,  (int)0, (int)0, null);
 
         if (platforms != null) {
             // Draw the platforms in the world
@@ -69,3 +82,4 @@ class World{
     }
 
 }
+  
