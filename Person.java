@@ -13,7 +13,7 @@ import java.io.IOException;
 
 
 class Person{
-    Pair position;
+    public Pair position;
     Pair velocity;
     Pair acceleration;
     double radius;
@@ -22,19 +22,25 @@ class Person{
 
     Pair dimensions = new Pair(110, 180);
 
+    Main main;
+    World currentWorld;
+
     private BufferedImage avatar = null;
     private BufferedImage walk1 = null;
     private BufferedImage walk2 = null;
     private BufferedImage walk3 = null;
     private BufferedImage walk4 = null;
 
-    public Person(int x, int y) {
+    public Person(Main main, World world, int x, int y) {
         position = new Pair(x, y - dimensions.y);
         velocity = new Pair(0, 0);
         acceleration = new Pair(0,250);
         radius = 5;
         horizontalMotion = false;
         animationCounter = 0;
+
+        this.main = main;
+        this.currentWorld = world;
         
         try{
             avatar = ImageIO.read(Main.class.getResource("avatar.png"));
@@ -46,8 +52,9 @@ class Person{
             System.err.println("IOException");
             System.exit(1);
         }
-        
+
     }
+    
     
     public void update(World w, double time){
         position = position.add(velocity.times(time));
@@ -136,6 +143,9 @@ class Person{
         }
         if (c == 'w'){
             this.setVelocityY(-800);
+        }
+        if (c == 'o') {
+            main.openDoor();
         }
         
     }
