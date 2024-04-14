@@ -1,5 +1,6 @@
 import java.awt.Color;
 import java.util.Random;
+import java.awt.Graphics;
 
 public class Key extends Item {
 	Pair position;
@@ -16,7 +17,7 @@ public class Key extends Item {
         Color c = g.getColor();
         
         g.setColor(color);
-        g.drawOval(position.x, position.y, radius, radius);
+        g.drawOval((int) position.x, (int) position.y, radius, radius);
         g.setColor(c);
     }
 
@@ -26,12 +27,12 @@ public class Key extends Item {
     		// hide? or set position = new Pair() ?
     }
 		
-	public void use() {
+	public Color use() {
 		// semantically: inventory.pop(this);
 		// person.velocity increases or something like that
 		// item needs to control person? otherwise return
 		// what the person should do
-		return color; // myKey.use() returns blue and then we
+		return this.color; // myKey.use() returns blue and then we
 		// can do myPerson.color = myKey.use() turning person into blue
 	}
 
