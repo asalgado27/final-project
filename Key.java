@@ -6,19 +6,23 @@ public class Key extends Item {
 	Pair position;
 	static int radius = 10;
 	Color color;
+
+	boolean show = true;
 	
-	public Key(int x, int y) {
+	public Key(Platform platform, World world) {
 		Random rand = new Random();
 		Color color = new Color(rand.nextFloat(), rand.nextFloat(), rand.nextFloat());
-		position = new Pair(x, y);
+		position = new Pair(world.width/2, platform.position.y - 50);
 	}
 
 	public void draw(Graphics g){
-        Color c = g.getColor();
+		if (show == true) {
+			Color c = g.getColor();
         
-        g.setColor(color);
-        g.drawOval((int) position.x, (int) position.y, radius, radius);
-        g.setColor(c);
+        	g.setColor(color);
+        	g.drawOval((int) position.x, (int) position.y, radius, radius);
+        	g.setColor(c);
+		}
     }
 
     public void collect() {
