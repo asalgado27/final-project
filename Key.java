@@ -33,11 +33,6 @@ public class Key extends Item {
 		
 	public void use() {
 		// semantically: inventory.pop(this);
-		// person.velocity increases or something like that
-		// item needs to control person? otherwise return
-		// what the person should do
-		return this.color; // myKey.use() returns blue and then we
-		// can do myPerson.color = myKey.use() turning person into blue
 	}
 
 }
