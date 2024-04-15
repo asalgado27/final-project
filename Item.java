@@ -14,7 +14,7 @@ public abstract class Item {
 	public void collect() {}
 	// item disappears (or pops, or does some motion) when the person collects it
 
-	public Color use() {return null;} 
+	public void use() {} 
 	// unleash powers of the item
 	// remove from inventory if item is inventory; or, if item is immediate-use, immediately use
 }
