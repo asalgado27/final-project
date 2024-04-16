@@ -6,6 +6,7 @@ import java.awt.Dimension;
 import java.util.Random;
 import java.awt.event.KeyListener;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 
  
 public class Main extends JPanel implements KeyListener{
@@ -19,7 +20,7 @@ public class Main extends JPanel implements KeyListener{
     public char c = '0';
     World homebase;
     World lavaBiome;
-
+    public ArrayList<Item> uncollectedItems;
     World currentWorld;
 
     public Main(){
@@ -31,6 +32,8 @@ public class Main extends JPanel implements KeyListener{
 
         // Establish homebase as the current world
         this.currentWorld = homebase;
+        
+        uncollectedItems = new ArrayList<>();
 
         this.setPreferredSize(new Dimension(WIDTH, HEIGHT));
         this.addKeyListener(this); 
@@ -106,5 +109,15 @@ public class Main extends JPanel implements KeyListener{
     // Change dimensions to those of Lava Biome
     public void dimLava() {
         this.setPreferredSize(new Dimension(lavaWidth, lavaHeight));
+    }
+
+    public void checkForItems(Pair personPosition){
+        for (int i = 0; i < uncollectedItems.size(); i++) {
+            Item item = uncollectedItems.get(i);
+            //i'll change this later to be a range --Alicia
+            if (item.position.x == personPosition.x && item.position.y == personPosition.y){
+                item.collect();
+            }
+        }
     }
 }
