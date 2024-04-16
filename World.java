@@ -15,6 +15,8 @@ class World{
 
     Platform[] platforms;
     Door[] doors;
+    
+
 
     Main main;
     private BufferedImage hbBackground = null;
@@ -23,6 +25,7 @@ class World{
         this.width = initWidth;
         this.height = initHeight;
         this.main = main;
+        
         
     }
 
