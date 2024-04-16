@@ -10,6 +10,7 @@ public class Key extends Item {
 	boolean show = true;
 	
 	public Key(Platform platform, World world) {
+		super(world.main, world.person);
 		Random rand = new Random();
 		Color color = new Color(rand.nextFloat(), rand.nextFloat(), rand.nextFloat());
 		position = new Pair(world.width/2, platform.position.y - 50);
