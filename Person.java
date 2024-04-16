@@ -10,6 +10,7 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 
 class Person{
@@ -24,6 +25,7 @@ class Person{
 
     Main main;
     World currentWorld;
+    public  ArrayList<Item> inventory;
 
     private BufferedImage avatar = null;
     private BufferedImage walk1 = null;
@@ -38,7 +40,8 @@ class Person{
         radius = 5;
         horizontalMotion = false;
         animationCounter = 0;
-
+        inventory = new ArrayList<>();
+        
         this.main = main;
         this.currentWorld = world;
         
@@ -81,6 +84,8 @@ class Person{
             horizontalMotion = false;
             animationCounter = 0;
         }
+        main.checkForItems(position);
+        
     }
 
     public void setPosition(Pair p){
