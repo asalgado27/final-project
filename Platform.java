@@ -7,7 +7,8 @@ class Platform {
     Pair dimensions;
 
     // Array of ints to keep track of where any ladders on this platform are
-    int[] ladderPos;
+    int ladderPos = 0; // NOTE: 0 means NO LADDER
+    int ladderLength;
 
     // Field to keep track of Person object
     boolean hasPerson;
@@ -19,24 +20,21 @@ class Platform {
         this.hasPerson = false;
     }
 
-    public Platform(int xPos, int yPos, int width, int height, int[] ladderPos) {
+    public Platform(int xPos, int yPos, int width, int height, int ladderPos, int ladderLength) {
         this(xPos, yPos, width, height);
-
         this.ladderPos = ladderPos;
+        this.ladderLength = ladderLength;
     }
 
     // Draws the platform
     public void draw(Graphics g) {
-        g.setColor(Color.white);
-        g.fillRect((int)position.x, (int)position.y, (int)dimensions.x, (int)dimensions.y);
+        g.setColor(Color.RED);
+        g.drawRect((int)position.x, (int)position.y, (int)dimensions.x, (int)dimensions.y);
 
         // Draw any ladders (if it's not null)
-        if (ladderPos != null) {
-            for (int x : this.ladderPos) {
-                // Draws line indicating ladder's location
-                g.setColor(Color.blue);
-                g.drawLine(x, (int)position.x, x, (int)position.y - 30);
-            }
+        if (ladderPos > 0) {
+            g.setColor(Color.blue);
+            g.drawRect(ladderPos, (int)position.y, 30, ladderLength);
         }
     }
 
