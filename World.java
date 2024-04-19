@@ -39,18 +39,21 @@ class World{
         int[] ladderLength = new int[3];
         // NOTE: THE FUNCION OF LADDERPOS HAS BEEN CHANGED TO EACH PLATFORM HAS ONE LADDER ONLY
 
-        ladderPos[0] = width - 60;
-        ladderPos[1] = 29;
-        ladderPos[2] = width - 78;
+        ladderPos[0] = width - 70;
+        ladderPos[1] = 19;
+        ladderPos[2] = width - 88;
 
         ladderLength[0] = 200;
         ladderLength[1] = 180;
         ladderLength[2] = 200;
 
-        platforms = new Platform[3];
+        platforms = new Platform[4];
         platforms[0] = new Platform(0, 190, width, 13, ladderPos[0], ladderLength[0]);
         platforms[1] = new Platform(0, 388, width, 13, ladderPos[1], ladderLength[1]);
         platforms[2] = new Platform(0, 570, width, 13, ladderPos[2], ladderLength[2]);
+        platforms[3] = new Platform(0, height, width, 13);
+
+        person.currentPlatform = platforms[3];
 
         doors = new Door[3];
         doors[0] = new Door((int)(platforms[0].position.x + 30), (int)(platforms[0].position.y - Door.dimensions.y));

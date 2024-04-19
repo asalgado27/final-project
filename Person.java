@@ -15,6 +15,8 @@ import java.util.ArrayList;
 
 
 class Person{
+    Pair dimensions = new Pair(70, 100);
+
     public Pair position;
     Pair velocity;
     Pair acceleration;
@@ -23,7 +25,10 @@ class Person{
     boolean horizontalRMotion;
     boolean horizontalLMotion;
 
-    Pair dimensions = new Pair(70, 100);
+    int upwardVelocity = 500;
+    int downwardVelocity = 0;
+
+    Platform currentPlatform;
 
     Main main;
     World currentWorld;
@@ -83,17 +88,21 @@ class Person{
     
     public void update(World w, double time){
         position = position.add(velocity.times(time));
+
         if (position.y <= w.height - dimensions.y && position.y >= 0){
             velocity = velocity.add(acceleration.times(time));
         }
+
         else if (position.y < 0) {
             setVelocityY(0);
             this.setPosition(new Pair(position.x, 0));
         }
+
         else if (position.y > w.height - dimensions.y){
             setVelocityY(0);
             this.setPosition(new Pair(position.x, w.height - dimensions.y));
         }
+
         if (position.x <= 0){
             this.setVelocityX(0);
             this.setPosition(new Pair(0, position.y));
@@ -101,6 +110,7 @@ class Person{
             horizontalLMotion = false;
             animationCounter = 0;
         }
+
         if (position.x >= w.width - dimensions.x){
             this.setVelocityX(0);
             this.setPosition(new Pair(w.width - dimensions.x, position.y));
@@ -109,7 +119,41 @@ class Person{
             animationCounter = 0;
         }
         main.checkForItems(position);
-        
+
+        checkIfOnLadder();
+        checkIfOnPlatform();
+            
+    }
+
+    public void checkIfOnLadder() {
+        for (Platform p : currentWorld.platforms) {
+            if (this.position.y > p.position.y && this.position.y + this.dimensions.y < p.position.y + p.ladderLength) {
+                if (position.x + dimensions.x / 2 < p.ladderPos + p.ladderWidth && position.x + dimensions.x / 2 > p.ladderPos) {
+                    setAcceleration(0);
+                    upwardVelocity = 80;
+                    downwardVelocity = 80;
+                }
+                else {
+                    setAcceleration(250);
+                    upwardVelocity = 500;
+                }
+            }
+        }
+    }
+
+    public void checkIfOnPlatform() {
+        for (Platform p : currentWorld.platforms) {
+            if (position.y > currentPlatform.position.y && p.position.y > currentPlatform.position.y) {
+                currentPlatform = p;
+            }
+            if (position.y + dimensions.y < p.position.y && p.position.y < currentPlatform.position.y) {
+                currentPlatform = p;
+            }
+            if (position.y + dimensions.y > currentPlatform.position.y) {
+                setVelocityY(0);
+                this.setPosition(new Pair(position.x, currentPlatform.position.y - dimensions.y));
+            }
+        }
     }
 
     public void setPosition(Pair p){
@@ -123,7 +167,6 @@ class Person{
     }
     public void setAcceleration(int a) {
         acceleration = new Pair(acceleration.x, a);
-        System.out.println(acceleration);
     }
     public Pair getPosition(){
     	return position;
@@ -185,10 +228,11 @@ class Person{
             horizontalRMotion = true;
         }
         if (c == 's'){
+            this.setVelocityY(downwardVelocity);
             //don't change the velocity. can make the person duck
         }
         if (c == 'w'){
-            this.setVelocityY(-800);
+            this.setVelocityY(-1 * upwardVelocity);
         }
         if (c == 'o') {
             main.openDoor();
