@@ -8,6 +8,7 @@ import java.awt.event.KeyListener;
 import java.awt.event.KeyEvent;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
+import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -19,26 +20,32 @@ class Person{
     Pair acceleration;
     double radius;
     int animationCounter;
-    boolean horizontalMotion;
+    boolean horizontalRMotion;
+    boolean horizontalLMotion;
 
-    Pair dimensions = new Pair(110, 180);
+    Pair dimensions = new Pair(70, 100);
 
     Main main;
     World currentWorld;
     public  ArrayList<Item> inventory;
 
-    private BufferedImage avatar = null;
-    private BufferedImage walk1 = null;
-    private BufferedImage walk2 = null;
-    private BufferedImage walk3 = null;
-    private BufferedImage walk4 = null;
+    private Image avatar = null;
+    private Image walkR1 = null;
+    private Image walkR2 = null;
+    private Image walkR3 = null;
+    private Image walkR4 = null;
+    private Image walkL1 = null;
+    private Image walkL2 = null;
+    private Image walkL3 = null;
+    private Image walkL4 = null;
 
     public Person(Main main, World world, int x, int y) {
         position = new Pair(x, y - dimensions.y);
         velocity = new Pair(0, 0);
         acceleration = new Pair(0,250);
         radius = 5;
-        horizontalMotion = false;
+        horizontalRMotion = false;
+        horizontalLMotion = false;
         animationCounter = 0;
         inventory = new ArrayList<>();
         
@@ -47,10 +54,25 @@ class Person{
         
         try{
             avatar = ImageIO.read(Main.class.getResource("avatar.png"));
-            walk1 = ImageIO.read(Main.class.getResource("walk1.png"));
-            walk2 = ImageIO.read(Main.class.getResource("walk2.png"));
-            walk3 = ImageIO.read(Main.class.getResource("walk3.png"));
-            walk4 = ImageIO.read(Main.class.getResource("walk4.png"));
+            avatar = avatar.getScaledInstance((int)dimensions.x,(int)dimensions.y, 1);
+            //Image a = avatar.getScaledInstance(100,50, 1);
+            //avatar = (BufferedImage)a;
+            walkR1 = ImageIO.read(Main.class.getResource("walkR1.png"));
+            walkR1 = walkR1.getScaledInstance((int)dimensions.x,(int)dimensions.y, 1);
+            walkR2 = ImageIO.read(Main.class.getResource("walkR2.png"));
+            walkR2 = walkR2.getScaledInstance((int)dimensions.x,(int)dimensions.y, 1);
+            walkR3 = ImageIO.read(Main.class.getResource("walkR3.png"));
+            walkR3 = walkR3.getScaledInstance((int)dimensions.x,(int)dimensions.y, 1);
+            walkR4 = ImageIO.read(Main.class.getResource("walkR4.png"));
+            walkR4 = walkR4.getScaledInstance((int)dimensions.x,(int)dimensions.y, 1);
+            walkL1 = ImageIO.read(Main.class.getResource("walkL1.png"));
+            walkL1 = walkL1.getScaledInstance((int)dimensions.x,(int)dimensions.y, 1);
+            walkL2 = ImageIO.read(Main.class.getResource("walkL2.png"));
+            walkL2 = walkL2.getScaledInstance((int)dimensions.x,(int)dimensions.y, 1);
+            walkL3 = ImageIO.read(Main.class.getResource("walkL3.png"));
+            walkL3 = walkL3.getScaledInstance((int)dimensions.x,(int)dimensions.y, 1);
+            walkL4 = ImageIO.read(Main.class.getResource("walkL4.png"));
+            walkL4 = walkL4.getScaledInstance((int)dimensions.x,(int)dimensions.y, 1);
         } catch (IOException e){
             System.err.println("IOException");
             System.exit(1);
@@ -75,13 +97,15 @@ class Person{
         if (position.x <= 0){
             this.setVelocityX(0);
             this.setPosition(new Pair(0, position.y));
-            horizontalMotion = false;
+            horizontalRMotion = false;
+            horizontalLMotion = false;
             animationCounter = 0;
         }
         if (position.x >= w.width - dimensions.x){
             this.setVelocityX(0);
             this.setPosition(new Pair(w.width - dimensions.x, position.y));
-            horizontalMotion = false;
+            horizontalRMotion = false;
+            horizontalLMotion = false;
             animationCounter = 0;
         }
         main.checkForItems(position);
@@ -109,24 +133,41 @@ class Person{
     }
     
     public void draw(Graphics g){
-        if (!horizontalMotion){
+        if (!horizontalRMotion && !horizontalLMotion){
             g.drawImage(avatar,  (int)position.x, (int)position.y, null);
         }
-        if (horizontalMotion){
+        if (horizontalRMotion){
             animationCounter++;
             //divided just stores an integer that tells the animation to change which one is being drawn every 10 frames
             int divided = animationCounter/10%4;
             if (divided==0){
-                g.drawImage(walk1,  (int)position.x, (int)position.y, null);
+                g.drawImage(walkR1,  (int)position.x, (int)position.y, null);
             }
             if (divided==1){
-                g.drawImage(walk2,  (int)position.x, (int)position.y, null);
+                g.drawImage(walkR2,  (int)position.x, (int)position.y, null);
             }
             if (divided==2){
-                g.drawImage(walk3,  (int)position.x, (int)position.y, null);
+                g.drawImage(walkR3,  (int)position.x, (int)position.y, null);
             }
             if (divided==3){
-                g.drawImage(walk4,  (int)position.x, (int)position.y, null);
+                g.drawImage(walkR4,  (int)position.x, (int)position.y, null);
+            }
+        }
+        if (horizontalLMotion){
+            animationCounter++;
+            //divided just stores an integer that tells the animation to change which one is being drawn every 10 frames
+            int divided = animationCounter/10%4;
+            if (divided==0){
+                g.drawImage(walkL1,  (int)position.x, (int)position.y, null);
+            }
+            if (divided==1){
+                g.drawImage(walkL2,  (int)position.x, (int)position.y, null);
+            }
+            if (divided==2){
+                g.drawImage(walkL3,  (int)position.x, (int)position.y, null);
+            }
+            if (divided==3){
+                g.drawImage(walkL4,  (int)position.x, (int)position.y, null);
             }
         }
     }
@@ -137,11 +178,11 @@ class Person{
         
         if (c == 'a'){
             this.setVelocityX(-200);
-            horizontalMotion = true;
+            horizontalLMotion = true;
         }
         if (c == 'd'){
             this.setVelocityX(200);
-            horizontalMotion = true;
+            horizontalRMotion = true;
         }
         if (c == 's'){
             //don't change the velocity. can make the person duck
@@ -156,14 +197,22 @@ class Person{
     }
     //when keys are released, trigger this to stop moving
     public void antimovement(char c){
-        if (c == 'a' || c== 'd'){
+        if (c == 'a'){
             this.setVelocityX(0);
-            horizontalMotion = false;
+            horizontalLMotion = false;
             animationCounter = 0;
         }
-        if (c == 's' || c == 'w'){
+        if (c == 's'){
             this.setVelocityY(0);
-            horizontalMotion = false;
+            animationCounter = 0;
+        }
+        if (c== 'd'){
+            this.setVelocityX(0);
+            horizontalRMotion = false;
+            animationCounter = 0;
+        }
+        if (c == 'w'){
+            this.setVelocityY(0);
             animationCounter = 0;
         }
     }
