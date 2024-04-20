@@ -30,6 +30,8 @@ class Person{
 
     Platform currentPlatform;
 
+    boolean canJump = true;
+
     Main main;
     World currentWorld;
     public  ArrayList<Item> inventory;
@@ -146,12 +148,16 @@ class Person{
             if (position.y > currentPlatform.position.y && p.position.y > currentPlatform.position.y) {
                 currentPlatform = p;
             }
-            if (position.y + dimensions.y < p.position.y && p.position.y < currentPlatform.position.y) {
+            else if (position.y + dimensions.y < p.position.y && p.position.y < currentPlatform.position.y) {
                 currentPlatform = p;
             }
-            if (position.y + dimensions.y > currentPlatform.position.y) {
+            if (position.y + dimensions.y >= currentPlatform.position.y) {
+                canJump = true;
                 setVelocityY(0);
                 this.setPosition(new Pair(position.x, currentPlatform.position.y - dimensions.y));
+            }
+            else {
+                canJump = false;
             }
         }
     }
@@ -218,7 +224,6 @@ class Person{
     
     //when keys are pressed, use this to start moving
     public void movement(char c){
-        
         if (c == 'a'){
             this.setVelocityX(-200);
             horizontalLMotion = true;
@@ -231,7 +236,7 @@ class Person{
             this.setVelocityY(downwardVelocity);
             //don't change the velocity. can make the person duck
         }
-        if (c == 'w'){
+        if (c == 'w' && canJump == true){
             this.setVelocityY(-1 * upwardVelocity);
         }
         if (c == 'o') {
