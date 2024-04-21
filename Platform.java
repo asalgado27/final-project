@@ -14,14 +14,17 @@ class Platform {
     // Field to keep track of Person object
     boolean hasPerson = false;
 
+    // Field to keep track of door on platform
+    Door door;
+
     // Constructor for default platform
-    public Platform(int xPos, int yPos, int width, int height) {
-        position = new Pair(xPos, yPos);
-        dimensions = new Pair(width, height);
+    public Platform(Pair position, Pair dimensions) {
+        this.position = position;
+        this.dimensions = dimensions;
     }
 
-    public Platform(int xPos, int yPos, int width, int height, int ladderPos, int ladderLength) {
-        this(xPos, yPos, width, height);
+    public Platform(Pair position, Pair dimensions, int ladderPos, int ladderLength) {
+        this(position, dimensions);
         this.ladderPos = ladderPos;
         this.ladderLength = ladderLength;
     }
@@ -36,7 +39,11 @@ class Platform {
             g.setColor(Color.blue);
             g.drawRect(ladderPos, (int)position.y, ladderWidth, ladderLength);
         }
+
+        // Draw the door (if it's not null)
+        if (this.door != null) {
+            this.door.draw(g);
+        }
     }
 
-    // Create method to change if the person is on the platform or not
 }
