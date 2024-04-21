@@ -10,12 +10,12 @@ import java.util.ArrayList;
 
  
 public class Main extends JPanel implements KeyListener{
-    public static final int WIDTH = 500;
-    public static final int HEIGHT = 768;
+    public static final int HBWidth = 500;
+    public static final int HBHeight = 768;
     public static final int FPS = 60;
 
-    public static final int lavaWidth = 1000;
-    public static final int lavaHeight = 768;
+    public static final int lavaWidth = 1200;
+    public static final int lavaHeight = 500;
 
     public char c = '0';
     World homebase;
@@ -24,12 +24,15 @@ public class Main extends JPanel implements KeyListener{
 
     public Person person;
 
+    JFrame frame;
+
     public ArrayList<Item> uncollectedItems;
 
-    public Main(){
+    public Main(JFrame frame){
+        this.frame = frame;
         this.person = new Person(this, null);
 
-        homebase = new World(this, WIDTH, HEIGHT, "Homebase");
+        homebase = new World(this, HBWidth, HBHeight, "Homebase");
 
         // Put the person in the homebase
         person.changeWorld(homebase);
@@ -41,7 +44,7 @@ public class Main extends JPanel implements KeyListener{
         
         uncollectedItems = new ArrayList<>();
 
-        this.setPreferredSize(new Dimension(WIDTH, HEIGHT));
+        this.setPreferredSize(new Dimension(HBWidth, HBHeight));
         this.addKeyListener(this); 
         this.setFocusable(true); 
         this.requestFocus(); 
@@ -52,7 +55,7 @@ public class Main extends JPanel implements KeyListener{
     public static void main(String[] args){
         JFrame frame = new JFrame("Homebase");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        Main mainInstance = new Main();
+        Main mainInstance = new Main(frame);
         frame.setContentPane(mainInstance);
         frame.pack();
         frame.setVisible(true);
@@ -69,7 +72,7 @@ public class Main extends JPanel implements KeyListener{
     class Runner implements Runnable{
         public void run() {
             while(true){
-                homebase.updatePerson((double)1.0/FPS);
+                currentWorld.updatePerson((double)1.0/FPS);
                 repaint();
             try{
                 Thread.sleep(1000/FPS);
@@ -111,16 +114,24 @@ public class Main extends JPanel implements KeyListener{
                 this.currentWorld = lavaBiome;
                 person.changeWorld(lavaBiome);
 
-                dimLava();
+                changeDimensions("Lava Biome");
             }
         }
         
 
     }
 
-    // Change dimensions to those of Lava Biome
-    public void dimLava() {
-        this.setSize(new Dimension(lavaWidth, lavaHeight));
+    // Change dimensions to those of the specified world
+    public void changeDimensions(String worldType) {
+        if (worldType.equals("Homebase")) {
+            this.setPreferredSize(new Dimension(HBWidth, HBHeight));
+            frame.setTitle("Homebase");
+            frame.pack();
+        } else {
+            this.setPreferredSize(new Dimension(lavaWidth, lavaHeight));
+            frame.setTitle("Lava Biome");
+            frame.pack();
+        }
     }
 
     public void checkForItems(Pair personPosition){
