@@ -277,6 +277,13 @@ class Person{
     public void changeWorld(World newWorld) {
         this.currentWorld = newWorld;
         position = new Pair(50, currentWorld.height - this.dimensions.y);
+        // Update the person's new platform and give error message if no platforms available
+        if (newWorld.platforms == null) {
+            System.err.println("ERROR: New world does not have any platforms for person to stand on.");
+            System.exit(1);
+        }
+
+        this.currentPlatform = newWorld.platforms[newWorld.platforms.length - 1];
     }
 
 } 
