@@ -33,7 +33,7 @@ class Person{
     boolean canJump = true;
 
     Main main;
-    World currentWorld;
+    private World currentWorld;
     public  ArrayList<Item> inventory;
 
     private Image avatar = null;
@@ -46,8 +46,8 @@ class Person{
     private Image walkL3 = null;
     private Image walkL4 = null;
 
-    public Person(Main main, World world, int x, int y) {
-        position = new Pair(x, y - dimensions.y);
+    public Person(Main main, World world) {
+        //position = new Pair(x, y - dimensions.y);
         velocity = new Pair(0, 0);
         acceleration = new Pair(0,250);
         radius = 5;
@@ -128,36 +128,42 @@ class Person{
     }
 
     public void checkIfOnLadder() {
-        for (Platform p : currentWorld.platforms) {
-            if (this.position.y > p.position.y && this.position.y + this.dimensions.y < p.position.y + p.ladderLength) {
-                if (position.x + dimensions.x / 2 < p.ladderPos + p.ladderWidth && position.x + dimensions.x / 2 > p.ladderPos) {
-                    setAcceleration(0);
-                    upwardVelocity = 80;
-                    downwardVelocity = 80;
-                }
-                else {
-                    setAcceleration(250);
-                    upwardVelocity = 500;
+        // Only check if on ladder if platforms are nearby
+        if (currentWorld.platforms != null) {
+            for (Platform p : currentWorld.platforms) {
+                if (this.position.y > p.position.y && this.position.y + this.dimensions.y < p.position.y + p.ladderLength) {
+                    if (position.x + dimensions.x / 2 < p.ladderPos + p.ladderWidth && position.x + dimensions.x / 2 > p.ladderPos) {
+                        setAcceleration(0);
+                        upwardVelocity = 80;
+                        downwardVelocity = 80;
+                    }
+                    else {
+                        setAcceleration(250);
+                        upwardVelocity = 500;
+                    }
                 }
             }
         }
     }
 
     public void checkIfOnPlatform() {
-        for (Platform p : currentWorld.platforms) {
-            if (position.y > currentPlatform.position.y && p.position.y > currentPlatform.position.y) {
-                currentPlatform = p;
-            }
-            else if (position.y + dimensions.y < p.position.y && p.position.y < currentPlatform.position.y) {
-                currentPlatform = p;
-            }
-            if (position.y + dimensions.y >= currentPlatform.position.y) {
-                canJump = true;
-                setVelocityY(0);
-                this.setPosition(new Pair(position.x, currentPlatform.position.y - dimensions.y));
-            }
-            else {
-                canJump = false;
+        // Only check if on platform if platforms are nearby
+        if (currentWorld.platforms != null) {
+            for (Platform p : currentWorld.platforms) {
+                if (position.y > currentPlatform.position.y && p.position.y > currentPlatform.position.y) {
+                    currentPlatform = p;
+                }
+                else if (position.y + dimensions.y < p.position.y && p.position.y < currentPlatform.position.y) {
+                    currentPlatform = p;
+                }
+                if (position.y + dimensions.y >= currentPlatform.position.y) {
+                    canJump = true;
+                    setVelocityY(0);
+                    this.setPosition(new Pair(position.x, currentPlatform.position.y - dimensions.y));
+                }
+                else {
+                    canJump = false;
+                }
             }
         }
     }
@@ -244,6 +250,7 @@ class Person{
         }
         
     }
+
     //when keys are released, trigger this to stop moving
     public void antimovement(char c){
         if (c == 'a'){
@@ -264,6 +271,12 @@ class Person{
             this.setVelocityY(0);
             animationCounter = 0;
         }
+    }
+
+    // Changes the world the person is in and puts them at a new location
+    public void changeWorld(World newWorld) {
+        this.currentWorld = newWorld;
+        position = new Pair(50, currentWorld.height - this.dimensions.y);
     }
 
 } 
