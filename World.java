@@ -1,4 +1,3 @@
-
 import java.awt.Color;
 import java.awt.Graphics;
 
@@ -11,25 +10,31 @@ import javax.imageio.ImageIO;
 class World{
     int width;
     int height;
-    public Person person;
+    Person person;
 
     Platform[] platforms;
-    Door[] doors;
 
     Main main;
-    private BufferedImage hbBackground = null;
+    private BufferedImage background = null;
     
-    public World(Main main, int initWidth, int initHeight){
+    public World(Main main, int initWidth, int initHeight, String worldType){
+        this.main = main;
         this.width = initWidth;
         this.height = initHeight;
-        this.main = main;
+
+        this.person = main.person;
+
+        if (worldType.equals("Homebase")) {
+            createHomebase();
+        } else {
+            createLavaBiome();
+        }
     }
 
     // Create objects within homebase
-    public void createHomebase() {
-        person = new Person(main, this, 50, height);
+    private void createHomebase() {
         try{
-            hbBackground = ImageIO.read(Main.class.getResource("hbBackground.png"));
+            this.background = ImageIO.read(Main.class.getResource("hbBackground.png"));
         } catch (IOException e){
             System.err.println("IOException");
             System.exit(1);
@@ -37,7 +42,7 @@ class World{
         // Create array of ladder locations
         int[] ladderPos = new int[3]; 
         int[] ladderLength = new int[3];
-        // NOTE: THE FUNCION OF LADDERPOS HAS BEEN CHANGED TO EACH PLATFORM HAS ONE LADDER ONLY
+        // NOTE: THE FUNCTION OF LADDERPOS HAS BEEN CHANGED TO EACH PLATFORM HAS ONE LADDER ONLY
 
         ladderPos[0] = width - 70;
         ladderPos[1] = 19;
@@ -48,22 +53,21 @@ class World{
         ladderLength[2] = 200;
 
         platforms = new Platform[4];
-        platforms[0] = new Platform(0, 190, width, 13, ladderPos[0], ladderLength[0]);
-        platforms[1] = new Platform(0, 388, width, 13, ladderPos[1], ladderLength[1]);
-        platforms[2] = new Platform(0, 570, width, 13, ladderPos[2], ladderLength[2]);
-        platforms[3] = new Platform(0, height, width, 13);
+        platforms[0] = new Platform(new Pair(0, 190), new Pair(width, 13), ladderPos[0], ladderLength[0]);
+        platforms[1] = new Platform(new Pair(0, 388), new Pair(width, 13), ladderPos[1], ladderLength[1]);
+        platforms[2] = new Platform(new Pair(0, 570), new Pair(width, 13), ladderPos[2], ladderLength[2]);
+        platforms[3] = new Platform(new Pair(0, height), new Pair(width, 13));
 
-        person.currentPlatform = platforms[3];
+        this.person.currentPlatform = platforms[3];
 
-        doors = new Door[3];
-        doors[0] = new Door((int)(platforms[0].position.x + 30), (int)(platforms[0].position.y - Door.dimensions.y));
-        doors[1] = new Door((int)(platforms[1].position.x + 335), (int)(platforms[1].position.y - Door.dimensions.y));
-        doors[2] = new Door((int)(platforms[2].position.x + 88), (int)(platforms[2].position.y - Door.dimensions.y));
+        platforms[0].door = new Door(new Pair((int)(platforms[0].position.x + 30), (int)(platforms[0].position.y - Door.dimensions.y)));
+        platforms[1].door = new Door(new Pair((int)(platforms[1].position.x + 335), (int)(platforms[1].position.y - Door.dimensions.y)));
+        platforms[2].door = new Door(new Pair((int)(platforms[2].position.x + 88), (int)(platforms[2].position.y - Door.dimensions.y)));
     }
 
     // Create objects within lava biome
-    public void createLavaBiome(Person person) {
-        this.person = person;
+    private void createLavaBiome() {
+
     }
 
     public void drawPerson(Graphics g){
@@ -77,19 +81,12 @@ class World{
     // Draws the world
     public void draw(Graphics g) {
         // Draw the background of the world
-        g.drawImage(hbBackground,  (int)0, (int)0, null);
+        g.drawImage(background,  (int)0, (int)0, null);
 
         if (platforms != null) {
             // Draw the platforms in the world
             for (Platform platform : platforms) {
                 platform.draw(g);
-            }
-        }
-
-        if (doors != null) {
-            // Then draw the doors in the world
-            for (Door door : doors) {
-                door.draw(g);
             }
         }
 
