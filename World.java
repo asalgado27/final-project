@@ -17,10 +17,10 @@ class World{
     Main main;
     private BufferedImage background = null;
     
-    public World(Main main, int initWidth, int initHeight, String worldType){
+    public World(Main main, int width, int height, String worldType){
         this.main = main;
-        this.width = initWidth;
-        this.height = initHeight;
+        this.width = width;
+        this.height = height;
 
         this.person = main.person;
 
@@ -67,7 +67,13 @@ class World{
 
     // Create objects within lava biome
     private void createLavaBiome() {
+        double stepWidth = this.width * (1.0 / 3.0);
 
+        // Create platforms of lava biome
+        platforms = new Platform[3];
+        platforms[0] = new Platform(new Pair(this.width * (0.0 / 3.0), this.height * (3.0 / 3.0)), new Pair(stepWidth, 13));
+        platforms[1] = new Platform(new Pair(this.width * (1.0 / 3.0), this.height * (2.0 / 3.0)), new Pair(stepWidth, 13));
+        platforms[2] = new Platform(new Pair(this.width * (2.0 / 3.0), this.height * (1.0 / 3.0)), new Pair(stepWidth, 13));
     }
 
     public void drawPerson(Graphics g){
