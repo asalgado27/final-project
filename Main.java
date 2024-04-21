@@ -14,23 +14,29 @@ public class Main extends JPanel implements KeyListener{
     public static final int HEIGHT = 768;
     public static final int FPS = 60;
 
-    public static final int lavaWidth = 1200;
+    public static final int lavaWidth = 1000;
     public static final int lavaHeight = 768;
 
     public char c = '0';
     World homebase;
     World lavaBiome;
-    public ArrayList<Item> uncollectedItems;
     World currentWorld;
 
+    public Person person;
+
+    public ArrayList<Item> uncollectedItems;
+
     public Main(){
-        homebase = new World(this, WIDTH, HEIGHT);
-        homebase.createHomebase();
+        this.person = new Person(this, null);
 
-        lavaBiome = new World(this, lavaWidth, lavaHeight);
-        lavaBiome.createLavaBiome(homebase.person);
+        homebase = new World(this, WIDTH, HEIGHT, "Homebase");
 
-        // Establish homebase as the current world
+        // Put the person in the homebase
+        person.changeWorld(homebase);
+
+        lavaBiome = new World(this, lavaWidth, lavaHeight, "Lava Biome");
+
+        // Establish homebase as the initial current world
         this.currentWorld = homebase;
         
         uncollectedItems = new ArrayList<>();
@@ -75,19 +81,19 @@ public class Main extends JPanel implements KeyListener{
  
     public void keyPressed(KeyEvent e) {
         char c = e.getKeyChar();
-        homebase.person.movement(c);
+        person.movement(c);
     }
     
 
     public void keyReleased(KeyEvent e) {
         char c = e.getKeyChar();
-        homebase.person.antimovement(c);
+        person.antimovement(c);
     }
  
  
     public void keyTyped(KeyEvent e) {
     	char c = e.getKeyChar();
-        homebase.person.movement(c);
+        person.movement(c);
         
     }
     
@@ -98,17 +104,23 @@ public class Main extends JPanel implements KeyListener{
 
     // Open the door the person is at
     public void openDoor() {
-        // Check if person is near door
-        if (homebase.person.position.x > homebase.doors[0].position.x && homebase.person.position.x < homebase.doors[0].position.x + homebase.doors[0].dimensions.x) {
-            // Move person to new world
-            this.currentWorld = lavaBiome;
-            dimLava();
+        // Check if person is near door (assuming a door exists)
+        if (person.currentPlatform.door != null) {
+            if (person.position.x > person.currentPlatform.door.position.x && person.position.x < person.currentPlatform.door.position.x + person.currentPlatform.door.dimensions.x) {
+                // Move person to new world
+                this.currentWorld = lavaBiome;
+                person.changeWorld(lavaBiome);
+
+                dimLava();
+            }
         }
+        
+
     }
 
     // Change dimensions to those of Lava Biome
     public void dimLava() {
-        this.setPreferredSize(new Dimension(lavaWidth, lavaHeight));
+        this.setSize(new Dimension(lavaWidth, lavaHeight));
     }
 
     public void checkForItems(Pair personPosition){
