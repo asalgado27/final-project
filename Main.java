@@ -14,8 +14,8 @@ public class Main extends JPanel implements KeyListener{
     public static final int HBHeight = 768;
     public static final int FPS = 60;
 
-    public static final int lavaWidth = 1400;
-    public static final int lavaHeight = 750;
+    public static final int lavaWidth = 1200;
+    public static final int lavaHeight = 500;
 
     public char c = '0';
     World homebase;
@@ -109,12 +109,20 @@ public class Main extends JPanel implements KeyListener{
     public void openDoor() {
         // Check if person is near door (assuming a door exists)
         if (person.currentPlatform.door != null) {
-            if (person.position.x > person.currentPlatform.door.position.x && person.position.x < person.currentPlatform.door.position.x + person.currentPlatform.door.dimensions.x) {
+            if (person.position.x + person.dimensions.x / 3 > person.currentPlatform.door.position.x && person.position.x + person.dimensions.x / 3 < person.currentPlatform.door.position.x + person.currentPlatform.door.dimensions.x) {
                 // Move person to new world
-                this.currentWorld = lavaBiome;
-                person.changeWorld(lavaBiome);
+                if (currentWorld == homebase) {
+                    this.currentWorld = lavaBiome;
+                    person.changeWorld(lavaBiome);
+                    changeDimensions("Lava Biome");
+                }
+                else if (currentWorld == lavaBiome) {
+                    this.currentWorld = homebase;
+                    person.changeWorld(homebase);
+                    changeDimensions("Homebase");
+                    person.position = new Pair(homebase.platforms[2].door.position.x, homebase.platforms[2].door.position.y);
+                }
 
-                changeDimensions("Lava Biome");
             }
         }
         
@@ -138,9 +146,7 @@ public class Main extends JPanel implements KeyListener{
         for (int i = 0; i < uncollectedItems.size(); i++) {
             Item item = uncollectedItems.get(i);
             //i'll change this later to be a range --Alicia
-            if (item.position.x == personPosition.x && item.position.y == personPosition.y){
-                item.collect();
-            }
+            item.checkAndCollect();
         }
     }
 }

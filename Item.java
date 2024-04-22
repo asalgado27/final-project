@@ -10,16 +10,16 @@ public abstract class Item {
     Person p;
     boolean visible;
 
-	public Item(Main m, Person p) {
-        this.m = m;
-        this.p = p;
-        m.uncollectedItems.add(this);
+	public Item(/*Main m, Person p*/) {
+        // this.m = m;
+        //this.p = p;
+        // m.uncollectedItems.add(this);
         visible = true;
     }
 
 	public void draw(Graphics g) {}
 
-	public void collect() {
+	public void checkAndCollect() {
         p.inventory.add(this);
         m.uncollectedItems.remove(this);
         visible = false;

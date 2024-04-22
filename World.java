@@ -49,9 +49,9 @@ class World{
         ladderPos[1] = 19;
         ladderPos[2] = width - 88;
 
-        ladderLength[0] = 200;
-        ladderLength[1] = 180;
-        ladderLength[2] = 200;
+        ladderLength[0] = 205;
+        ladderLength[1] = 185;
+        ladderLength[2] = 205;
 
         platforms = new Platform[4];
         platforms[0] = new Platform(new Pair(0, 190), new Pair(width, 13), ladderPos[0], ladderLength[0]);
@@ -64,6 +64,11 @@ class World{
         platforms[0].door = new Door(new Pair((int)(platforms[0].position.x + 30), (int)(platforms[0].position.y - Door.dimensions.y)));
         platforms[1].door = new Door(new Pair((int)(platforms[1].position.x + 335), (int)(platforms[1].position.y - Door.dimensions.y)));
         platforms[2].door = new Door(new Pair((int)(platforms[2].position.x + 88), (int)(platforms[2].position.y - Door.dimensions.y)));
+            
+        platforms[0].key = new Key(platforms[0], this, 200);
+        platforms[1].key = new Key(platforms[1], this, width - 350);
+        platforms[2].key = new Key(platforms[2], this, 450);
+        platforms[3].key = new Key(platforms[3], this, 200);
     }
 
     // Create objects within lava biome
@@ -78,9 +83,17 @@ class World{
         }
         // Create platforms of lava biome
         platforms = new Platform[3];
-        platforms[0] = new Platform(new Pair(this.width * (0.0 / 3.0), this.height * (3.0 / 3.0)), new Pair(stepWidth, 13));
+
+        // CAUTION: platform 0 is the topmost platform, platform 1 is one step lower, and so on
+        platforms[0] = new Platform(new Pair(this.width * (2.0 / 3.0), this.height * (1.0 / 3.0)), new Pair(stepWidth, 13));
         platforms[1] = new Platform(new Pair(this.width * (1.0 / 3.0), this.height * (2.0 / 3.0)), new Pair(stepWidth, 13));
-        platforms[2] = new Platform(new Pair(this.width * (2.0 / 3.0), this.height * (1.0 / 3.0)), new Pair(stepWidth, 13));
+        platforms[2] = new Platform(new Pair(this.width * (0.0 / 3.0), this.height * (3.0 / 3.0)), new Pair(this.width, 13));
+    
+        platforms[0].door = new Door(new Pair((int)(platforms[0].position.x + platforms[0].dimensions.x - 20 - Door.dimensions.x), (int)(platforms[0].position.y - Door.dimensions.y)));
+        
+        platforms[0].key = new Key(platforms[2], this, 250);
+        platforms[1].key = new Key(platforms[1], this);
+        platforms[2].key = new Key(platforms[0], this, width - 150);
     }
 
     public void drawPerson(Graphics g){

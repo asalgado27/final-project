@@ -4,16 +4,31 @@ import java.awt.Graphics;
 
 public class Key extends Item {
 	Pair position;
-	static int radius = 10;
+	static int radius = 15;
 	Color color;
+	Random rand;
+
+	Platform platform;
+	Person person;
 
 	boolean show = true;
 	
 	public Key(Platform platform, World world) {
-		super(world.main, world.person);
-		Random rand = new Random();
-		Color color = new Color(rand.nextFloat(), rand.nextFloat(), rand.nextFloat());
-		position = new Pair(world.width/2, platform.position.y - 50);
+		// super(world.main, world.person);
+		this.platform = platform;
+		this.person = world.person;
+		rand = new Random();
+		color = new Color(rand.nextFloat(), rand.nextFloat(), rand.nextFloat());
+		position = new Pair(platform.position.x + platform.dimensions.x / 2, platform.position.y - 52);
+	}
+
+	public Key(Platform platform, World world, int xPos) {
+		// super(world.main, world.person);
+		this.platform = platform;
+		this.person = world.person;
+		rand = new Random();
+		color = new Color(rand.nextFloat(), rand.nextFloat(), rand.nextFloat());
+		position = new Pair(xPos, platform.position.y - 52);
 	}
 
 	public void draw(Graphics g){
@@ -21,15 +36,17 @@ public class Key extends Item {
 			Color c = g.getColor();
         
         	g.setColor(color);
-        	g.drawOval((int) position.x, (int) position.y, radius, radius);
+        	g.fillOval((int) position.x, (int) position.y, radius, radius);
         	g.setColor(c);
 		}
     }
 
-    public void collect() {
-    	// item disappears when person collects it
-    	// how should we make it disappear?
-    		// hide? or set position = new Pair() ?
+    public void checkAndCollect() {
+    	boolean sameYvalue = (person.position.y + person.dimensions.y / 2 - position.y < 10) && (person.position.y + person.dimensions.y / 2 - position.y > -10);
+    	boolean sameXvalue = (person.position.x + person.dimensions.x / 2 - position.x < 10 && person.position.x + person.dimensions.x / 2 - position.x > -10);
+    	if (sameYvalue && sameXvalue) {
+    		show = false;
+    	}
     }
 		
 	public void use() {

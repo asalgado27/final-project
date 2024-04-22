@@ -16,6 +16,7 @@ class Platform {
 
     // Field to keep track of door on platform
     Door door;
+    Key key;
 
     // Constructor for default platform
     public Platform(Pair position, Pair dimensions) {
@@ -37,7 +38,12 @@ class Platform {
         // Draw any ladders (if it's not null)
         if (ladderPos > 0) {
             g.setColor(Color.blue);
-            g.drawRect(ladderPos, (int)position.y, ladderWidth, ladderLength);
+            g.drawRect(ladderPos, (int)position.y-2, ladderWidth, ladderLength);
+        }
+
+        if (this.key != null) {
+            this.key.checkAndCollect();
+            this.key.draw(g);
         }
 
         // Draw the door (if it's not null)
