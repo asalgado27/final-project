@@ -18,27 +18,37 @@ class Platform {
     Door door;
     Key key;
 
+    // Field to keep track of which world the platform is in
+    World world;
+
     // Constructor for default platform
-    public Platform(Pair position, Pair dimensions) {
+    public Platform(World world, Pair position, Pair dimensions) {
         this.position = position;
         this.dimensions = dimensions;
+        this.world = world;
     }
 
-    public Platform(Pair position, Pair dimensions, int ladderPos, int ladderLength) {
-        this(position, dimensions);
+    public Platform(World world, Pair position, Pair dimensions, int ladderPos, int ladderLength) {
+        this(world, position, dimensions);
         this.ladderPos = ladderPos;
         this.ladderLength = ladderLength;
     }
 
     // Draws the platform
     public void draw(Graphics g) {
-        g.setColor(Color.RED);
-        g.drawRect((int)position.x, (int)position.y, (int)dimensions.x, (int)dimensions.y);
+        // Draw color of platform based on which world it is
+        if (this.world.worldType.equals("Homebase")) {
+            g.setColor(Color.RED);
+            g.drawRect((int)position.x, (int)position.y, (int)dimensions.x, (int)dimensions.y);
+        } else {
+            g.setColor(Color.black);
+            g.fillRect((int)position.x, (int)position.y, (int)dimensions.x, (int)dimensions.y);
+        }
 
         // Draw any ladders (if it's not null)
         if (ladderPos > 0) {
             g.setColor(Color.blue);
-            g.drawRect(ladderPos, (int)position.y-2, ladderWidth, ladderLength);
+            g.drawRect(ladderPos, (int) position.y - 2, ladderWidth, ladderLength);
         }
 
         if (this.key != null) {
