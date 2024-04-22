@@ -48,9 +48,9 @@ class World{
         ladderPos[1] = 19;
         ladderPos[2] = width - 88;
 
-        ladderLength[0] = 205;
-        ladderLength[1] = 185;
-        ladderLength[2] = 205;
+        ladderLength[0] = 200;
+        ladderLength[1] = 180;
+        ladderLength[2] = 200;
 
         platforms = new Platform[4];
         platforms[0] = new Platform(new Pair(0, 190), new Pair(width, 13), ladderPos[0], ladderLength[0]);
