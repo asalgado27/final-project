@@ -92,7 +92,7 @@ class Person{
 
     }
 
-    public void update(World w, double time){
+    public void update(double time){
         // Continually update person's position
         position = position.add(velocity.times(time));
 
