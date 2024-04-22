@@ -3,7 +3,7 @@ import java.awt.Graphics;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-
+import java.awt.Image;
 import javax.imageio.ImageIO;
 
 
@@ -15,7 +15,7 @@ class World{
     Platform[] platforms;
 
     Main main;
-    private BufferedImage background = null;
+    private Image background = null;
     
     public World(Main main, int width, int height, String worldType){
         this.main = main;
@@ -35,6 +35,7 @@ class World{
     private void createHomebase() {
         try{
             this.background = ImageIO.read(Main.class.getResource("hbBackground.png"));
+            background = background.getScaledInstance(width,height, 1);
         } catch (IOException e){
             System.err.println("IOException");
             System.exit(1);
@@ -68,7 +69,13 @@ class World{
     // Create objects within lava biome
     private void createLavaBiome() {
         double stepWidth = this.width * (1.0 / 3.0);
-
+        try{
+            this.background = ImageIO.read(Main.class.getResource("lavabackground.jpg"));
+            background = background.getScaledInstance(width,height, 1);
+        } catch (IOException e){
+            System.err.println("IOException");
+            System.exit(1);
+        }
         // Create platforms of lava biome
         platforms = new Platform[3];
         platforms[0] = new Platform(new Pair(this.width * (0.0 / 3.0), this.height * (3.0 / 3.0)), new Pair(stepWidth, 13));
