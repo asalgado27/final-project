@@ -96,6 +96,7 @@ public class Main extends JPanel implements KeyListener{
  
     public void keyTyped(KeyEvent e) {
     	char c = e.getKeyChar();
+        person.movement(c);
         
     }
     
