@@ -15,7 +15,8 @@ import java.util.ArrayList;
 
 
 class Person{
-    Pair dimensions = new Pair(70, 100); // size of person
+    // Field to determine size of person
+    Pair dimensions = new Pair(70, 100);
 
     public Pair position;
     Pair velocity;
@@ -26,18 +27,20 @@ class Person{
     boolean horizontalRMotion;
     boolean horizontalLMotion;
 
-    int upwardVelocity = 500; // jump velocity
+    // Fields to keep track of jump velocity
+    int upwardVelocity = 500;
     int downwardVelocity = 0;
 
     Platform currentPlatform;
 
-    // keeps track of whether the person is on a ladder or platform
+    // Field to keep track of whether person is on a ladder or on a platform
     boolean onLadder = false;
     boolean canGoUp = true;
 
-    Main main; // allows person to access aspects of main e.g. to check for key presses
-    private World currentWorld; // keep track of what world the person is in; same person for any world
-    public  ArrayList<Item> inventory; // contains the items the person has collected
+
+    Main main;
+    private World currentWorld;
+    public  ArrayList<Item> inventory;
 
     private Image avatar = null;
     private Image walkR1 = null;
@@ -50,7 +53,6 @@ class Person{
     private Image walkL4 = null;
 
     public Person(Main main, World world) {
-        //position = new Pair(x, y - dimensions.y);
         velocity = new Pair(0, 0);
         acceleration = new Pair(0,250);
         radius = 5;
@@ -83,31 +85,33 @@ class Person{
             walkL3 = walkL3.getScaledInstance((int)dimensions.x,(int)dimensions.y, 1);
             walkL4 = ImageIO.read(Main.class.getResource("walkL4.png"));
             walkL4 = walkL4.getScaledInstance((int)dimensions.x,(int)dimensions.y, 1);
-        } 
-        catch (IOException e) {
+        } catch (IOException e) {
             System.err.println("IOException");
             System.exit(1);
         }
 
     }
-    
-    public void update(World w, double time){
-        position = position.add(velocity.times(time)); // continually updates person's position
 
-        // checking whether person is in the y-bounds of world; keeps person within y-bounds of world
+    public void update(World w, double time){
+        // Continually update person's position
+        position = position.add(velocity.times(time));
+
+        // Check if person is within the y-bounds of the world
         if (position.y <= currentWorld.height - dimensions.y && position.y >= 0){
             velocity = velocity.add(acceleration.times(time));
         }
+
         else if (position.y < 0) {
             setVelocityY(0);
             this.setPosition(new Pair(position.x, 0));
         }
+
         else if (position.y > currentWorld.height - dimensions.y){
             setVelocityY(0);
             this.setPosition(new Pair(position.x, currentWorld.height - dimensions.y));
         }
 
-        // checking whether person is in x-bounds of world; keeps person within x-bounds of world
+        // Check if person is within the x-bounds of the world
         if (position.x <= 0){
             this.setVelocityX(0);
             this.setPosition(new Pair(0, position.y));
@@ -123,7 +127,8 @@ class Person{
             animationCounter = 0;
         }
 
-        main.checkForItems(position); // checks whether person is touching items
+        // Check if the person is touching any items
+        main.checkForItems(position);
 
         checkIfOnLadder();
         checkIfOnPlatform();
@@ -134,20 +139,22 @@ class Person{
         // Only check if on ladder if platforms are nearby
         if (currentWorld.platforms != null) {
             for (Platform p : currentWorld.platforms) {
+                // Check if person is within the x-bounds of ladder
                 if (this.position.y + this.dimensions.y > p.position.y && this.position.y + this.dimensions.y <= p.position.y + p.ladderLength) {  
-                // check if person within x-bounds of ladder
+                    // Check if person is within the y-bounds of ladder
                     if (this.position.x + this.dimensions.x / 2 < p.ladderPos + p.ladderWidth && this.position.x + this.dimensions.x / 2 > p.ladderPos) {
-                    // check if person within y-bounds of ladder  
-                        canGoUp = true; // can go up the ladder
-                        onLadder = true; // yes on ladder
-                        setAcceleration(0); // no acceleration when on ladder
-                        upwardVelocity = 80; // climb up with velocity 80
-                        downwardVelocity = 80; // climb down with velocity 80
+                        canGoUp = true;
+                        onLadder = true;
+                        // No acceleration when on ladder
+                        setAcceleration(0);
+                        upwardVelocity = 80;
+                        downwardVelocity = 80;
                     }
                     else {
-                        onLadder = false; // not on ladder
-                        setAcceleration(250); // falls due to gravity
-                        upwardVelocity = 500; // jumps with velocity 500
+                        onLadder = false;
+                        // Falls due to gravity
+                        setAcceleration(250);
+                        upwardVelocity = 500;
                     }
                 }
             }
@@ -159,12 +166,13 @@ class Person{
         if (currentWorld.platforms != null) {
             for (Platform p : currentWorld.platforms) {
                 if (position.y + dimensions.y > currentPlatform.position.y + 2 && p.position.y > currentPlatform.position.y) {
-                    currentPlatform = p; // keep track of current platform the person is within y-bounds of
+                    currentPlatform = p;
                 }
                 else if (position.y + dimensions.y < p.position.y && p.position.y < currentPlatform.position.y) {
-                    currentPlatform = p; // keep track of current platform the person is within y-bounds of
+                    currentPlatform = p;
                 }
-                // check if within platform's standing dimentions (otherwise needs to fall)
+                
+                // Check if the person can stand on the platform (or otherwise will fall)
                 if (position.y + dimensions.y >= currentPlatform.position.y) {
                     if (position.x + dimensions.x * 3 / 4 > currentPlatform.position.x && position.x + dimensions.x / 4 < currentPlatform.position.x + currentPlatform.dimensions.x) {
                         this.setPosition(new Pair(position.x, currentPlatform.position.y - this.dimensions.y));
@@ -173,12 +181,13 @@ class Person{
                     }
                 }
                 else if (onLadder == false) {
-                    canGoUp = false; // can't move up if neither on platform nor on ladder
+                    // Person cannot move up if they're not on the platform or the ladder
+                    canGoUp = false;
                 }
             }
         }
     }
-
+    
     public void setPosition(Pair p){
     	position = p;
     }
@@ -237,7 +246,6 @@ class Person{
             }
         }
     }
-
     
     //when keys are pressed, use this to start moving
     public void movement(char c){
@@ -262,7 +270,7 @@ class Person{
             
         }
         if (c == 'o') {
-            main.openDoor();
+            main.openDoor(this.currentWorld);
         }
         
     }
