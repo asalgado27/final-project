@@ -119,7 +119,7 @@ class World{
     }
 
     public void updatePerson(double time){
-        person.update(this, time);
+        person.update(time);
     }
 
     // Draws the world
