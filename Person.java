@@ -30,6 +30,7 @@ class Person{
 
     Platform currentPlatform;
 
+    boolean onLadder = false;
     boolean canJump = true;
 
     Main main;
@@ -131,13 +132,16 @@ class Person{
         // Only check if on ladder if platforms are nearby
         if (currentWorld.platforms != null) {
             for (Platform p : currentWorld.platforms) {
-                if (this.position.y > p.position.y && this.position.y + this.dimensions.y < p.position.y + p.ladderLength) {
-                    if (position.x + dimensions.x / 2 < p.ladderPos + p.ladderWidth && position.x + dimensions.x / 2 > p.ladderPos) {
+                if (this.position.x + this.dimensions.x / 2 < p.ladderPos + p.ladderWidth && this.position.x + this.dimensions.x / 2 > p.ladderPos) {
+                    if (this.position.y + this.dimensions.y > p.position.y && this.position.y + this.dimensions.y <= p.position.y + p.ladderLength) {  
+                        canJump = true;
+                        onLadder = true;
                         setAcceleration(0);
                         upwardVelocity = 80;
                         downwardVelocity = 80;
                     }
                     else {
+                        onLadder = false;
                         setAcceleration(250);
                         upwardVelocity = 500;
                     }
@@ -150,7 +154,7 @@ class Person{
         // Only check if on platform if platforms are nearby
         if (currentWorld.platforms != null) {
             for (Platform p : currentWorld.platforms) {
-                if (position.y > currentPlatform.position.y && p.position.y > currentPlatform.position.y) {
+                if (position.y + dimensions.y > currentPlatform.position.y && p.position.y > currentPlatform.position.y) {
                     currentPlatform = p;
                 }
                 else if (position.y + dimensions.y < p.position.y && p.position.y < currentPlatform.position.y) {
@@ -161,7 +165,7 @@ class Person{
                     setVelocityY(0);
                     this.setPosition(new Pair(position.x, currentPlatform.position.y - dimensions.y));
                 }
-                else {
+                else if (onLadder == false) {
                     canJump = false;
                 }
             }
@@ -239,11 +243,16 @@ class Person{
             horizontalRMotion = true;
         }
         if (c == 's'){
-            this.setVelocityY(downwardVelocity);
+            if (onLadder == true) {
+                this.setVelocityY(downwardVelocity);
+            }
             //don't change the velocity. can make the person duck
         }
-        if (c == 'w' && canJump == true){
-            this.setVelocityY(-1 * upwardVelocity);
+        if (c == 'w'){
+            if (canJump == true) {
+                this.setVelocityY(-1 * upwardVelocity);
+            }
+            
         }
         if (c == 'o') {
             main.openDoor();
