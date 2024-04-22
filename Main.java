@@ -14,13 +14,14 @@ public class Main extends JPanel implements KeyListener{
     public static final int HBHeight = 768;
     public static final int FPS = 60;
 
-    public static final int lavaWidth = 1200;
-    public static final int lavaHeight = 500;
+    public static final int lavaWidth = 1400;
+    public static final int lavaHeight = 768;
 
     public char c = '0';
-    World homebase;
-    World lavaBiome;
+
     World currentWorld;
+
+    World[] worlds;
 
     public Person person;
 
@@ -32,15 +33,21 @@ public class Main extends JPanel implements KeyListener{
         this.frame = frame;
         this.person = new Person(this, null);
 
-        homebase = new World(this, HBWidth, HBHeight, "Homebase");
+        // Establish array of worlds (0 is homebase, 1 is lava biome)
+        worlds = new World[2];
+        worlds[0] = new World(this, HBWidth, HBHeight, "Homebase");
+        worlds[1] = new World(this, lavaWidth, lavaHeight, "Lava Biome");
+
+        // Finish creating each world now that the array has been created
+        for (World world : worlds) {
+            world.createWorld(worlds);
+        }
 
         // Put the person in the homebase
-        person.changeWorld(homebase);
-
-        lavaBiome = new World(this, lavaWidth, lavaHeight, "Lava Biome");
+        person.changeWorld(worlds[0]);
 
         // Establish homebase as the initial current world
-        this.currentWorld = homebase;
+        this.currentWorld = worlds[0];
         
         uncollectedItems = new ArrayList<>();
 
@@ -106,23 +113,17 @@ public class Main extends JPanel implements KeyListener{
     }
 
     // Open the door the person is at
-    public void openDoor() {
+    public void openDoor(World oldWorld) {
+        // Determine what world the door is opening to
         // Check if person is near door (assuming a door exists)
         if (person.currentPlatform.door != null) {
             if (person.position.x + person.dimensions.x / 3 > person.currentPlatform.door.position.x && person.position.x + person.dimensions.x / 3 < person.currentPlatform.door.position.x + person.currentPlatform.door.dimensions.x) {
+                World nextWorld = person.currentPlatform.door.nextWorld;
                 // Move person to new world
-                if (currentWorld == homebase) {
-                    this.currentWorld = lavaBiome;
-                    person.changeWorld(lavaBiome);
-                    changeDimensions("Lava Biome");
-                }
-                else if (currentWorld == lavaBiome) {
-                    this.currentWorld = homebase;
-                    person.changeWorld(homebase);
-                    changeDimensions("Homebase");
-                    person.position = new Pair(homebase.platforms[2].door.position.x, homebase.platforms[2].door.position.y);
-                }
+                this.currentWorld = nextWorld;
+                person.changeWorld(nextWorld);
 
+                changeDimensions(nextWorld.worldType);
             }
         }
         
@@ -145,7 +146,6 @@ public class Main extends JPanel implements KeyListener{
     public void checkForItems(Pair personPosition){
         for (int i = 0; i < uncollectedItems.size(); i++) {
             Item item = uncollectedItems.get(i);
-            //i'll change this later to be a range --Alicia
             item.checkAndCollect();
         }
     }
