@@ -15,7 +15,11 @@ class World{
     Platform[] platforms;
 
     Main main;
+    World[] worlds;
     private Image background = null;
+
+    // Keep track of what type of world this is
+    public String worldType;
     
     public World(Main main, int width, int height, String worldType){
         this.main = main;
@@ -23,8 +27,13 @@ class World{
         this.height = height;
 
         this.person = main.person;
+        this.worldType = worldType;
+    }
 
-        if (worldType.equals("Homebase")) {
+    // Creates the world
+    public void createWorld(World[] worlds) {
+        this.worlds = worlds;
+        if (this.worldType.equals("Homebase")) {
             createHomebase();
         } else {
             createLavaBiome();
@@ -54,17 +63,17 @@ class World{
         ladderLength[2] = 205;
 
         platforms = new Platform[4];
-        platforms[0] = new Platform(new Pair(0, 190), new Pair(width, 13), ladderPos[0], ladderLength[0]);
-        platforms[1] = new Platform(new Pair(0, 388), new Pair(width, 13), ladderPos[1], ladderLength[1]);
-        platforms[2] = new Platform(new Pair(0, 570), new Pair(width, 13), ladderPos[2], ladderLength[2]);
-        platforms[3] = new Platform(new Pair(0, height), new Pair(width, 13));
+        platforms[0] = new Platform(this, new Pair(0, 190), new Pair(width, 13), ladderPos[0], ladderLength[0]);
+        platforms[1] = new Platform(this, new Pair(0, 388), new Pair(width, 13), ladderPos[1], ladderLength[1]);
+        platforms[2] = new Platform(this, new Pair(0, 570), new Pair(width, 13), ladderPos[2], ladderLength[2]);
+        platforms[3] = new Platform(this, new Pair(0, height), new Pair(width, 13));
 
         this.person.currentPlatform = platforms[3];
 
-        platforms[0].door = new Door(new Pair((int)(platforms[0].position.x + 30), (int)(platforms[0].position.y - Door.dimensions.y)));
-        platforms[1].door = new Door(new Pair((int)(platforms[1].position.x + 335), (int)(platforms[1].position.y - Door.dimensions.y)));
-        platforms[2].door = new Door(new Pair((int)(platforms[2].position.x + 88), (int)(platforms[2].position.y - Door.dimensions.y)));
-            
+        platforms[0].door = new Door(this, worlds[1], new Pair((int)(platforms[0].position.x + 30), (int)(platforms[0].position.y - Door.dimensions.y)));
+        platforms[1].door = new Door(this, worlds[1], new Pair((int)(platforms[1].position.x + 335), (int)(platforms[1].position.y - Door.dimensions.y)));
+        platforms[2].door = new Door(this, worlds[1], new Pair((int)(platforms[2].position.x + 88), (int)(platforms[2].position.y - Door.dimensions.y)));
+
         platforms[0].key = new Key(platforms[0], this, 200);
         platforms[1].key = new Key(platforms[1], this, width - 350);
         platforms[2].key = new Key(platforms[2], this, 450);
@@ -73,7 +82,6 @@ class World{
 
     // Create objects within lava biome
     private void createLavaBiome() {
-        double stepWidth = this.width * (1.0 / 3.0);
         try{
             this.background = ImageIO.read(Main.class.getResource("lavabackground.jpg"));
             background = background.getScaledInstance(width,height, 1);
@@ -81,16 +89,26 @@ class World{
             System.err.println("IOException");
             System.exit(1);
         }
-        // Create platforms of lava biome
-        platforms = new Platform[3];
 
-        // CAUTION: platform 0 is the topmost platform, platform 1 is one step lower, and so on
-        platforms[0] = new Platform(new Pair(this.width * (2.0 / 3.0), this.height * (1.0 / 3.0)), new Pair(stepWidth, 13));
-        platforms[1] = new Platform(new Pair(this.width * (1.0 / 3.0), this.height * (2.0 / 3.0)), new Pair(stepWidth, 13));
-        platforms[2] = new Platform(new Pair(this.width * (0.0 / 3.0), this.height * (3.0 / 3.0)), new Pair(this.width, 13));
-    
-        platforms[0].door = new Door(new Pair((int)(platforms[0].position.x + platforms[0].dimensions.x - 20 - Door.dimensions.x), (int)(platforms[0].position.y - Door.dimensions.y)));
-        
+        // Create platforms of lava biome
+        platforms = new Platform[13];
+        platforms[0] = new Platform(this, new Pair(0, this.height - 600), new Pair(186, 13));
+        platforms[1] = new Platform(this, new Pair(186, this.height - 570), new Pair(93, 13));
+        platforms[2] = new Platform(this, new Pair(558, this.height - 550), new Pair(93, 13));
+        platforms[3] = new Platform(this, new Pair(837, this.height - 500), new Pair(93, 13));
+        platforms[4] = new Platform(this, new Pair(372, this.height - 460), new Pair(93, 13));
+        platforms[5] = new Platform(this, new Pair(1302, this.height - 550), new Pair(93, 13));
+        platforms[6] = new Platform(this, new Pair(1116, this.height - 370), new Pair(93, 13));
+        platforms[7] = new Platform(this, new Pair(930, this.height - 250), new Pair(93, 13));
+        platforms[8] = new Platform(this, new Pair(558, this.height - 200), new Pair(93, 13));
+        platforms[9] = new Platform(this, new Pair(744, this.height - 100), new Pair(93, 13));
+        platforms[10] = new Platform(this, new Pair(372, this.height - 150), new Pair(93, 13));
+        platforms[11] = new Platform(this, new Pair(186, this.height - 100), new Pair(93, 13));
+        platforms[12] = new Platform(this, new Pair(0, this.height), new Pair(this.width, 13));
+
+        // Add door to final platform
+        platforms[0].door = new Door(Color.orange, this, worlds[0], new Pair((int) (platforms[0].position.x + 62), (int)(platforms[0].position.y - Door.dimensions.y)));
+
         platforms[0].key = new Key(platforms[2], this, 250);
         platforms[1].key = new Key(platforms[1], this);
         platforms[2].key = new Key(platforms[0], this, width - 150);
