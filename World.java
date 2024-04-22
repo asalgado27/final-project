@@ -109,9 +109,9 @@ class World{
         // Add door to final platform
         platforms[0].door = new Door(Color.orange, this, worlds[0], new Pair((int) (platforms[0].position.x + 62), (int)(platforms[0].position.y - Door.dimensions.y)));
 
-        platforms[0].key = new Key(platforms[2], this, 250);
-        platforms[1].key = new Key(platforms[1], this);
-        platforms[2].key = new Key(platforms[0], this, width - 150);
+        platforms[4].key = new Key(platforms[4], this);
+        platforms[8].key = new Key(platforms[8], this);
+        platforms[5].key = new Key(platforms[5], this);
     }
 
     public void drawPerson(Graphics g){
