@@ -14,8 +14,8 @@ public class Main extends JPanel implements KeyListener{
     public static final int HBHeight = 768;
     public static final int FPS = 60;
 
-    public static final int lavaWidth = 1200;
-    public static final int lavaHeight = 500;
+    public static final int lavaWidth = 1400;
+    public static final int lavaHeight = 750;
 
     public char c = '0';
     World homebase;
