@@ -6,28 +6,28 @@ import java.awt.Graphics;
 public abstract class Item {
     Pair position;
     Color color;
-    Main m;
-    Person p;
+    Main main;
+    Person person;
     boolean visible;
 
-    public Item(/*Main m, Person p*/) {
-        // this.m = m;
-        //this.p = p;
-        // m.uncollectedItems.add(this);
+    public Item(/*Main main, Person person*/) {
+        // this.main = main;
+        //this.person = person;
+        // main.uncollectedItems.add(this);
         visible = true;
     }
 
     public void draw(Graphics g) {}
 
     public void checkAndCollect() {
-        p.inventory.add(this);
-        m.uncollectedItems.remove(this);
+        person.inventory.add(this);
+        main.uncollectedItems.remove(this);
         visible = false;
     }
 	// item disappears (or pops, or does some motion) when the person collects it
 
     public void use() {
-        p.inventory.remove(this);
+        person.inventory.remove(this);
         
     } 
 	// unleash powers of the item
