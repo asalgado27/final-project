@@ -28,7 +28,7 @@ class Person{
     boolean horizontalLMotion;
 
     // Fields to keep track of jump velocity
-    int upwardVelocity = 500;
+    int upwardVelocity = 300;
     int downwardVelocity = 0;
 
     Platform currentPlatform;
@@ -154,7 +154,7 @@ class Person{
                         onLadder = false;
                         // Falls due to gravity
                         setAcceleration(250);
-                        upwardVelocity = 500;
+                        upwardVelocity = 300;
                     }
                 }
             }
@@ -171,7 +171,6 @@ class Person{
                 else if (position.y + dimensions.y < p.position.y && p.position.y < currentPlatform.position.y) {
                     currentPlatform = p;
                 }
-                
                 // Check if the person can stand on the platform (or otherwise will fall)
                 if (position.y + dimensions.y >= currentPlatform.position.y) {
                     if (position.x + dimensions.x * 3 / 4 > currentPlatform.position.x && position.x + dimensions.x / 4 < currentPlatform.position.x + currentPlatform.dimensions.x) {

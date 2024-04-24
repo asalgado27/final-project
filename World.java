@@ -97,13 +97,13 @@ class World{
         platforms[2] = new Platform(this, new Pair(558, this.height - 550), new Pair(93, 13));
         platforms[3] = new Platform(this, new Pair(837, this.height - 500), new Pair(93, 13));
         platforms[4] = new Platform(this, new Pair(372, this.height - 460), new Pair(93, 13));
-        platforms[5] = new Platform(this, new Pair(1302, this.height - 550), new Pair(93, 13));
+        platforms[5] = new Platform(this, new Pair(1302, this.height - 520), new Pair(93, 13));
         platforms[6] = new Platform(this, new Pair(1116, this.height - 370), new Pair(93, 13));
         platforms[7] = new Platform(this, new Pair(930, this.height - 250), new Pair(93, 13));
         platforms[8] = new Platform(this, new Pair(558, this.height - 200), new Pair(93, 13));
         platforms[9] = new Platform(this, new Pair(744, this.height - 100), new Pair(93, 13));
         platforms[10] = new Platform(this, new Pair(372, this.height - 150), new Pair(93, 13));
-        platforms[11] = new Platform(this, new Pair(186, this.height - 100), new Pair(93, 13));
+        platforms[11] = new Platform(this, new Pair(186, this.height - 120), new Pair(93, 13));
         platforms[12] = new Platform(this, new Pair(0, this.height), new Pair(this.width, 13));
 
         // Add door to final platform
