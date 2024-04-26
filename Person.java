@@ -136,13 +136,13 @@ class Person{
     }
 
     public void checkIfOnLadder() {
-        // Only check if on ladder if platforms are nearby
+        // Only check if on ladder if platforms exist in the person's current world
         if (currentWorld.platforms != null) {
-            for (Platform p : currentWorld.platforms) {
-                // Check if person is within the x-bounds of ladder
-                if (this.position.y + this.dimensions.y > p.position.y && this.position.y + this.dimensions.y <= p.position.y + p.ladderLength) {  
-                    // Check if person is within the y-bounds of ladder
-                    if (this.position.x + this.dimensions.x / 2 < p.ladderPos + p.ladderWidth && this.position.x + this.dimensions.x / 2 > p.ladderPos) {
+            for (Platform platform : currentWorld.platforms) {
+                // Check if person is within the y-bounds of ladder
+                if (this.position.y + this.dimensions.y > platform.position.y && this.position.y + this.dimensions.y <= platform.position.y + platform.ladderLength) {  
+                    // Check if person is within the x-bounds of ladder
+                    if (this.position.x + this.dimensions.x / 2 < platform.ladderPos + platform.ladderWidth && this.position.x + this.dimensions.x / 2 > platform.ladderPos) {
                         canGoUp = true;
                         onLadder = true;
                         // No acceleration when on ladder
@@ -164,12 +164,12 @@ class Person{
     public void checkIfOnPlatform() {
         // Only check if on platform if platforms are nearby
         if (currentWorld.platforms != null) {
-            for (Platform p : currentWorld.platforms) {
-                if (position.y + dimensions.y > currentPlatform.position.y + 2 && p.position.y > currentPlatform.position.y) {
-                    currentPlatform = p;
+            for (Platform platform : currentWorld.platforms) {
+                if (position.y + dimensions.y > currentPlatform.position.y + 2 && platform.position.y > currentPlatform.position.y) {
+                    currentPlatform = platform;
                 }
-                else if (position.y + dimensions.y < p.position.y && p.position.y < currentPlatform.position.y) {
-                    currentPlatform = p;
+                else if (position.y + dimensions.y < platform.position.y && platform.position.y < currentPlatform.position.y) {
+                    currentPlatform = platform;
                 }
                 // Check if the person can stand on the platform (or otherwise will fall)
                 if (position.y + dimensions.y >= currentPlatform.position.y) {
@@ -187,23 +187,23 @@ class Person{
         }
     }
     
-    public void setPosition(Pair p){
-    	position = p;
+    public void setPosition(Pair position){
+    	this.position = position;
     }
-    public void setVelocityX(int v){
-    	velocity = new Pair(v, velocity.y);
+    public void setVelocityX(int newXVelocity){
+    	this.velocity = new Pair(newXVelocity, this.velocity.y);
     }
-    public void setVelocityY(int v){
-    	velocity = new Pair(velocity.x, v);
+    public void setVelocityY(int newYVelocity){
+    	this.velocity = new Pair(velocity.x, newYVelocity);
     }
-    public void setAcceleration(int a) {
-        acceleration = new Pair(acceleration.x, a);
+    public void setAcceleration(int newAcceler) {
+        this.acceleration = new Pair(this.acceleration.x, newAcceler);
     }
     public Pair getPosition(){
-    	return position;
+    	return this.position;
     }
     public Pair getVelocity(){
-    	return velocity;
+    	return this.velocity;
     }
     
     public void draw(Graphics g){
@@ -230,7 +230,7 @@ class Person{
         if (horizontalLMotion){
             animationCounter++;
             //divided just stores an integer that tells the animation to change which one is being drawn every 10 frames
-            int divided = animationCounter/10%4;
+            int divided = animationCounter / 10 % 4;
             if (divided==0){
                 g.drawImage(walkL1,  (int)position.x, (int)position.y, null);
             }
@@ -260,10 +260,11 @@ class Person{
             if (onLadder == true) {
                 this.setVelocityY(downwardVelocity);
             }
-            //don't change the velocity. can make the person duck
+            // Don't change the velocity. can make the person duck
         }
         if (c == 'w'){
-            if (canGoUp == true) { // only jump or climb if canGoUp
+            // Only jump or climb if canGoUp
+            if (canGoUp == true) {
                 this.setVelocityY(-1 * upwardVelocity);
             }
             
