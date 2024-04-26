@@ -46,11 +46,13 @@ class Platform {
         }
 
         // Draw any ladders (if it's not null)
+        // Note that ladders are drawn downward from the platform they are established on
         if (ladderPos > 0) {
             g.setColor(Color.blue);
             g.drawRect(ladderPos, (int) position.y - 2, ladderWidth, ladderLength);
         }
 
+        // Draw the key (if it's not null)
         if (this.key != null) {
             this.key.checkAndCollect();
             this.key.draw(g);
