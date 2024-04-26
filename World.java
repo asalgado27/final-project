@@ -135,20 +135,5 @@ class World{
 
     }
 
-    
-    // Returns the index of a specific platform in the lists of platform
-    // Note that return type is Integer so that we can return null without having a compile-time error 
-    public Integer findPlatform(Platform target) {
-        for (int i = 0; i < platforms.length; i++) {
-            if (platforms[i].equals(target)) {
-                return i;
-            }
-        }
-
-        // If platform does not exist, return null
-        return null;
-    }
-    
-
 }
   
