@@ -52,7 +52,6 @@ class World{
         // Create array of ladder locations
         int[] ladderPos = new int[3]; 
         int[] ladderLength = new int[3];
-        // NOTE: THE FUNCTION OF LADDERPOS HAS BEEN CHANGED TO EACH PLATFORM HAS ONE LADDER ONLY
 
         ladderPos[0] = width - 70;
         ladderPos[1] = 19;
@@ -135,6 +134,21 @@ class World{
         }
 
     }
+
+    
+    // Returns the index of a specific platform in the lists of platform
+    // Note that return type is Integer so that we can return null without having a compile-time error 
+    public Integer findPlatform(Platform target) {
+        for (int i = 0; i < platforms.length; i++) {
+            if (platforms[i].equals(target)) {
+                return i;
+            }
+        }
+
+        // If platform does not exist, return null
+        return null;
+    }
+    
 
 }
   
