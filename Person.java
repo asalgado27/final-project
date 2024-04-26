@@ -18,6 +18,7 @@ class Person{
     // Field to determine size of person
     Pair dimensions = new Pair(70, 100);
 
+    // Position variable denotes the top-left corner of the person's image
     public Pair position;
     Pair velocity;
     Pair acceleration;
@@ -132,34 +133,39 @@ class Person{
 
         checkIfOnLadder();
         checkIfOnPlatform();
-            
     }
+    
 
     public void checkIfOnLadder() {
         // Only check if on ladder if platforms exist in the person's current world
         if (currentWorld.platforms != null) {
             for (Platform platform : currentWorld.platforms) {
-                // Check if person is within the y-bounds of ladder
-                if (this.position.y + this.dimensions.y > platform.position.y && this.position.y + this.dimensions.y <= platform.position.y + platform.ladderLength) {  
-                    // Check if person is within the x-bounds of ladder
-                    if (this.position.x + this.dimensions.x / 2 < platform.ladderPos + platform.ladderWidth && this.position.x + this.dimensions.x / 2 > platform.ladderPos) {
+                // Check if person is within the x-bounds of ladder
+                if (this.position.x + this.dimensions.x / 2 < platform.ladderPos + platform.ladderWidth && this.position.x + this.dimensions.x / 2 > platform.ladderPos) {
+                    // Check if person is within the y-bounds of ladder
+                    if (this.position.y + this.dimensions.y <= platform.position.y + platform.ladderLength && this.position.y + this.dimensions.y > platform.position.y) {  
                         canGoUp = true;
                         onLadder = true;
                         // No acceleration when on ladder
                         setAcceleration(0);
                         upwardVelocity = 80;
                         downwardVelocity = 80;
-                    }
-                    else {
-                        onLadder = false;
-                        // Falls due to gravity
-                        setAcceleration(250);
-                        upwardVelocity = 300;
+
+                        // Exit the method as we have found the person to be on the ladder
+                        return;
                     }
                 }
             }
         }
+
+        // If this point is reached, the person is not on the ladder
+
+        onLadder = false;
+        // Falls due to gravity
+        setAcceleration(250);
+        upwardVelocity = 300;
     }
+    
 
     public void checkIfOnPlatform() {
         // Only check if on platform if platforms are nearby
