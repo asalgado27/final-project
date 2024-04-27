@@ -68,10 +68,10 @@ class World{
         platforms[3] = new Platform(this, new Pair(0, height), new Pair(width, 13));
 
         this.person.currentPlatform = platforms[3];
-
-        platforms[0].door = new Door(this, worlds[1], new Pair((int)(platforms[0].position.x + 30), (int)(platforms[0].position.y - Door.dimensions.y)));
-        platforms[1].door = new Door(this, worlds[1], new Pair((int)(platforms[1].position.x + 335), (int)(platforms[1].position.y - Door.dimensions.y)));
-        platforms[2].door = new Door(this, worlds[1], new Pair((int)(platforms[2].position.x + 88), (int)(platforms[2].position.y - Door.dimensions.y)));
+        //right now, all these doors open without keys, since I (Alicia) am assuming Adrian will switch around which doors are what biome later on.
+        platforms[0].door = new Door(this, worlds[1], new Pair((int)(platforms[0].position.x + 30), (int)(platforms[0].position.y - Door.dimensions.y)), new int[]{});
+        platforms[1].door = new Door(this, worlds[1], new Pair((int)(platforms[1].position.x + 335), (int)(platforms[1].position.y - Door.dimensions.y)), new int[]{});
+        platforms[2].door = new Door(this, worlds[1], new Pair((int)(platforms[2].position.x + 88), (int)(platforms[2].position.y - Door.dimensions.y)), new int[]{});
 
         platforms[0].key = new Key(platforms[0], this, 200);
         platforms[1].key = new Key(platforms[1], this, width - 350);
@@ -105,12 +105,12 @@ class World{
         platforms[11] = new Platform(this, new Pair(186, this.height - 120), new Pair(93, 13));
         platforms[12] = new Platform(this, new Pair(0, this.height), new Pair(this.width, 13));
 
-        // Add door to final platform
-        platforms[0].door = new Door(Color.orange, this, worlds[0], new Pair((int) (platforms[0].position.x + 62), (int)(platforms[0].position.y - Door.dimensions.y)));
-
-        platforms[4].key = new Key(platforms[4], this);
-        platforms[8].key = new Key(platforms[8], this);
-        platforms[5].key = new Key(platforms[5], this);
+        // Add door to final platform - this door needs keys 4, 5, 6
+        platforms[0].door = new Door(Color.orange, this, worlds[0], new Pair((int) (platforms[0].position.x + 62), (int)(platforms[0].position.y - Door.dimensions.y)), new int[]{4,5,6});
+        //the lava biome contains keys 4, 5, 6
+        platforms[4].key = new Key(platforms[4], this, 4);
+        platforms[8].key = new Key(platforms[8], this, 5);
+        platforms[5].key = new Key(platforms[5], this, 6);
     }
 
     public void drawPerson(Graphics g){
