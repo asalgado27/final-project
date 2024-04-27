@@ -27,12 +27,11 @@ public class Main extends JPanel implements KeyListener{
 
     JFrame frame;
 
-    public ArrayList<Item> uncollectedItems;
+    public ArrayList<Item> uncollectedItems = new ArrayList<>();
 
     public Main(JFrame frame){
         this.frame = frame;
         this.person = new Person(this, null);
-
         // Establish array of worlds (0 is homebase, 1 is lava biome)
         worlds = new World[2];
         worlds[0] = new World(this, HBWidth, HBHeight, "Homebase");
@@ -48,8 +47,6 @@ public class Main extends JPanel implements KeyListener{
 
         // Establish homebase as the initial current world
         this.currentWorld = worlds[0];
-        
-        uncollectedItems = new ArrayList<>();
 
         this.setPreferredSize(new Dimension(HBWidth, HBHeight));
         this.addKeyListener(this); 
@@ -117,7 +114,7 @@ public class Main extends JPanel implements KeyListener{
         // Determine what world the door is opening to
         // Check if person is near door (assuming a door exists)
         if (person.currentPlatform.door != null) {
-            if (person.position.x + person.dimensions.x / 3 > person.currentPlatform.door.position.x && person.position.x + person.dimensions.x / 3 < person.currentPlatform.door.position.x + person.currentPlatform.door.dimensions.x) {
+            if (person.position.x + person.dimensions.x / 3 > person.currentPlatform.door.position.x && person.position.x + person.dimensions.x / 3 < person.currentPlatform.door.position.x + person.currentPlatform.door.dimensions.x && person.currentPlatform.door.canOpen()) {
                 World nextWorld = person.currentPlatform.door.nextWorld;
                 // Move person to new world
                 this.currentWorld = nextWorld;
@@ -147,6 +144,7 @@ public class Main extends JPanel implements KeyListener{
         for (int i = 0; i < uncollectedItems.size(); i++) {
             Item item = uncollectedItems.get(i);
             item.checkAndCollect();
+            System.out.println("checkforitems in main");
         }
     }
 }
