@@ -7,23 +7,25 @@ public class Key extends Item {
 	static int radius = 15;
 	Color color;
 	Random rand;
+	int index;
 
 	Platform platform;
 	Person person;
 
 	boolean show = true;
 	
-	public Key(Platform platform, World world) {
-		// super(world.main, world.person);
+	public Key(Platform platform, World world, int index) {
+		super(world.main, world.person);
 		this.platform = platform;
 		this.person = world.person;
 		rand = new Random();
 		color = new Color(rand.nextFloat(), rand.nextFloat(), rand.nextFloat());
 		position = new Pair(platform.position.x + platform.dimensions.x / 2, platform.position.y - 52);
+		this.index = index;
 	}
 
-	public Key(Platform platform, World world, int xPos) {
-		// super(world.main, world.person);
+	public Key(Platform platform, World world, int xPos, int index) {
+		super(world.main, world.person);
 		this.platform = platform;
 		this.person = world.person;
 		rand = new Random();
@@ -42,7 +44,8 @@ public class Key extends Item {
     }
 
     public void checkAndCollect() {
-    	boolean sameYvalue = (person.position.y + person.dimensions.y / 2 - position.y < 10) && (person.position.y + person.dimensions.y / 2 - position.y > -10);
+    	super.checkAndCollect();
+		boolean sameYvalue = (person.position.y + person.dimensions.y / 2 - position.y < 10) && (person.position.y + person.dimensions.y / 2 - position.y > -10);
     	boolean sameXvalue = (person.position.x + person.dimensions.x / 2 - position.x < 10 && person.position.x + person.dimensions.x / 2 - position.x > -10);
     	if (sameYvalue && sameXvalue) {
     		show = false;
