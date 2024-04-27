@@ -10,10 +10,12 @@ public abstract class Item {
     Person person;
     boolean visible;
 
-    public Item(/*Main main, Person person*/) {
-        // this.main = main;
-        //this.person = person;
-        // main.uncollectedItems.add(this);
+    int index;
+
+    public Item(Main main, Person person) {
+        this.main = main;
+        this.person = person;
+        main.uncollectedItems.add(this);
         visible = true;
     }
 
@@ -21,6 +23,9 @@ public abstract class Item {
 
     public void checkAndCollect() {
         person.inventory.add(this);
+        if (this instanceof Key && person.keyInventory.contains(this.index) == false){
+            person.keyInventory.add(this.index);
+        }
         main.uncollectedItems.remove(this);
         visible = false;
     }
@@ -28,6 +33,9 @@ public abstract class Item {
 
     public void use() {
         person.inventory.remove(this);
+        if (this instanceof Key){
+            person.keyInventory.remove(this.index);
+        }
         
     } 
 	// unleash powers of the item
