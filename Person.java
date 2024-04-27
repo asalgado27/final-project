@@ -41,7 +41,8 @@ class Person{
 
     Main main;
     private World currentWorld;
-    public  ArrayList<Item> inventory;
+    public ArrayList<Item> inventory;
+    public ArrayList<Integer> keyInventory;
 
     private Image avatar = null;
     private Image walkR1 = null;
@@ -61,6 +62,7 @@ class Person{
         horizontalLMotion = false;
         animationCounter = 0;
         inventory = new ArrayList<>();
+        keyInventory = new ArrayList<>();
         
         this.main = main;
         this.currentWorld = world;
