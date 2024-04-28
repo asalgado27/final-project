@@ -1,7 +1,6 @@
 import java.awt.Color;
 import java.awt.Graphics;
 
-import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.awt.Image;
 import javax.imageio.ImageIO;
@@ -33,10 +32,18 @@ class World{
     // Creates the world
     public void createWorld(World[] worlds) {
         this.worlds = worlds;
+        System.out.println(this.worldType);
         if (this.worldType.equals("Homebase")) {
             createHomebase();
-        } else {
+            System.out.println("createWorld called createHomebase");
+        }
+        if (this.worldType.equals("Lava Biome")){
             createLavaBiome();
+            System.out.println("createWorld called createLavaBiome");
+        }
+        if (this.worldType.equals("Tree Biome")){
+            createTreeBiome();
+            System.out.println("createWorld called createTreeBiome");
         }
     }
 
@@ -70,17 +77,18 @@ class World{
         this.person.currentPlatform = platforms[3];
         //right now, all these doors open without keys, since I (Alicia) am assuming Adrian will switch around which doors are what biome later on.
         platforms[0].door = new Door(this, worlds[1], new Pair((int)(platforms[0].position.x + 30), (int)(platforms[0].position.y - Door.dimensions.y)), new int[]{});
-        platforms[1].door = new Door(this, worlds[1], new Pair((int)(platforms[1].position.x + 335), (int)(platforms[1].position.y - Door.dimensions.y)), new int[]{});
+        platforms[1].door = new Door(this, worlds[2], new Pair((int)(platforms[1].position.x + 335), (int)(platforms[1].position.y - Door.dimensions.y)), new int[]{});
         platforms[2].door = new Door(this, worlds[1], new Pair((int)(platforms[2].position.x + 88), (int)(platforms[2].position.y - Door.dimensions.y)), new int[]{});
 
-        platforms[0].key = new Key(platforms[0], this, 200);
-        platforms[1].key = new Key(platforms[1], this, width - 350);
-        platforms[2].key = new Key(platforms[2], this, 450);
-        platforms[3].key = new Key(platforms[3], this, 200);
+        platforms[0].key = new Key(platforms[0], this, 3);
+        platforms[1].key = new Key(platforms[1], this, 2);
+        platforms[2].key = new Key(platforms[2], this, 1);
+        platforms[3].key = new Key(platforms[3], this, 0);
     }
 
     // Create objects within lava biome
     private void createLavaBiome() {
+        System.out.println("lavabiome created");
         try{
             this.background = ImageIO.read(Main.class.getResource("lavabackground.jpg"));
             background = background.getScaledInstance(width,height, 1);
@@ -111,6 +119,40 @@ class World{
         platforms[4].key = new Key(platforms[4], this, 4);
         platforms[8].key = new Key(platforms[8], this, 5);
         platforms[5].key = new Key(platforms[5], this, 6);
+    }
+
+    private void createTreeBiome() {
+        System.out.println("treebiome created");
+        try{
+            this.background = ImageIO.read(Main.class.getResource("lavabackground.jpg"));
+            background = background.getScaledInstance(width,height, 1);
+        } catch (IOException e){
+            System.err.println("IOException");
+            System.exit(1);
+        }
+
+        // Create platforms of lava biome
+        platforms = new Platform[13];
+        platforms[0] = new Platform(this, new Pair(0, this.height - 600), new Pair(186, 13));
+        platforms[1] = new Platform(this, new Pair(186, this.height - 570), new Pair(93, 13));
+        platforms[2] = new Platform(this, new Pair(558, this.height - 550), new Pair(93, 13));
+        platforms[3] = new Platform(this, new Pair(837, this.height - 500), new Pair(93, 13));
+        platforms[4] = new Platform(this, new Pair(372, this.height - 460), new Pair(93, 13));
+        platforms[5] = new Platform(this, new Pair(1302, this.height - 520), new Pair(93, 13));
+        platforms[6] = new Platform(this, new Pair(1116, this.height - 370), new Pair(93, 13));
+        platforms[7] = new Platform(this, new Pair(930, this.height - 250), new Pair(93, 13));
+        platforms[8] = new Platform(this, new Pair(558, this.height - 200), new Pair(93, 13));
+        platforms[9] = new Platform(this, new Pair(744, this.height - 100), new Pair(93, 13));
+        platforms[10] = new Platform(this, new Pair(372, this.height - 150), new Pair(93, 13));
+        platforms[11] = new Platform(this, new Pair(186, this.height - 120), new Pair(93, 13));
+        platforms[12] = new Platform(this, new Pair(0, this.height), new Pair(this.width, 13));
+
+        // Add door to final platform - this door needs keys 7, 8, 9
+        platforms[0].door = new Door(Color.pink, this, worlds[0], new Pair((int) (platforms[0].position.x + 62), (int)(platforms[0].position.y - Door.dimensions.y)), new int[]{7,8,9});
+        //the tree biome needs keys 7, 8, 9
+        platforms[4].key = new Key(platforms[4], this, 7);
+        platforms[8].key = new Key(platforms[8], this, 8);
+        platforms[5].key = new Key(platforms[5], this, 9);
     }
 
     public void drawPerson(Graphics g){
