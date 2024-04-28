@@ -1,6 +1,9 @@
 import java.awt.Color;
 import java.util.Random;
 import java.awt.Graphics;
+import java.awt.Image;
+import javax.imageio.ImageIO;
+import java.io.IOException;
 
 public class Key extends Item {
 	Pair position;
@@ -13,6 +16,7 @@ public class Key extends Item {
 	Person person;
 
 	boolean show = true;
+	private Image keyImage = null;
 	
 	public Key(Platform platform, World world, int index) {
 		super(world.main, world.person);
@@ -22,6 +26,14 @@ public class Key extends Item {
 		color = new Color(rand.nextFloat(), rand.nextFloat(), rand.nextFloat());
 		position = new Pair(platform.position.x + platform.dimensions.x / 2, platform.position.y - 52);
 		this.index = index;
+		try {
+            keyImage = ImageIO.read(Main.class.getResource("key.png"));
+            keyImage = keyImage.getScaledInstance((int)50,(int)50, 1);
+            
+        } catch (IOException e) {
+            System.err.println("IOException");
+            System.exit(1);
+        }
 	}
 
 	public Key(Platform platform, World world, int xPos, int index) {
@@ -35,11 +47,9 @@ public class Key extends Item {
 
 	public void draw(Graphics g){
 		if (show == true) {
-			Color c = g.getColor();
-        
-        	g.setColor(color);
-        	g.fillOval((int) position.x, (int) position.y, radius, radius);
-        	g.setColor(c);
+			
+        	g.drawImage(keyImage,  (int)position.x, (int)position.y, null);
+			g.drawString("" + index, (int)position.x, (int)position.y);
 		}
     }
 
