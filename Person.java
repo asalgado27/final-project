@@ -1,15 +1,7 @@
-import javax.swing.JPanel;
-import javax.swing.JFrame;
-import java.awt.Color;
+
 import java.awt.Graphics;
-import java.awt.Dimension;
-import java.util.Random;
-import java.awt.event.KeyListener;
-import java.awt.event.KeyEvent;
 import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
 import java.awt.Image;
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -175,9 +167,20 @@ class Person{
             for (Platform platform : currentWorld.platforms) {
                 if (position.y + dimensions.y > currentPlatform.position.y + 2 && platform.position.y > currentPlatform.position.y) {
                     currentPlatform = platform;
+                    currentPlatform.personHere = true;
+                    System.out.println("1");
+                    if (platform instanceof TreePlatform){
+                        platform.counterPlus();
+                        System.out.println("2");
+                    }
                 }
                 else if (position.y + dimensions.y < platform.position.y && platform.position.y < currentPlatform.position.y) {
                     currentPlatform = platform;
+                    currentPlatform.personHere = true;
+                    if (platform instanceof TreePlatform){
+                        platform.counterPlus();
+                        System.out.println("4");
+                    }
                 }
                 // Check if the person can stand on the platform (or otherwise will fall)
                 if (position.y + dimensions.y >= currentPlatform.position.y) {
