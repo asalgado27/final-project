@@ -32,10 +32,11 @@ public class Main extends JPanel implements KeyListener{
     public Main(JFrame frame){
         this.frame = frame;
         this.person = new Person(this, null);
-        // Establish array of worlds (0 is homebase, 1 is lava biome)
-        worlds = new World[2];
+        // Establish array of worlds (0 is homebase, 1 is lava biome, 2 is tree biome)
+        worlds = new World[3];
         worlds[0] = new World(this, HBWidth, HBHeight, "Homebase");
         worlds[1] = new World(this, lavaWidth, lavaHeight, "Lava Biome");
+        worlds[2] = new World(this, lavaWidth, lavaHeight, "Tree Biome");
 
         // Finish creating each world now that the array has been created
         for (World world : worlds) {
@@ -144,7 +145,6 @@ public class Main extends JPanel implements KeyListener{
         for (int i = 0; i < uncollectedItems.size(); i++) {
             Item item = uncollectedItems.get(i);
             item.checkAndCollect();
-            System.out.println("checkforitems in main");
         }
     }
 }
