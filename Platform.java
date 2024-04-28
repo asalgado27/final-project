@@ -5,6 +5,7 @@ class Platform {
     // Fields indicating location and size of the platform
     Pair position;
     Pair dimensions;
+    boolean personHere;
 
     // Array of ints to keep track of where any ladders on this platform are
     int ladderPos = 0; // NOTE: 0 means NO LADDER
@@ -62,6 +63,9 @@ class Platform {
         if (this.door != null) {
             this.door.draw(g);
         }
+    }
+    public void counterPlus(){
+        return;
     }
 
 }
