@@ -34,12 +34,16 @@ class World{
         this.worlds = worlds;
         if (this.worldType.equals("Homebase")) {
             createHomebase();
-        }
-        if (this.worldType.equals("Lava Biome")){
+        } else if (this.worldType.equals("Lava Biome")){
             createLavaBiome();
-        }
-        if (this.worldType.equals("Tree Biome")){
+        } else if (this.worldType.equals("Tree Biome")){
             createTreeBiome();
+        } else if (this.worldType.equals("Sky Biome")) {
+            createSkyBiome();
+        } else {
+            // If an invalid world type is attempted to be created
+            System.err.println("ERROR: Invalid world type.");
+            System.exit(1);
         }
     }
 
@@ -72,7 +76,9 @@ class World{
 
         this.person.currentPlatform = platforms[3];
         //right now, all these doors open without keys, since I (Alicia) am assuming Adrian will switch around which doors are what biome later on.
-        platforms[0].door = new Door(this, worlds[1], new Pair((int)(platforms[0].position.x + 30), (int)(platforms[0].position.y - Door.dimensions.y)), new int[]{});
+        // Thanks Alicia! I created the instance of the sky biome so now all the doors should lead to their respective world
+        // Feel free to implement the door-opening feature if you like!
+        platforms[0].door = new Door(this, worlds[3], new Pair((int)(platforms[0].position.x + 30), (int)(platforms[0].position.y - Door.dimensions.y)), new int[]{});
         platforms[1].door = new Door(this, worlds[2], new Pair((int)(platforms[1].position.x + 335), (int)(platforms[1].position.y - Door.dimensions.y)), new int[]{});
         platforms[2].door = new Door(this, worlds[1], new Pair((int)(platforms[2].position.x + 88), (int)(platforms[2].position.y - Door.dimensions.y)), new int[]{});
 
@@ -93,7 +99,8 @@ class World{
         }
 
         // Create platforms of lava biome
-        platforms = new Platform[13];
+        // TEMPORARILY switched to 14 -- be sure to switch back to 13 and delete second to last platform
+        platforms = new Platform[14];
         platforms[0] = new Platform(this, new Pair(0, this.height - 600), new Pair(186, 13));
         platforms[1] = new Platform(this, new Pair(186, this.height - 570), new Pair(93, 13));
         platforms[2] = new Platform(this, new Pair(558, this.height - 550), new Pair(93, 13));
@@ -106,7 +113,9 @@ class World{
         platforms[9] = new Platform(this, new Pair(744, this.height - 100), new Pair(93, 13));
         platforms[10] = new Platform(this, new Pair(372, this.height - 150), new Pair(93, 13));
         platforms[11] = new Platform(this, new Pair(186, this.height - 120), new Pair(93, 13));
-        platforms[12] = new Platform(this, new Pair(0, this.height), new Pair(this.width, 13));
+        // DELETE THIS NEXT PLATFORM
+        platforms[12] = new Platform(this, new Pair(300, this.height - 120), new Pair(93, 13));
+        platforms[13] = new Platform(this, new Pair(0, this.height), new Pair(this.width, 13));
 
         // Add door to final platform - this door needs keys 4, 5, 6
         platforms[0].door = new Door(Color.orange, this, worlds[0], new Pair((int) (platforms[0].position.x + 62), (int)(platforms[0].position.y - Door.dimensions.y)), new int[]{4,5,6});
@@ -116,6 +125,7 @@ class World{
         platforms[5].key = new Key(platforms[5], this, 6);
     }
 
+    // Create objects within tree biome
     private void createTreeBiome() {
         try{
             this.background = ImageIO.read(Main.class.getResource("treebackground.png"));
@@ -149,6 +159,13 @@ class World{
         platforms[5].key = new Key(platforms[5], this, 9);
     }
 
+    // Create objects within sky biome
+    private void createSkyBiome() {
+        // Create platforms of sky biome
+        platforms = new Platform[1];
+        platforms[0] = new Platform(this, new Pair(0, this.height), new Pair(this.width, 13));
+    }
+
     public void drawPerson(Graphics g){
         person.draw(g);
     }
@@ -160,7 +177,7 @@ class World{
     // Draws the world
     public void draw(Graphics g) {
         // Draw the background of the world
-        g.drawImage(background,  (int)0, (int)0, null);
+        g.drawImage(background, (int) 0, (int) 0, null);
 
         if (platforms != null) {
             // Draw the platforms in the world
@@ -172,4 +189,3 @@ class World{
     }
 
 }
-  
