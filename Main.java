@@ -1,3 +1,4 @@
+
 import javax.swing.JPanel;
 import javax.swing.JFrame;
 import java.awt.Color;
@@ -38,12 +39,13 @@ public class Main extends JPanel implements KeyListener{
     public Main(JFrame frame){
         this.frame = frame;
         this.person = new Person(this, null);
-        // Establish array of worlds (0 is homebase, 1 is lava biome, 2 is tree biome)
-        worlds = new World[4];
-        worlds[0] = new World(this, HBWidth, HBHeight, "Homebase");
+        // Establish array of worlds (4 is homebase, 0 is opener, 1 is lava biome, 2 is tree biome, 3 is sky biome)
+        worlds = new World[5];
+        worlds[0] = new World(this, HBWidth, HBHeight, "Opener");
         worlds[1] = new World(this, lavaWidth, lavaHeight, "Lava Biome");
         worlds[2] = new World(this, treeWidth, treeHeight, "Tree Biome");
         worlds[3] = new World(this, skyWidth, skyHeight, "Sky Biome");
+        worlds[4] = new World(this, HBWidth, HBHeight, "Homebase");
 
         // Finish creating each world now that the array has been created
         for (World world : worlds) {
