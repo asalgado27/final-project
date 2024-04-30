@@ -166,12 +166,11 @@ class Person{
         if (currentWorld.platforms != null) {
             for (Platform platform : currentWorld.platforms) {
                 if (position.y + dimensions.y > currentPlatform.position.y + 2 && platform.position.y > currentPlatform.position.y) {
+                    currentPlatform.personHere = false;
                     currentPlatform = platform;
                     currentPlatform.personHere = true;
-                    System.out.println("1");
                     if (platform instanceof TreePlatform){
                         platform.counterPlus();
-                        System.out.println("2");
                     }
                 }
                 else if (position.y + dimensions.y < platform.position.y && platform.position.y < currentPlatform.position.y) {
@@ -179,7 +178,6 @@ class Person{
                     currentPlatform.personHere = true;
                     if (platform instanceof TreePlatform){
                         platform.counterPlus();
-                        System.out.println("4");
                     }
                 }
                 // Check if the person can stand on the platform (or otherwise will fall)
