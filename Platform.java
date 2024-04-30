@@ -5,15 +5,15 @@ class Platform {
     // Fields indicating location and size of the platform
     Pair position;
     Pair dimensions;
+    //keeps track of whether person is here
     boolean personHere;
+
+    boolean visible = true;
 
     // Array of ints to keep track of where any ladders on this platform are
     int ladderPos = 0; // NOTE: 0 means NO LADDER
     int ladderLength;
     static int ladderWidth = 52;
-
-    // Field to keep track of Person object
-    boolean hasPerson = false;
 
     // Field to keep track of door on platform
     Door door;
@@ -37,6 +37,7 @@ class Platform {
 
     // Draws the platform
     public void draw(Graphics g) {
+        
         // Draw color of platform based on which world it is
         if (this.world.worldType.equals("Homebase")) {
             g.setColor(Color.RED);
@@ -65,6 +66,7 @@ class Platform {
         }
     }
     public void counterPlus(){
+        System.out.println("in parent Counter Plus");
         return;
     }
 
