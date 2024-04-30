@@ -34,6 +34,8 @@ class World{
         this.worlds = worlds;
         if (this.worldType.equals("Homebase")) {
             createHomebase();
+        } else if (this.worldType.equals("Opener")) {
+            createOpener();
         } else if (this.worldType.equals("Lava Biome")){
             createLavaBiome();
         } else if (this.worldType.equals("Tree Biome")){
@@ -46,6 +48,26 @@ class World{
             System.exit(1);
         }
     }
+
+    
+
+    private void createOpener() {
+    try{
+        this.background = ImageIO.read(Main.class.getResource("openerbackground.png"));
+        background = background.getScaledInstance(width,height, 1);
+    } catch (IOException e){
+        System.err.println("IOException");
+        System.exit(1);
+    }
+
+    platforms = new Platform[1];
+    platforms[0] = new Platform(this, new Pair(0, height), new Pair(width, 13));
+
+    this.person.currentPlatform = platforms[0];
+    //opens without keys
+    platforms[0].door = new Door(this, worlds[4], new Pair((int)(platforms[0].position.x + 360), (int)(platforms[0].position.y - Door.dimensions.y)), new int[]{});
+}
+
 
     // Create objects within homebase
     private void createHomebase() {
