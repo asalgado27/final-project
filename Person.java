@@ -162,9 +162,43 @@ class Person{
     
 
     public void checkIfOnPlatform() {
-        // Only check if on platform if platforms are nearby
+        // Only check if on platform if platforms currently exist in the world
         if (currentWorld.platforms != null) {
             for (Platform platform : currentWorld.platforms) {
+                // Check if person is in proper vicinity of platform
+
+
+
+
+                
+                /*
+                // Check if person is within the x-bounds of the platform
+                if (this.position.x + this.dimensions.x > platform.position.x && this.position.x < platform.position.x + platform.dimensions.x) {
+                    // Check if person is within the y-bounds of the platform
+
+                    // Note y-coordinate of bottom of person
+                    double feetCoords = this.position.y + this.dimensions.y;
+
+                    // Check if feet are on top of platform (or within 1 vertical unit above the top of the platform)
+                    if (feetCoords < platform.position.y && feetCoords > platform.position.y) {
+                        currentPlatform.personHere = false;
+                        currentPlatform = platform;
+                        currentPlatform.personHere = true;
+
+                        /*
+                        // Update the person's y-position to be on top of the platform
+                        this.setPosition(new Pair(position.x, currentPlatform.position.y - this.dimensions.y));
+                        canGoUp = true;
+                        setVelocityY(0);
+                        
+                    }
+                }
+                */
+
+
+
+
+                
                 if (position.y + dimensions.y > currentPlatform.position.y + 2 && platform.position.y > currentPlatform.position.y) {
                     currentPlatform.personHere = false;
                     currentPlatform = platform;
@@ -172,14 +206,18 @@ class Person{
                     if (platform instanceof TreePlatform){
                         platform.counterPlus();
                     }
-                }
-                else if (position.y + dimensions.y < platform.position.y && platform.position.y < currentPlatform.position.y) {
+                } else if (position.y + dimensions.y < platform.position.y && platform.position.y < currentPlatform.position.y) {
                     currentPlatform = platform;
                     currentPlatform.personHere = true;
                     if (platform instanceof TreePlatform){
                         platform.counterPlus();
                     }
                 }
+                
+
+
+               
+
                 // Check if the person can stand on the platform (or otherwise will fall)
                 if (position.y + dimensions.y >= currentPlatform.position.y) {
                     if (position.x + dimensions.x * 3 / 4 > currentPlatform.position.x && position.x + dimensions.x / 4 < currentPlatform.position.x + currentPlatform.dimensions.x) {
@@ -187,11 +225,12 @@ class Person{
                         canGoUp = true;
                         setVelocityY(0);
                     }
-                }
-                else if (onLadder == false) {
+                } else if (onLadder == false) {
                     // Person cannot move up if they're not on the platform or the ladder
                     canGoUp = false;
                 }
+
+                
             }
         }
     }
@@ -238,7 +277,7 @@ class Person{
         }
         if (horizontalLMotion){
             animationCounter++;
-            //divided just stores an integer that tells the animation to change which one is being drawn every 10 frames
+            // Divided stores an integer that tells the animation to change which one is being drawn every 10 frames
             int divided = animationCounter / 10 % 4;
             if (divided==0){
                 g.drawImage(walkL1,  (int)position.x, (int)position.y, null);
@@ -255,7 +294,7 @@ class Person{
         }
     }
     
-    //when keys are pressed, use this to start moving
+    // When keys are pressed, use this to start moving
     public void movement(char c){
         if (c == 'a'){
             this.setVelocityX(-200);
@@ -284,7 +323,7 @@ class Person{
         
     }
 
-    //when keys are released, trigger this to stop moving
+    // When keys are released, trigger this to stop moving
     public void antimovement(char c){
         if (c == 'a'){
             this.setVelocityX(0);
