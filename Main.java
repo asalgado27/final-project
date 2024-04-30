@@ -17,6 +17,12 @@ public class Main extends JPanel implements KeyListener{
     public static final int lavaWidth = 1400;
     public static final int lavaHeight = 768;
 
+    public static final int treeWidth = 1400;
+    public static final int treeHeight = 768;
+
+    public static final int skyWidth = 1400;
+    public static final int skyHeight = 768;
+
     public char c = '0';
 
     World currentWorld;
@@ -33,10 +39,11 @@ public class Main extends JPanel implements KeyListener{
         this.frame = frame;
         this.person = new Person(this, null);
         // Establish array of worlds (0 is homebase, 1 is lava biome, 2 is tree biome)
-        worlds = new World[3];
+        worlds = new World[4];
         worlds[0] = new World(this, HBWidth, HBHeight, "Homebase");
         worlds[1] = new World(this, lavaWidth, lavaHeight, "Lava Biome");
-        worlds[2] = new World(this, lavaWidth, lavaHeight, "Tree Biome");
+        worlds[2] = new World(this, treeWidth, treeHeight, "Tree Biome");
+        worlds[3] = new World(this, skyWidth, skyHeight, "Sky Biome");
 
         // Finish creating each world now that the array has been created
         for (World world : worlds) {
@@ -133,12 +140,23 @@ public class Main extends JPanel implements KeyListener{
         if (worldType.equals("Homebase")) {
             this.setPreferredSize(new Dimension(HBWidth, HBHeight));
             frame.setTitle("Homebase");
-            frame.pack();
-        } else {
+        } else if (worldType.equals("Lava Biome")) {
             this.setPreferredSize(new Dimension(lavaWidth, lavaHeight));
             frame.setTitle("Lava Biome");
-            frame.pack();
+        } else if (worldType.equals("Tree Biome")) {
+            this.setPreferredSize(new Dimension(treeWidth, treeHeight));
+            frame.setTitle("Tree Biome");
+        } else if (worldType.equals("Sky Biome")) {
+            this.setPreferredSize(new Dimension(skyWidth, skyHeight));
+            frame.setTitle("Sky Biome");
+        } else {
+            // An invalid world attempted to be resized
+            System.err.println("ERROR: Cannot resize an invalid world.");
+            System.exit(1);
         }
+
+        // Don't forget to pack the frame after these changes!
+        frame.pack();
     }
 
     public void checkForItems(Pair personPosition){
