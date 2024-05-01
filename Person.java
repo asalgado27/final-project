@@ -169,7 +169,6 @@ class Person{
 
 
 
-
                 
                 /*
                 // Check if person is within the x-bounds of the platform
@@ -179,8 +178,9 @@ class Person{
                     // Note y-coordinate of bottom of person
                     double feetCoords = this.position.y + this.dimensions.y;
 
-                    // Check if feet are on top of platform (or within 1 vertical unit above the top of the platform)
-                    if (feetCoords < platform.position.y && feetCoords > platform.position.y) {
+                    // Check if feet are on top of platform (or within 1 vertical unit below the top of the platform)
+                    if (feetCoords > platform.position.y && feetCoords < platform.position.y + platform.dimensions.y) {
+                        
                         currentPlatform.personHere = false;
                         currentPlatform = platform;
                         currentPlatform.personHere = true;
@@ -191,9 +191,18 @@ class Person{
                         canGoUp = true;
                         setVelocityY(0);
                         
+                        
                     }
                 }
                 */
+                
+
+
+
+
+
+
+
 
 
 
@@ -214,6 +223,7 @@ class Person{
                     }
                 }
                 
+                
 
 
                
@@ -221,7 +231,9 @@ class Person{
                 // Check if the person can stand on the platform (or otherwise will fall)
                 if (position.y + dimensions.y >= currentPlatform.position.y) {
                     if (position.x + dimensions.x * 3 / 4 > currentPlatform.position.x && position.x + dimensions.x / 4 < currentPlatform.position.x + currentPlatform.dimensions.x) {
-                        this.setPosition(new Pair(position.x, currentPlatform.position.y - this.dimensions.y));
+                        if (!onLadder) {
+                            this.setPosition(new Pair(position.x, currentPlatform.position.y - this.dimensions.y));
+                        }
                         canGoUp = true;
                         setVelocityY(0);
                     }
@@ -229,7 +241,7 @@ class Person{
                     // Person cannot move up if they're not on the platform or the ladder
                     canGoUp = false;
                 }
-
+                
                 
             }
         }
@@ -305,8 +317,53 @@ class Person{
             horizontalRMotion = true;
         }
         if (c == 's'){
+
+            /*
+            if (this.position.x + this.dimensions.x / 2 < currentPlatform.ladderPos + currentPlatform.ladderWidth && this.position.x + this.dimensions.x / 2 > currentPlatform.ladderPos) {
+                onLadder = true;
+                //this.position.y++;
+                this.setVelocityY(downwardVelocity);
+            }
+            */
+            
+
+            // Allow the user to move down the ladder if already on the ladder
+            // Or if person is in the x-vicinity of its platform's ladder
             if (onLadder == true) {
                 this.setVelocityY(downwardVelocity);
+            } else {
+
+                /*
+                // Otherwise, check if the person is at the top of the ladder and about to get on
+                if (this.position.x + this.dimensions.x / 2 < currentPlatform.ladderPos + currentPlatform.ladderWidth && this.position.x + this.dimensions.x / 2 > currentPlatform.ladderPos) {
+                    // If they are, give them a little push
+                    //this.position.y += 10;
+
+
+                    
+                    this.onLadder = true;
+                    canGoUp = true;
+                    setAcceleration(0);
+                    this.setVelocityY(downwardVelocity);
+                    this.position.y += 4;
+                    upwardVelocity = 80;
+                    downwardVelocity = 80;
+                    System.out.println("TEST");
+                    
+
+
+                    
+                    canGoUp = true;
+                    onLadder = true;
+                    // No acceleration when on ladder
+                    setAcceleration(0);
+                    upwardVelocity = 80;
+                    downwardVelocity = 80;
+                    
+
+
+                }
+                */
             }
             // Don't change the velocity. can make the person duck
         }
