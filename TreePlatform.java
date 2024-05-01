@@ -20,7 +20,7 @@ public class TreePlatform extends Platform {
         if (personHere){
             counterPlus();
         }
-        if (counter >=80){
+        if (counter >=80 && counter <=249){
             setVisibleFalse();
         }
         if (counter >=250){
