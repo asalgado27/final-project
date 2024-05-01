@@ -318,7 +318,7 @@ class Person{
             
         }
         if (c == 'o') {
-            main.openDoor(this.currentWorld);
+            main.openDoor();
         }
         
     }
@@ -355,6 +355,7 @@ class Person{
             System.exit(1);
         }
 
+        // Place person onto the lowest platform of the world
         this.currentPlatform = newWorld.platforms[newWorld.platforms.length - 1];
     }
 
