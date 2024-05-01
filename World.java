@@ -121,8 +121,7 @@ class World{
         }
 
         // Create platforms of lava biome
-        // TEMPORARILY switched to 14 -- be sure to switch back to 13 and delete second to last platform
-        platforms = new Platform[14];
+        platforms = new Platform[13];
         platforms[0] = new Platform(this, new Pair(0, this.height - 600), new Pair(186, 13));
         platforms[1] = new Platform(this, new Pair(186, this.height - 570), new Pair(93, 13));
         platforms[2] = new Platform(this, new Pair(558, this.height - 550), new Pair(93, 13));
@@ -135,9 +134,7 @@ class World{
         platforms[9] = new Platform(this, new Pair(744, this.height - 100), new Pair(93, 13));
         platforms[10] = new Platform(this, new Pair(372, this.height - 150), new Pair(93, 13));
         platforms[11] = new Platform(this, new Pair(186, this.height - 120), new Pair(93, 13));
-        // DELETE THIS NEXT PLATFORM
-        platforms[12] = new Platform(this, new Pair(300, this.height - 120), new Pair(93, 13));
-        platforms[13] = new Platform(this, new Pair(0, this.height), new Pair(this.width, 13));
+        platforms[12] = new Platform(this, new Pair(0, this.height), new Pair(this.width, 13));
 
         // Add door to final platform - this door needs keys 4, 5, 6
         platforms[0].door = new Door(Color.orange, this, worlds[1], new Pair((int) (platforms[0].position.x + 62), (int)(platforms[0].position.y - Door.dimensions.y)), new int[]{4,5,6});
