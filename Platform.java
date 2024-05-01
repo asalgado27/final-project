@@ -65,9 +65,11 @@ class Platform {
             this.door.draw(g);
         }
     }
+
     public void counterPlus(){
         System.out.println("in parent Counter Plus");
         return;
     }
 
+    public void update(double time) {}
 }

@@ -182,8 +182,25 @@ class World{
     // Create objects within sky biome
     private void createSkyBiome() {
         // Create platforms of sky biome
-        platforms = new Platform[1];
-        platforms[0] = new Platform(this, new Pair(0, this.height), new Pair(this.width, 13));
+        platforms = new SkyPlatform[10];
+        platforms[0] = new SkyPlatform(this, new Pair(1214, this.height - 450), new Pair(186, 13));
+        platforms[1] = new SkyPlatform(this, new Pair(270, this.height - 240), new Pair(93, 13));
+        platforms[2] = new SkyPlatform(this, new Pair(790, this.height - 510), new Pair(93, 13));
+        platforms[3] = new SkyPlatform(this, new Pair(400, this.height - 420), new Pair(93, 13));
+        platforms[4] = new SkyPlatform(this, new Pair(660, this.height - 380), new Pair(93, 13));
+        platforms[5] = new SkyPlatform(this, new Pair(1050, this.height - 280), new Pair(93, 13));
+        platforms[6] = new SkyPlatform(this, new Pair(530, this.height - 270), new Pair(93, 13));
+        platforms[7] = new SkyPlatform(this, new Pair(920, this.height - 220), new Pair(93, 13));
+        platforms[8] = new SkyPlatform(this, new Pair(140, this.height - 50), new Pair(93, 13));
+        platforms[9] = new SkyPlatform(this, new Pair(0, this.height), new Pair(this.width, 13));
+
+        // Add door to final platform - this door needs keys 10, 11, 12
+        platforms[0].door = new Door(Color.blue, this, worlds[1], new Pair((int) (platforms[0].position.x + 62), (int)(platforms[0].position.y - Door.dimensions.y)), new int[]{10,11,12});
+
+        // Sky biome contains keys 10, 11, 12
+        platforms[4].key = new Key(platforms[4], this, 10);
+        platforms[8].key = new Key(platforms[8], this, 11);
+        platforms[5].key = new Key(platforms[5], this, 12);
     }
 
     public void drawPerson(Graphics g){
@@ -192,6 +209,16 @@ class World{
 
     public void updatePerson(double time){
         person.update(time);
+    }
+
+    public void updateSkyPlatforms(double time) {
+        if (this.worldType.equals("Sky Biome")) {
+            platforms[1].update(time);
+            platforms[2].update(time);
+            platforms[3].update(time);
+            platforms[6].update(time);
+            platforms[7].update(time);
+        } 
     }
 
     // Draws the world

@@ -21,7 +21,7 @@ class Person{
     boolean horizontalLMotion;
 
     // Fields to keep track of jump velocity
-    int upwardVelocity = 300;
+    int upwardVelocity = 300; // should use 200 to not hit head on homebase ceiling
     int downwardVelocity = 0;
 
     Platform currentPlatform;
@@ -48,7 +48,7 @@ class Person{
 
     public Person(Main main, World world) {
         velocity = new Pair(0, 0);
-        acceleration = new Pair(0,250);
+        acceleration = new Pair(0,300);
         radius = 5;
         horizontalRMotion = false;
         horizontalLMotion = false;
@@ -156,8 +156,8 @@ class Person{
 
         onLadder = false;
         // Falls due to gravity
-        setAcceleration(250);
-        upwardVelocity = 300;
+        setAcceleration(300);
+        upwardVelocity = 300; // should use 200 to not hit head on homebase ceiling
     }
     
 
@@ -167,9 +167,6 @@ class Person{
             for (Platform platform : currentWorld.platforms) {
                 // Check if person is in proper vicinity of platform
 
-
-
-                
                 /*
                 // Check if person is within the x-bounds of the platform
                 if (this.position.x + this.dimensions.x > platform.position.x && this.position.x < platform.position.x + platform.dimensions.x) {
@@ -189,24 +186,10 @@ class Person{
                         // Update the person's y-position to be on top of the platform
                         this.setPosition(new Pair(position.x, currentPlatform.position.y - this.dimensions.y));
                         canGoUp = true;
-                        setVelocityY(0);
-                        
-                        
+                        setVelocityY(0);                     
                     }
                 }
                 */
-                
-
-
-
-
-
-
-
-
-
-
-
                 
                 if (position.y + dimensions.y > currentPlatform.position.y + 2 && platform.position.y > currentPlatform.position.y) {
                     currentPlatform.personHere = false;
@@ -222,12 +205,7 @@ class Person{
                         platform.counterPlus();
                     }
                 }
-                
-                
-
-
                
-
                 // Check if the person can stand on the platform (or otherwise will fall)
                 if (position.y + dimensions.y >= currentPlatform.position.y) {
                     if (position.x + dimensions.x * 3 / 4 > currentPlatform.position.x && position.x + dimensions.x / 4 < currentPlatform.position.x + currentPlatform.dimensions.x) {
@@ -339,8 +317,6 @@ class Person{
                     // If they are, give them a little push
                     //this.position.y += 10;
 
-
-                    
                     this.onLadder = true;
                     canGoUp = true;
                     setAcceleration(0);
@@ -349,18 +325,13 @@ class Person{
                     upwardVelocity = 80;
                     downwardVelocity = 80;
                     System.out.println("TEST");
-                    
 
-
-                    
                     canGoUp = true;
                     onLadder = true;
                     // No acceleration when on ladder
                     setAcceleration(0);
                     upwardVelocity = 80;
                     downwardVelocity = 80;
-                    
-
 
                 }
                 */
@@ -404,8 +375,28 @@ class Person{
 
     // Changes the world the person is in and puts them at a new location
     public void changeWorld(World newWorld) {
+
+        // THE BELOW SECTION IS WORK IN PROGRESS 
+        /* if (newWorld.worldType.equals("Homebase")) {
+            if (currentWorld.worldType.equals("Lava Biome")) {
+                System.out.println("entering homebase from lava biome");
+                this.position = new Pair(100, 570 - 13 - this.dimensions.y);
+            }
+            else if (currentWorld.worldType.equals("Tree Biome")) {
+                System.out.println("entering homebase from lava biome");
+                this.position = new Pair(100, 388 - 13 - this.dimensions.y);
+            }
+            else if (currentWorld.worldType.equals("Sky Biome")) {
+                System.out.println("entering homebase from lava biome");
+                this.position = new Pair(100, 190 - 13 - this.dimensions.y);
+            }
+        }
+        */ // otherwise... set position as below
+
         this.currentWorld = newWorld;
         position = new Pair(50, currentWorld.height - this.dimensions.y);
+
+
         // Update the person's new platform and give error message if no platforms available
         if (newWorld.platforms == null) {
             System.err.println("ERROR: New world does not have any platforms for person to stand on.");
