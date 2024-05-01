@@ -139,7 +139,6 @@ public class Main extends JPanel implements KeyListener{
                 this.currentWorld = nextWorld;
                 person.changeWorld(nextWorld);
 
-                System.out.println("OH DEAR: " + nextWorld.worldType);
                 changeDimensions(nextWorld.worldType);
             }
         }
