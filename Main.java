@@ -13,7 +13,7 @@ import java.util.ArrayList;
 public class Main extends JPanel implements KeyListener{
     public static final int FPS = 60;
 
-    public static final int openerWidth = 500;
+    public static final int openerWidth = 501;
     public static final int openerHeight = 768;
 
     public static final int HBWidth = 500;
