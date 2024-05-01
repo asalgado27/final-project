@@ -32,10 +32,10 @@ class World{
     // Creates the world
     public void createWorld(World[] worlds) {
         this.worlds = worlds;
-        if (this.worldType.equals("Homebase")) {
-            createHomebase();
-        } else if (this.worldType.equals("Opener")) {
+        if (this.worldType.equals("Opener")) {
             createOpener();
+        } else if (this.worldType.equals("Homebase")) {
+            createHomebase();
         } else if (this.worldType.equals("Lava Biome")){
             createLavaBiome();
         } else if (this.worldType.equals("Tree Biome")){
@@ -49,24 +49,24 @@ class World{
         }
     }
 
-    
-
+    // Creates the opening page of the game
     private void createOpener() {
-    try{
-        this.background = ImageIO.read(Main.class.getResource("openerbackground.png"));
-        background = background.getScaledInstance(width,height, 1);
-    } catch (IOException e){
-        System.err.println("IOException");
-        System.exit(1);
+        try{
+            this.background = ImageIO.read(Main.class.getResource("openerbackground.png"));
+            background = background.getScaledInstance(width,height, 1);
+        } catch (IOException e){
+            System.err.println("IOException");
+            System.exit(1);
+        }
+
+        // Create platform of opener world
+        platforms = new Platform[1];
+        platforms[0] = new Platform(this, new Pair(0, height), new Pair(width, 13));
+
+        this.person.currentPlatform = platforms[0];
+        // Opener door opens without keys
+        platforms[0].door = new Door(this, worlds[1], new Pair((int)(platforms[0].position.x + 360), (int)(platforms[0].position.y - Door.dimensions.y)), new int[]{});
     }
-
-    platforms = new Platform[1];
-    platforms[0] = new Platform(this, new Pair(0, height), new Pair(width, 13));
-
-    this.person.currentPlatform = platforms[0];
-    //opens without keys
-    platforms[0].door = new Door(this, worlds[4], new Pair((int)(platforms[0].position.x + 360), (int)(platforms[0].position.y - Door.dimensions.y)), new int[]{});
-}
 
 
     // Create objects within homebase
@@ -100,9 +100,9 @@ class World{
         //right now, all these doors open without keys, since I (Alicia) am assuming Adrian will switch around which doors are what biome later on.
         // Thanks Alicia! I created the instance of the sky biome so now all the doors should lead to their respective world
         // Feel free to implement the door-opening feature if you like!
-        platforms[0].door = new Door(this, worlds[3], new Pair((int)(platforms[0].position.x + 30), (int)(platforms[0].position.y - Door.dimensions.y)), new int[]{});
-        platforms[1].door = new Door(this, worlds[2], new Pair((int)(platforms[1].position.x + 335), (int)(platforms[1].position.y - Door.dimensions.y)), new int[]{});
-        platforms[2].door = new Door(this, worlds[1], new Pair((int)(platforms[2].position.x + 88), (int)(platforms[2].position.y - Door.dimensions.y)), new int[]{});
+        platforms[0].door = new Door(this, worlds[4], new Pair((int)(platforms[0].position.x + 30), (int)(platforms[0].position.y - Door.dimensions.y)), new int[]{});
+        platforms[1].door = new Door(this, worlds[3], new Pair((int)(platforms[1].position.x + 335), (int)(platforms[1].position.y - Door.dimensions.y)), new int[]{});
+        platforms[2].door = new Door(this, worlds[2], new Pair((int)(platforms[2].position.x + 88), (int)(platforms[2].position.y - Door.dimensions.y)), new int[]{});
 
         platforms[0].key = new Key(platforms[0], this, 3);
         platforms[1].key = new Key(platforms[1], this, 2);
@@ -140,8 +140,9 @@ class World{
         platforms[13] = new Platform(this, new Pair(0, this.height), new Pair(this.width, 13));
 
         // Add door to final platform - this door needs keys 4, 5, 6
-        platforms[0].door = new Door(Color.orange, this, worlds[0], new Pair((int) (platforms[0].position.x + 62), (int)(platforms[0].position.y - Door.dimensions.y)), new int[]{4,5,6});
-        //the lava biome contains keys 4, 5, 6
+        platforms[0].door = new Door(Color.orange, this, worlds[1], new Pair((int) (platforms[0].position.x + 62), (int)(platforms[0].position.y - Door.dimensions.y)), new int[]{4,5,6});
+
+        // Note that the lava biome contains keys 4, 5, 6
         platforms[4].key = new Key(platforms[4], this, 4);
         platforms[8].key = new Key(platforms[8], this, 5);
         platforms[5].key = new Key(platforms[5], this, 6);
@@ -174,7 +175,7 @@ class World{
         platforms[12] = new TreePlatform(this, new Pair(0, this.height), new Pair(this.width, 13));
 
         // Add door to final platform - this door needs keys 7, 8, 9
-        platforms[0].door = new Door(Color.pink, this, worlds[0], new Pair((int) (platforms[0].position.x + 62), (int)(platforms[0].position.y - Door.dimensions.y)), new int[]{7,8,9});
+        platforms[0].door = new Door(Color.pink, this, worlds[1], new Pair((int) (platforms[0].position.x + 62), (int)(platforms[0].position.y - Door.dimensions.y)), new int[]{7,8,9});
         //the tree biome needs keys 7, 8, 9
         platforms[4].key = new Key(platforms[4], this, 7);
         platforms[8].key = new Key(platforms[8], this, 8);
