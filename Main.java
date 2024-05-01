@@ -11,9 +11,13 @@ import java.util.ArrayList;
 
  
 public class Main extends JPanel implements KeyListener{
+    public static final int FPS = 60;
+
+    public static final int openerWidth = 500;
+    public static final int openerHeight = 768;
+
     public static final int HBWidth = 500;
     public static final int HBHeight = 768;
-    public static final int FPS = 60;
 
     public static final int lavaWidth = 1400;
     public static final int lavaHeight = 768;
@@ -39,26 +43,29 @@ public class Main extends JPanel implements KeyListener{
     public Main(JFrame frame){
         this.frame = frame;
         this.person = new Person(this, null);
-        // Establish array of worlds (4 is homebase, 0 is opener, 1 is lava biome, 2 is tree biome, 3 is sky biome)
+        // Establish array of worlds (0 is opener, 1 is homebase, 2 is lava biome, 3 is tree biome, 4 is sky biome)
         worlds = new World[5];
-        worlds[0] = new World(this, HBWidth, HBHeight, "Opener");
-        worlds[1] = new World(this, lavaWidth, lavaHeight, "Lava Biome");
-        worlds[2] = new World(this, treeWidth, treeHeight, "Tree Biome");
-        worlds[3] = new World(this, skyWidth, skyHeight, "Sky Biome");
-        worlds[4] = new World(this, HBWidth, HBHeight, "Homebase");
+        worlds[0] = new World(this, openerWidth, openerHeight, "Opener");
+        worlds[1] = new World(this, HBWidth, HBHeight, "Homebase");
+        worlds[2] = new World(this, lavaWidth, lavaHeight, "Lava Biome");
+        worlds[3] = new World(this, treeWidth, treeHeight, "Tree Biome");
+        worlds[4] = new World(this, skyWidth, skyHeight, "Sky Biome");
+
+        // Determine the world the person will begin in
+        World startWorld = worlds[1];
 
         // Finish creating each world now that the array has been created
         for (World world : worlds) {
             world.createWorld(worlds);
         }
 
-        // Put the person in the homebase
-        person.changeWorld(worlds[0]);
+        // Put the person in the opener
+        person.changeWorld(startWorld);
 
-        // Establish homebase as the initial current world
-        this.currentWorld = worlds[0];
+        // Establish opener as the initial current world
+        this.currentWorld = startWorld;
 
-        this.setPreferredSize(new Dimension(HBWidth, HBHeight));
+        this.setPreferredSize(new Dimension(startWorld.width, startWorld.height));
         this.addKeyListener(this); 
         this.setFocusable(true); 
         this.requestFocus(); 
@@ -67,7 +74,7 @@ public class Main extends JPanel implements KeyListener{
     }
 
     public static void main(String[] args){
-        JFrame frame = new JFrame("Homebase");
+        JFrame frame = new JFrame("Welcome to Earth Escape!");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         Main mainInstance = new Main(frame);
         frame.setContentPane(mainInstance);
@@ -120,16 +127,19 @@ public class Main extends JPanel implements KeyListener{
     }
 
     // Open the door the person is at
-    public void openDoor(World oldWorld) {
+    public void openDoor() {
+
         // Determine what world the door is opening to
         // Check if person is near door (assuming a door exists)
         if (person.currentPlatform.door != null) {
             if (person.position.x + person.dimensions.x / 3 > person.currentPlatform.door.position.x && person.position.x + person.dimensions.x / 3 < person.currentPlatform.door.position.x + person.currentPlatform.door.dimensions.x && person.currentPlatform.door.canOpen()) {
+
                 World nextWorld = person.currentPlatform.door.nextWorld;
                 // Move person to new world
                 this.currentWorld = nextWorld;
                 person.changeWorld(nextWorld);
 
+                System.out.println("OH DEAR: " + nextWorld.worldType);
                 changeDimensions(nextWorld.worldType);
             }
         }
@@ -139,7 +149,10 @@ public class Main extends JPanel implements KeyListener{
 
     // Change dimensions to those of the specified world
     public void changeDimensions(String worldType) {
-        if (worldType.equals("Homebase")) {
+        if (worldType.equals("Opener")) {
+            this.setPreferredSize(new Dimension(openerWidth, openerHeight));
+            frame.setTitle("Welcome to Earth Escape!");
+        } else if (worldType.equals("Homebase")) {
             this.setPreferredSize(new Dimension(HBWidth, HBHeight));
             frame.setTitle("Homebase");
         } else if (worldType.equals("Lava Biome")) {
