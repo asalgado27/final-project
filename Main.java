@@ -52,7 +52,7 @@ public class Main extends JPanel implements KeyListener{
         worlds[4] = new World(this, skyWidth, skyHeight, "Sky Biome");
 
         // Determine the world the person will begin in
-        World startWorld = worlds[1];
+        World startWorld = worlds[0];
 
         // Finish creating each world now that the array has been created
         for (World world : worlds) {
