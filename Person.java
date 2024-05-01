@@ -191,14 +191,17 @@ class Person{
                 }
                 */
                 
-                if (position.y + dimensions.y > currentPlatform.position.y + 2 && platform.position.y > currentPlatform.position.y) {
+                if (position.y + dimensions.y > platform.position.y + 2 && position.y + dimensions.y < platform.position.y -2
+                && position.x + dimensions.x > platform.position.x && position.x + dimensions.x < platform.position.x + currentPlatform.dimensions.x) {
                     currentPlatform.personHere = false;
                     currentPlatform = platform;
                     currentPlatform.personHere = true;
                     if (platform instanceof TreePlatform){
                         platform.counterPlus();
                     }
-                } else if (position.y + dimensions.y < platform.position.y && platform.position.y < currentPlatform.position.y) {
+                } else if (position.y + dimensions.y < platform.position.y && platform.position.y < currentPlatform.position.y
+                && position.x + dimensions.x > platform.position.x && position.x + dimensions.x < platform.position.x + currentPlatform.dimensions.x) {
+                    currentPlatform.personHere = false;
                     currentPlatform = platform;
                     currentPlatform.personHere = true;
                     if (platform instanceof TreePlatform){
