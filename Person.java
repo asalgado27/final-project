@@ -21,7 +21,7 @@ class Person{
     boolean horizontalLMotion;
 
     // Fields to keep track of jump velocity
-    int upwardVelocity = 300; // default value
+    int upwardVelocity = 300;
     int downwardVelocity = 0;
 
     Platform currentPlatform;
@@ -47,18 +47,17 @@ class Person{
     private Image walkL4 = null;
 
     public Person(Main main, World world) {
-        this.main = main;
-        this.currentWorld = world;
-
-        acceleration = new Pair(0, 300);
         velocity = new Pair(0, 0);
+        acceleration = new Pair(0,250);
         radius = 5;
         horizontalRMotion = false;
         horizontalLMotion = false;
         animationCounter = 0;
         inventory = new ArrayList<>();
         keyInventory = new ArrayList<>();
-
+        
+        this.main = main;
+        this.currentWorld = world;
         
         try {
             avatar = ImageIO.read(Main.class.getResource("avatar.png"));
@@ -102,9 +101,9 @@ class Person{
             this.setPosition(new Pair(position.x, 0));
         }
 
-        else if (position.y > currentWorld.height){
+        else if (position.y > currentWorld.height - dimensions.y){
             setVelocityY(0);
-            this.setPosition(new Pair(position.x, currentWorld.height - this.dimensions.y));
+            this.setPosition(new Pair(position.x, currentWorld.height - dimensions.y));
         }
 
         // Check if person is within the x-bounds of the world
@@ -126,18 +125,12 @@ class Person{
         // Check if the person is touching any items
         main.checkForItems(position);
 
-        if (currentWorld == main.worlds[1]) {
-            checkIfOnLadder(220);
-        }
-        else {
-            checkIfOnLadder(300);
-        }
-        
+        checkIfOnLadder();
         checkIfOnPlatform();
     }
     
 
-    public void checkIfOnLadder(int upwardVel) {
+    public void checkIfOnLadder() {
         // Only check if on ladder if platforms exist in the person's current world
         if (currentWorld.platforms != null) {
             for (Platform platform : currentWorld.platforms) {
@@ -163,8 +156,8 @@ class Person{
 
         onLadder = false;
         // Falls due to gravity
-        setAcceleration(300);
-        upwardVelocity = upwardVel; // should use 200 to not hit head on homebase ceiling
+        setAcceleration(250);
+        upwardVelocity = 300;
     }
     
 
@@ -174,6 +167,9 @@ class Person{
             for (Platform platform : currentWorld.platforms) {
                 // Check if person is in proper vicinity of platform
 
+
+
+                
                 /*
                 // Check if person is within the x-bounds of the platform
                 if (this.position.x + this.dimensions.x > platform.position.x && this.position.x < platform.position.x + platform.dimensions.x) {
@@ -193,41 +189,53 @@ class Person{
                         // Update the person's y-position to be on top of the platform
                         this.setPosition(new Pair(position.x, currentPlatform.position.y - this.dimensions.y));
                         canGoUp = true;
-                        setVelocityY(0);                     
+                        setVelocityY(0);
+                        
+                        
                     }
                 }
                 */
                 
-                if (position.y + dimensions.y > platform.position.y + 2 && position.y + dimensions.y < platform.position.y - 2
-                && position.x + dimensions.x > platform.position.x && position.x + dimensions.x < platform.position.x + currentPlatform.dimensions.x) {
+
+
+
+
+
+
+
+
+
+
+
+                
+                if (position.y + dimensions.y > currentPlatform.position.y + 2 && platform.position.y > currentPlatform.position.y) {
                     currentPlatform.personHere = false;
                     currentPlatform = platform;
                     currentPlatform.personHere = true;
                     if (platform instanceof TreePlatform){
                         platform.counterPlus();
                     }
-                } else if (position.y + dimensions.y < platform.position.y && platform.position.y < currentPlatform.position.y
-                && position.x + dimensions.x > platform.position.x && position.x + dimensions.x < platform.position.x + currentPlatform.dimensions.x) {
-                    currentPlatform.personHere = false;
+                } else if (position.y + dimensions.y < platform.position.y && platform.position.y < currentPlatform.position.y) {
                     currentPlatform = platform;
                     currentPlatform.personHere = true;
                     if (platform instanceof TreePlatform){
                         platform.counterPlus();
                     }
                 }
+                
+                
+
+
                
+
                 // Check if the person can stand on the platform (or otherwise will fall)
-                if (position.y + dimensions.y >= currentPlatform.position.y || position.y + dimensions.y == currentWorld.basePlatform.position.y) {
+                if (position.y + dimensions.y >= currentPlatform.position.y) {
                     if (position.x + dimensions.x * 3 / 4 > currentPlatform.position.x && position.x + dimensions.x / 4 < currentPlatform.position.x + currentPlatform.dimensions.x) {
-                        //producing bug! 
-                        if (!onLadder && (!(currentPlatform instanceof TreePlatform) || !(currentPlatform instanceof SkyPlatform))) {
+                        if (!onLadder) {
                             this.setPosition(new Pair(position.x, currentPlatform.position.y - this.dimensions.y));
                         }
                         canGoUp = true;
                         setVelocityY(0);
-                    }
-                    if (position.y + dimensions.y == currentWorld.basePlatform.position.y){
-                        canGoUp = true;
                     }
                 } else if (onLadder == false) {
                     // Person cannot move up if they're not on the platform or the ladder
@@ -303,11 +311,9 @@ class Person{
         if (c == 'a'){
             this.setVelocityX(-200);
             horizontalLMotion = true;
-            horizontalRMotion = false;
         }
         if (c == 'd'){
             this.setVelocityX(200);
-            horizontalLMotion = false;
             horizontalRMotion = true;
         }
         if (c == 's'){
@@ -333,6 +339,8 @@ class Person{
                     // If they are, give them a little push
                     //this.position.y += 10;
 
+
+                    
                     this.onLadder = true;
                     canGoUp = true;
                     setAcceleration(0);
@@ -341,13 +349,18 @@ class Person{
                     upwardVelocity = 80;
                     downwardVelocity = 80;
                     System.out.println("TEST");
+                    
 
+
+                    
                     canGoUp = true;
                     onLadder = true;
                     // No acceleration when on ladder
                     setAcceleration(0);
                     upwardVelocity = 80;
                     downwardVelocity = 80;
+                    
+
 
                 }
                 */
@@ -374,17 +387,15 @@ class Person{
             horizontalLMotion = false;
             animationCounter = 0;
         }
+        if (c == 's'){
+            this.setVelocityY(0);
+            animationCounter = 0;
+        }
         if (c== 'd'){
             this.setVelocityX(0);
             horizontalRMotion = false;
             animationCounter = 0;
         }
-
-        if (c == 's'){
-            this.setVelocityY(0);
-            animationCounter = 0;
-        }
-        
         if (c == 'w'){
             this.setVelocityY(0);
             animationCounter = 0;
@@ -393,28 +404,8 @@ class Person{
 
     // Changes the world the person is in and puts them at a new location
     public void changeWorld(World newWorld) {
-
-        // THE BELOW SECTION IS WORK IN PROGRESS 
-        /* if (newWorld.worldType.equals("Homebase")) {
-            if (currentWorld.worldType.equals("Lava Biome")) {
-                System.out.println("entering homebase from lava biome");
-                this.position = new Pair(100, 570 - 13 - this.dimensions.y);
-            }
-            else if (currentWorld.worldType.equals("Tree Biome")) {
-                System.out.println("entering homebase from lava biome");
-                this.position = new Pair(100, 388 - 13 - this.dimensions.y);
-            }
-            else if (currentWorld.worldType.equals("Sky Biome")) {
-                System.out.println("entering homebase from lava biome");
-                this.position = new Pair(100, 190 - 13 - this.dimensions.y);
-            }
-        }
-        */ // otherwise... set position as below
-
         this.currentWorld = newWorld;
         position = new Pair(50, currentWorld.height - this.dimensions.y);
-
-
         // Update the person's new platform and give error message if no platforms available
         if (newWorld.platforms == null) {
             System.err.println("ERROR: New world does not have any platforms for person to stand on.");

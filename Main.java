@@ -1,3 +1,4 @@
+
 import javax.swing.JPanel;
 import javax.swing.JFrame;
 import java.awt.Color;
@@ -41,10 +42,7 @@ public class Main extends JPanel implements KeyListener{
 
     public Main(JFrame frame){
         this.frame = frame;
-
-        // create person
         this.person = new Person(this, null);
-
         // Establish array of worlds (0 is opener, 1 is homebase, 2 is lava biome, 3 is tree biome, 4 is sky biome)
         worlds = new World[5];
         worlds[0] = new World(this, openerWidth, openerHeight, "Opener");
@@ -52,7 +50,6 @@ public class Main extends JPanel implements KeyListener{
         worlds[2] = new World(this, lavaWidth, lavaHeight, "Lava Biome");
         worlds[3] = new World(this, treeWidth, treeHeight, "Tree Biome");
         worlds[4] = new World(this, skyWidth, skyHeight, "Sky Biome");
-
 
         // Determine the world the person will begin in
         World startWorld = worlds[0];
@@ -97,7 +94,6 @@ public class Main extends JPanel implements KeyListener{
         public void run() {
             while(true){
                 currentWorld.updatePerson((double)1.0/FPS);
-                currentWorld.updateSkyPlatforms((double)1.0/FPS);
                 repaint();
             try{
                 Thread.sleep(1000/FPS);
@@ -139,7 +135,6 @@ public class Main extends JPanel implements KeyListener{
             if (person.position.x + person.dimensions.x / 3 > person.currentPlatform.door.position.x && person.position.x + person.dimensions.x / 3 < person.currentPlatform.door.position.x + person.currentPlatform.door.dimensions.x && person.currentPlatform.door.canOpen()) {
 
                 World nextWorld = person.currentPlatform.door.nextWorld;
-                
                 // Move person to new world
                 this.currentWorld = nextWorld;
                 person.changeWorld(nextWorld);
