@@ -12,6 +12,7 @@ class World{
     Person person;
 
     Platform[] platforms;
+    Platform basePlatform;
 
     Main main;
     World[] worlds;
@@ -62,6 +63,7 @@ class World{
         // Create platform of opener world
         platforms = new Platform[1];
         platforms[0] = new Platform(this, new Pair(0, height), new Pair(width, 13));
+        basePlatform = platforms[0];
 
         this.person.currentPlatform = platforms[0];
         // Opener door opens without keys
@@ -96,7 +98,9 @@ class World{
         platforms[2] = new Platform(this, new Pair(0, 570), new Pair(width, 13), ladderPos[2], ladderLength[2]);
         platforms[3] = new Platform(this, new Pair(0, height), new Pair(width, 13));
 
-        this.person.currentPlatform = platforms[3];
+        basePlatform = platforms[3];
+
+        this.person.currentPlatform = basePlatform;
         //right now, all these doors open without keys, since I (Alicia) am assuming Adrian will switch around which doors are what biome later on.
         // Thanks Alicia! I created the instance of the sky biome so now all the doors should lead to their respective world
         // Feel free to implement the door-opening feature if you like!
@@ -107,7 +111,7 @@ class World{
         platforms[0].key = new Key(platforms[0], this, 3);
         platforms[1].key = new Key(platforms[1], this, 2);
         platforms[2].key = new Key(platforms[2], this, 1);
-        platforms[3].key = new Key(platforms[3], this, 0);
+        
     }
 
     // Create objects within lava biome
@@ -121,7 +125,7 @@ class World{
         }
 
         // Create platforms of lava biome
-        platforms = new Platform[13];
+        platforms = new Platform[12];
         platforms[0] = new Platform(this, new Pair(0, this.height - 600), new Pair(186, 13));
         platforms[1] = new Platform(this, new Pair(186, this.height - 570), new Pair(93, 13));
         platforms[2] = new Platform(this, new Pair(558, this.height - 550), new Pair(93, 13));
@@ -134,7 +138,8 @@ class World{
         platforms[9] = new Platform(this, new Pair(744, this.height - 100), new Pair(93, 13));
         platforms[10] = new Platform(this, new Pair(372, this.height - 150), new Pair(93, 13));
         platforms[11] = new Platform(this, new Pair(186, this.height - 120), new Pair(93, 13));
-        platforms[12] = new Platform(this, new Pair(0, this.height), new Pair(this.width, 13));
+        
+        basePlatform = new Platform(this, new Pair(0, this.height), new Pair(this.width, 13));
 
         // Add door to final platform - this door needs keys 4, 5, 6
         platforms[0].door = new Door(Color.orange, this, worlds[1], new Pair((int) (platforms[0].position.x + 62), (int)(platforms[0].position.y - Door.dimensions.y)), new int[]{4,5,6});
@@ -156,20 +161,22 @@ class World{
         }
 
         // Create platforms of tree biome
-        platforms = new TreePlatform[13];
-        platforms[0] = new TreePlatform(this, new Pair(0, this.height - 600), new Pair(186, 13));
-        platforms[1] = new TreePlatform(this, new Pair(186, this.height - 570), new Pair(93, 13));
-        platforms[2] = new TreePlatform(this, new Pair(558, this.height - 550), new Pair(93, 13));
-        platforms[3] = new TreePlatform(this, new Pair(837, this.height - 500), new Pair(93, 13));
-        platforms[4] = new TreePlatform(this, new Pair(372, this.height - 460), new Pair(93, 13));
-        platforms[5] = new TreePlatform(this, new Pair(1302, this.height - 520), new Pair(93, 13));
-        platforms[6] = new TreePlatform(this, new Pair(1116, this.height - 370), new Pair(93, 13));
-        platforms[7] = new TreePlatform(this, new Pair(930, this.height - 250), new Pair(93, 13));
-        platforms[8] = new TreePlatform(this, new Pair(558, this.height - 200), new Pair(93, 13));
-        platforms[9] = new TreePlatform(this, new Pair(744, this.height - 100), new Pair(93, 13));
-        platforms[10] = new TreePlatform(this, new Pair(372, this.height - 150), new Pair(93, 13));
-        platforms[11] = new TreePlatform(this, new Pair(186, this.height - 120), new Pair(93, 13));
-        platforms[12] = new TreePlatform(this, new Pair(0, this.height), new Pair(this.width, 13));
+        platforms = new TreePlatform[12];
+        platforms[0] = new TreePlatform(this, new Pair(0, this.height - 610), new Pair(186, 13));
+        platforms[1] = new TreePlatform(this, new Pair(150, this.height - 580), new Pair(93, 13));
+        platforms[2] = new TreePlatform(this, new Pair(520, this.height - 545), new Pair(93, 13));
+        platforms[3] = new TreePlatform(this, new Pair(943, this.height - 520), new Pair(93, 13));
+        platforms[4] = new TreePlatform(this, new Pair(309, this.height - 480), new Pair(93, 13));
+        platforms[5] = new TreePlatform(this, new Pair(1390, this.height - 530), new Pair(93, 13));
+        platforms[6] = new TreePlatform(this, new Pair(1100, this.height - 370), new Pair(93, 13));
+        platforms[7] = new TreePlatform(this, new Pair(948, this.height - 250), new Pair(93, 13));
+        platforms[8] = new TreePlatform(this, new Pair(530, this.height - 300), new Pair(93, 13));
+        platforms[9] = new TreePlatform(this, new Pair(720, this.height - 209), new Pair(93, 13));
+        platforms[10] = new TreePlatform(this, new Pair(380, this.height - 180), new Pair(93, 13));
+        platforms[11] = new TreePlatform(this, new Pair(170, this.height - 120), new Pair(93, 13));
+        
+        
+        basePlatform = new Platform(this, new Pair(0, this.height), new Pair(this.width, 13));
 
         // Add door to final platform - this door needs keys 7, 8, 9
         platforms[0].door = new Door(Color.pink, this, worlds[1], new Pair((int) (platforms[0].position.x + 62), (int)(platforms[0].position.y - Door.dimensions.y)), new int[]{7,8,9});
@@ -193,6 +200,8 @@ class World{
         platforms[7] = new SkyPlatform(this, new Pair(920, this.height - 220), new Pair(93, 13));
         platforms[8] = new SkyPlatform(this, new Pair(140, this.height - 50), new Pair(93, 13));
         platforms[9] = new SkyPlatform(this, new Pair(0, this.height), new Pair(this.width, 13));
+
+        basePlatform = platforms[9];
 
         // Add door to final platform - this door needs keys 10, 11, 12
         platforms[0].door = new Door(Color.blue, this, worlds[1], new Pair((int) (platforms[0].position.x + 62), (int)(platforms[0].position.y - Door.dimensions.y)), new int[]{10,11,12});
