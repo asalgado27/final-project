@@ -104,14 +104,7 @@ class Person{
 
         else if (position.y > currentWorld.height){
             setVelocityY(0);
-
-            World nextWorld = main.worlds[1];
-                
-            // Move person to new world
-            this.currentWorld = nextWorld;
-            this.changeWorld(nextWorld);
-
-            main.changeDimensions(nextWorld.worldType);
+            this.setPosition(new Pair(position.x, currentWorld.height - this.wddimensions.y));
         }
 
         // Check if person is within the x-bounds of the world
@@ -205,7 +198,7 @@ class Person{
                 }
                 */
                 
-                if (position.y + dimensions.y > platform.position.y + 2 && position.y + dimensions.y < platform.position.y -2
+                if (position.y + dimensions.y > platform.position.y + 2 && position.y + dimensions.y < platform.position.y - 2
                 && position.x + dimensions.x > platform.position.x && position.x + dimensions.x < platform.position.x + currentPlatform.dimensions.x) {
                     currentPlatform.personHere = false;
                     currentPlatform = platform;
