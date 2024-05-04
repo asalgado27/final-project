@@ -210,13 +210,17 @@ class Person{
                 }
                
                 // Check if the person can stand on the platform (or otherwise will fall)
-                if (position.y + dimensions.y >= currentPlatform.position.y) {
+                if (position.y + dimensions.y >= currentPlatform.position.y || position.y + dimensions.y == currentWorld.basePlatform.position.y) {
                     if (position.x + dimensions.x * 3 / 4 > currentPlatform.position.x && position.x + dimensions.x / 4 < currentPlatform.position.x + currentPlatform.dimensions.x) {
-                        if (!onLadder) {
+                        //producing bug! 
+                        if (!onLadder && (!(currentPlatform instanceof TreePlatform) || !(currentPlatform instanceof SkyPlatform))) {
                             this.setPosition(new Pair(position.x, currentPlatform.position.y - this.dimensions.y));
                         }
                         canGoUp = true;
                         setVelocityY(0);
+                    }
+                    if (position.y + dimensions.y == currentWorld.basePlatform.position.y){
+                        canGoUp = true;
                     }
                 } else if (onLadder == false) {
                     // Person cannot move up if they're not on the platform or the ladder
