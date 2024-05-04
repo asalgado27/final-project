@@ -16,14 +16,16 @@ public class TreePlatform extends Platform {
     @Override
     public void draw(Graphics g) {
         //increases counter if it is a tree platform and if the person is on the platform.
-        System.out.println(personHere);
-        if (personHere){
+        if (personHere && visible){
             counterPlus();
         }
-        if (counter >=80 && counter <=249){
+        if (!visible && !(counter <= 79 && counter >= 0)){
+            counterPlus();
+        }
+        if (counter >=80 && counter <=199){
             setVisibleFalse();
         }
-        if (counter >=250){
+        if (counter >=200){
             setVisibleTrue();
         }
         if (visible){
@@ -33,7 +35,8 @@ public class TreePlatform extends Platform {
     @Override
     public void counterPlus(){
         counter++;
-        System.out.println("in override " + counter);
+        
+        
     }
 
     public void setVisibleFalse(){
