@@ -21,7 +21,7 @@ class Person{
     boolean horizontalLMotion;
 
     // Fields to keep track of jump velocity
-    int upwardVelocity = 300; // should use 200 to not hit head on homebase ceiling
+    int upwardVelocity = 300; // default value
     int downwardVelocity = 0;
 
     Platform currentPlatform;
@@ -47,17 +47,18 @@ class Person{
     private Image walkL4 = null;
 
     public Person(Main main, World world) {
+        this.main = main;
+        this.currentWorld = world;
+
+        acceleration = new Pair(0, 300);
         velocity = new Pair(0, 0);
-        acceleration = new Pair(0,300);
         radius = 5;
         horizontalRMotion = false;
         horizontalLMotion = false;
         animationCounter = 0;
         inventory = new ArrayList<>();
         keyInventory = new ArrayList<>();
-        
-        this.main = main;
-        this.currentWorld = world;
+
         
         try {
             avatar = ImageIO.read(Main.class.getResource("avatar.png"));
@@ -101,9 +102,16 @@ class Person{
             this.setPosition(new Pair(position.x, 0));
         }
 
-        else if (position.y > currentWorld.height - dimensions.y){
+        else if (position.y > currentWorld.height){
             setVelocityY(0);
-            this.setPosition(new Pair(position.x, currentWorld.height - dimensions.y));
+
+            World nextWorld = main.worlds[1];
+                
+            // Move person to new world
+            this.currentWorld = nextWorld;
+            this.changeWorld(nextWorld);
+
+            main.changeDimensions(nextWorld.worldType);
         }
 
         // Check if person is within the x-bounds of the world
@@ -125,12 +133,18 @@ class Person{
         // Check if the person is touching any items
         main.checkForItems(position);
 
-        checkIfOnLadder();
+        if (currentWorld == main.worlds[1]) {
+            checkIfOnLadder(220);
+        }
+        else {
+            checkIfOnLadder(300);
+        }
+        
         checkIfOnPlatform();
     }
     
 
-    public void checkIfOnLadder() {
+    public void checkIfOnLadder(int upwardVel) {
         // Only check if on ladder if platforms exist in the person's current world
         if (currentWorld.platforms != null) {
             for (Platform platform : currentWorld.platforms) {
@@ -157,7 +171,7 @@ class Person{
         onLadder = false;
         // Falls due to gravity
         setAcceleration(300);
-        upwardVelocity = 300; // should use 200 to not hit head on homebase ceiling
+        upwardVelocity = upwardVel; // should use 200 to not hit head on homebase ceiling
     }
     
 
@@ -296,9 +310,11 @@ class Person{
         if (c == 'a'){
             this.setVelocityX(-200);
             horizontalLMotion = true;
+            horizontalRMotion = false;
         }
         if (c == 'd'){
             this.setVelocityX(200);
+            horizontalLMotion = false;
             horizontalRMotion = true;
         }
         if (c == 's'){
@@ -365,15 +381,17 @@ class Person{
             horizontalLMotion = false;
             animationCounter = 0;
         }
-        if (c == 's'){
-            this.setVelocityY(0);
-            animationCounter = 0;
-        }
         if (c== 'd'){
             this.setVelocityX(0);
             horizontalRMotion = false;
             animationCounter = 0;
         }
+
+        if (c == 's'){
+            this.setVelocityY(0);
+            animationCounter = 0;
+        }
+        
         if (c == 'w'){
             this.setVelocityY(0);
             animationCounter = 0;

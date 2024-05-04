@@ -41,7 +41,10 @@ public class Main extends JPanel implements KeyListener{
 
     public Main(JFrame frame){
         this.frame = frame;
+
+        // create person
         this.person = new Person(this, null);
+
         // Establish array of worlds (0 is opener, 1 is homebase, 2 is lava biome, 3 is tree biome, 4 is sky biome)
         worlds = new World[5];
         worlds[0] = new World(this, openerWidth, openerHeight, "Opener");
@@ -49,6 +52,7 @@ public class Main extends JPanel implements KeyListener{
         worlds[2] = new World(this, lavaWidth, lavaHeight, "Lava Biome");
         worlds[3] = new World(this, treeWidth, treeHeight, "Tree Biome");
         worlds[4] = new World(this, skyWidth, skyHeight, "Sky Biome");
+
 
         // Determine the world the person will begin in
         World startWorld = worlds[0];

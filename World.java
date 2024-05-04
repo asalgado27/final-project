@@ -80,6 +80,7 @@ class World{
             System.err.println("IOException");
             System.exit(1);
         }
+
         // Create array of ladder locations
         int[] ladderPos = new int[3]; 
         int[] ladderLength = new int[3];
@@ -188,6 +189,14 @@ class World{
 
     // Create objects within sky biome
     private void createSkyBiome() {
+        try{
+            this.background = ImageIO.read(Main.class.getResource("skybackground.png"));
+            background = background.getScaledInstance(width,height, 1);
+        } catch (IOException e){
+            System.err.println("IOException");
+            System.exit(1);
+        }
+
         // Create platforms of sky biome
         platforms = new SkyPlatform[10];
         platforms[0] = new SkyPlatform(this, new Pair(1214, this.height - 450), new Pair(186, 13));
@@ -198,8 +207,8 @@ class World{
         platforms[5] = new SkyPlatform(this, new Pair(1050, this.height - 280), new Pair(93, 13));
         platforms[6] = new SkyPlatform(this, new Pair(530, this.height - 270), new Pair(93, 13));
         platforms[7] = new SkyPlatform(this, new Pair(920, this.height - 220), new Pair(93, 13));
-        platforms[8] = new SkyPlatform(this, new Pair(140, this.height - 50), new Pair(93, 13));
-        platforms[9] = new SkyPlatform(this, new Pair(0, this.height), new Pair(this.width, 13));
+        platforms[8] = new SkyPlatform(this, new Pair(140, this.height - 150), new Pair(93, 13));
+        platforms[9] = new SkyPlatform(this, new Pair(30, this.height - 50), new Pair(93, 13));
 
         basePlatform = platforms[9];
 
