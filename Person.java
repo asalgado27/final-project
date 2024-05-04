@@ -104,7 +104,7 @@ class Person{
 
         else if (position.y > currentWorld.height){
             setVelocityY(0);
-            this.setPosition(new Pair(position.x, currentWorld.height - this.wddimensions.y));
+            this.setPosition(new Pair(position.x, currentWorld.height - this.dimensions.y));
         }
 
         // Check if person is within the x-bounds of the world
