@@ -66,7 +66,6 @@ class Platform {
         }
     }
     public void counterPlus(){
-        System.out.println("in parent Counter Plus");
         return;
     }
 
