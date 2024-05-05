@@ -16,7 +16,7 @@ class Platform {
     static int ladderWidth = 52;
 
     // Field to keep track of door on platform
-    Door door;
+    public Door door;
     Key key;
 
     // Field to keep track of which world the platform is in
