@@ -38,7 +38,7 @@ public class Main extends JPanel implements KeyListener{
 
     JFrame frame;
 
-    public ArrayList<Item> uncollectedItems = new ArrayList<>();
+    public ArrayList<Key> uncollectedItems = new ArrayList<Key>();
 
     public Main(JFrame frame){
         this.frame = frame;
@@ -177,8 +177,9 @@ public class Main extends JPanel implements KeyListener{
 
     public void checkForItems(Pair personPosition){
         for (int i = 0; i < uncollectedItems.size(); i++) {
-            Item item = uncollectedItems.get(i);
-            item.checkAndCollect();
+            Key key = uncollectedItems.get(i);
+            key.checkAndCollect();
+            
         }
     }
 
