@@ -31,7 +31,6 @@ class Person{
 
     Main main;
     private World currentWorld;
-    public ArrayList<Item> inventory;
     public ArrayList<Integer> keyInventory;
 
     private Image avatar = null;
@@ -54,8 +53,7 @@ class Person{
         horizontalRMotion = false;
         horizontalLMotion = false;
         animationCounter = 0;
-        inventory = new ArrayList<>();
-        keyInventory = new ArrayList<>();
+        keyInventory = new ArrayList<Integer>();
         
         
         try {
