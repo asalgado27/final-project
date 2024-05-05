@@ -97,9 +97,7 @@ class World{
         platforms[3] = new Platform(this, new Pair(0, height), new Pair(width, 13));
 
         this.person.currentPlatform = platforms[3];
-        //right now, all these doors open without keys, since I (Alicia) am assuming Adrian will switch around which doors are what biome later on.
-        // Thanks Alicia! I created the instance of the sky biome so now all the doors should lead to their respective world
-        // Feel free to implement the door-opening feature if you like!
+        
         platforms[0].door = new Door(this, worlds[4], new Pair((int)(platforms[0].position.x + 30), (int)(platforms[0].position.y - Door.dimensions.y)), new int[]{});
         platforms[1].door = new Door(this, worlds[3], new Pair((int)(platforms[1].position.x + 335), (int)(platforms[1].position.y - Door.dimensions.y)), new int[]{});
         platforms[2].door = new Door(this, worlds[2], new Pair((int)(platforms[2].position.x + 88), (int)(platforms[2].position.y - Door.dimensions.y)), new int[]{});
