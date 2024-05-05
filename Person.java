@@ -413,18 +413,31 @@ class Person{
         }
         */ // otherwise... set position as below
 
-        this.currentWorld = newWorld;
-        position = new Pair(50, currentWorld.height - this.dimensions.y);
-
-
         // Update the person's new platform and give error message if no platforms available
         if (newWorld.platforms == null) {
             System.err.println("ERROR: New world does not have any platforms for person to stand on.");
             System.exit(1);
         }
 
-        // Place person onto the lowest platform of the world
-        this.currentPlatform = newWorld.platforms[newWorld.platforms.length - 1];
+        // Keep track of the person's old world for the purposes of this method
+        World oldWorld = this.currentWorld;
+        this.currentWorld = newWorld;
+
+        // If the new door does not exist, place the person at the bottom platform
+        if (main.findPlatform(oldWorld, newWorld) == null) {
+            position = new Pair(50, currentWorld.height - this.dimensions.y);
+            this.currentPlatform = newWorld.platforms[newWorld.platforms.length - 1];
+        } else {
+            // Otherwise, find door person is teleporting back to
+            Platform newPlatform = newWorld.platforms[main.findPlatform(oldWorld, newWorld)];
+            // Find corresponding door person is teleporting back to 
+            Door newDoor = newPlatform.door;
+
+
+            // Put person 100 units to the right of the door in the homebase
+            position = new Pair(newDoor.position.x + 100, newDoor.position.y + newDoor.dimensions.y);
+            this.currentPlatform = newPlatform;
+        }
     }
 
 } 
