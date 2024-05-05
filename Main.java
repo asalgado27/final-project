@@ -181,4 +181,31 @@ public class Main extends JPanel implements KeyListener{
             item.checkAndCollect();
         }
     }
+
+    // Returns the index of the platform in the hombease that has the door back to old world
+    // If newWorld is not homebase, it returns null
+    public Integer findPlatform(World oldWorld, World newWorld) {
+        // If there's no door back to the old world (or if the new world does not exist), return null
+        if (oldWorld == null || newWorld == null) {
+            return null;
+        }
+
+        // If the newWorld is not the homebase, the user must start at the bottom platform
+        if (!newWorld.worldType.equals("Homebase")) {
+            return null;
+        }
+
+        // Loop through the homebase's platforms searching for the proper door
+        for (int i = 0; i < newWorld.platforms.length; i++) {
+            // Only check if a door exists on this platform
+            if (newWorld.platforms[i].door != null) {
+                if (newWorld.platforms[i].door.nextWorld.equals(oldWorld)) {
+                    return i;
+                }
+            }
+        }
+
+        // At this point, no door back has been found (which should be impossible as this is for the homebase)
+        return null;
+    }
 }
