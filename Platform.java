@@ -1,12 +1,20 @@
 import java.awt.Color;
 import java.awt.Graphics;
+import javax.imageio.ImageIO;
+import java.awt.Image;
+import java.io.IOException;
 
 class Platform {
     // Fields indicating location and size of the platform
     Pair position;
     Pair dimensions;
-    //keeps track of whether person is here
+    // Keeps track of whether person is here
     boolean personHere;
+
+    // Images for the platform
+     Image lavaPlatform = null;
+     Image treePlatform = null;
+     Image skyPlatform = null;
 
     boolean visible = true;
 
@@ -27,6 +35,18 @@ class Platform {
         this.position = position;
         this.dimensions = dimensions;
         this.world = world;
+
+        try {
+            lavaPlatform = ImageIO.read(Main.class.getResource("Lava.png"));
+            lavaPlatform = lavaPlatform.getScaledInstance((int)dimensions.x,(int)dimensions.y, 1);
+            treePlatform = ImageIO.read(Main.class.getResource("Branch.png"));
+            treePlatform = treePlatform.getScaledInstance((int)dimensions.x,(int)dimensions.y, 1);
+            skyPlatform = ImageIO.read(Main.class.getResource("Cloud.png"));
+            skyPlatform = skyPlatform.getScaledInstance((int)dimensions.x,(int)dimensions.y, 1);
+        } catch (IOException e) {
+            System.err.println("IOException");
+            System.exit(1);
+        }
     }
 
     public Platform(World world, Pair position, Pair dimensions, int ladderPos, int ladderLength) {
@@ -42,9 +62,14 @@ class Platform {
         if (this.world.worldType.equals("Homebase")) {
             g.setColor(Color.RED);
             g.drawRect((int)position.x, (int)position.y, (int)dimensions.x, (int)dimensions.y);
+        
+        } else if (this instanceof TreePlatform){
+            g.drawImage(treePlatform,  (int)position.x, (int)position.y, null);
+        } else if (this instanceof SkyPlatform) {
+            g.drawImage(skyPlatform,  (int)position.x, (int)position.y, null);
         } else {
             g.setColor(Color.black);
-            g.fillRect((int)position.x, (int)position.y, (int)dimensions.x, (int)dimensions.y);
+            g.drawImage(lavaPlatform,  (int)position.x, (int)position.y, null);
         }
 
         // Draw any ladders (if it's not null)
