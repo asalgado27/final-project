@@ -1,4 +1,3 @@
-
 import java.awt.Graphics;
 import javax.imageio.ImageIO;
 import java.awt.Image;
@@ -30,7 +29,6 @@ class Person{
     boolean onLadder = false;
     boolean canGoUp = true;
 
-
     Main main;
     private World currentWorld;
     public ArrayList<Item> inventory;
@@ -47,8 +45,11 @@ class Person{
     private Image walkL4 = null;
 
     public Person(Main main, World world) {
+        this.main = main;
+        this.currentWorld = world;
+
         velocity = new Pair(0, 0);
-        acceleration = new Pair(0,250);
+        acceleration = new Pair(0, 300);
         radius = 5;
         horizontalRMotion = false;
         horizontalLMotion = false;
@@ -56,8 +57,6 @@ class Person{
         inventory = new ArrayList<>();
         keyInventory = new ArrayList<>();
         
-        this.main = main;
-        this.currentWorld = world;
         
         try {
             avatar = ImageIO.read(Main.class.getResource("avatar.png"));
@@ -125,12 +124,17 @@ class Person{
         // Check if the person is touching any items
         main.checkForItems(position);
 
-        checkIfOnLadder();
+        if (currentWorld == main.worlds[1]) {
+            checkIfOnLadder(220);
+        }
+        else {
+            checkIfOnLadder(300);
+        }
+
         checkIfOnPlatform();
     }
     
-
-    public void checkIfOnLadder() {
+    public void checkIfOnLadder(int upwardVel) {
         // Only check if on ladder if platforms exist in the person's current world
         if (currentWorld.platforms != null) {
             for (Platform platform : currentWorld.platforms) {
@@ -155,9 +159,10 @@ class Person{
         // If this point is reached, the person is not on the ladder
 
         onLadder = false;
+
         // Falls due to gravity
-        setAcceleration(250);
-        upwardVelocity = 300;
+        setAcceleration(300);
+        upwardVelocity = upwardVel;
     }
     
 
@@ -195,17 +200,6 @@ class Person{
                     }
                 }
                 */
-                
-
-
-
-
-
-
-
-
-
-
 
                 
                 if (position.y + dimensions.y > currentPlatform.position.y + 2 && platform.position.y > currentPlatform.position.y) {
@@ -222,11 +216,6 @@ class Person{
                         platform.counterPlus();
                     }
                 }
-                
-                
-
-
-               
 
                 // Check if the person can stand on the platform (or otherwise will fall)
                 if (position.y + dimensions.y >= currentPlatform.position.y) {
@@ -311,9 +300,11 @@ class Person{
         if (c == 'a'){
             this.setVelocityX(-200);
             horizontalLMotion = true;
+            horizontalRMotion = false;
         }
         if (c == 'd'){
             this.setVelocityX(200);
+            horizontalLMotion = false;
             horizontalRMotion = true;
         }
         if (c == 's'){
@@ -404,8 +395,28 @@ class Person{
 
     // Changes the world the person is in and puts them at a new location
     public void changeWorld(World newWorld) {
+
+        // THE BELOW SECTION IS WORK IN PROGRESS 
+        /* if (newWorld.worldType.equals("Homebase")) {
+            if (currentWorld.worldType.equals("Lava Biome")) {
+                System.out.println("entering homebase from lava biome");
+                this.position = new Pair(100, 570 - 13 - this.dimensions.y);
+            }
+            else if (currentWorld.worldType.equals("Tree Biome")) {
+                System.out.println("entering homebase from lava biome");
+                this.position = new Pair(100, 388 - 13 - this.dimensions.y);
+            }
+            else if (currentWorld.worldType.equals("Sky Biome")) {
+                System.out.println("entering homebase from lava biome");
+                this.position = new Pair(100, 190 - 13 - this.dimensions.y);
+            }
+        }
+        */ // otherwise... set position as below
+
         this.currentWorld = newWorld;
         position = new Pair(50, currentWorld.height - this.dimensions.y);
+
+
         // Update the person's new platform and give error message if no platforms available
         if (newWorld.platforms == null) {
             System.err.println("ERROR: New world does not have any platforms for person to stand on.");

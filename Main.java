@@ -42,7 +42,10 @@ public class Main extends JPanel implements KeyListener{
 
     public Main(JFrame frame){
         this.frame = frame;
+
+        // Create person
         this.person = new Person(this, null);
+
         // Establish array of worlds (0 is opener, 1 is homebase, 2 is lava biome, 3 is tree biome, 4 is sky biome)
         worlds = new World[5];
         worlds[0] = new World(this, openerWidth, openerHeight, "Opener");
@@ -82,18 +85,17 @@ public class Main extends JPanel implements KeyListener{
         frame.setVisible(true);
     }
  
- 
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         currentWorld.draw(g);
         currentWorld.drawPerson(g);
     }
-
  
     class Runner implements Runnable{
         public void run() {
             while(true){
                 currentWorld.updatePerson((double)1.0/FPS);
+                currentWorld.updateSkyPlatforms((double)1.0/FPS);
                 repaint();
             try{
                 Thread.sleep(1000/FPS);

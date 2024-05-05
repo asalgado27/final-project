@@ -70,4 +70,6 @@ class Platform {
         return;
     }
 
+    public void update(double time) {}
+
 }
