@@ -200,7 +200,7 @@ class World{
         platforms[5] = new SkyPlatform(this, new Pair(1050, this.height - 280), new Pair(93, 13));
         platforms[6] = new SkyPlatform(this, new Pair(530, this.height - 270), new Pair(93, 13));
         platforms[7] = new SkyPlatform(this, new Pair(920, this.height - 220), new Pair(93, 13));
-        platforms[8] = new SkyPlatform(this, new Pair(140, this.height - 150), new Pair(93, 13));
+        platforms[8] = new SkyPlatform(this, new Pair(130, this.height - 80), new Pair(93, 13));
         platforms[9] = new SkyPlatform(this, new Pair(0, this.height), new Pair(this.width, 13));
 
         // Add door to final platform - this door needs keys 10, 11, 12

@@ -28,7 +28,7 @@ public class SkyPlatform extends Platform {
         }
 
         // Check if platform is within the y-bounds of its movement
-        if (position.y <= 620 && position.y >= 150){
+        if (position.y <= 600 && position.y >= 150){
             velocity = velocity.add(acceleration.times(time));
         }
 
@@ -37,9 +37,9 @@ public class SkyPlatform extends Platform {
             this.setPosition(new Pair(position.x, 150));
         }
 
-        else if (position.y > 620){
+        else if (position.y > 600){
             setVelocityY(0);
-            this.setPosition(new Pair(position.x, 620));
+            this.setPosition(new Pair(position.x, 600));
         }
     }
 
