@@ -1,5 +1,8 @@
 import java.awt.Color;
 import java.awt.Graphics;
+import javax.imageio.ImageIO;
+import java.awt.Image;
+import java.io.IOException;
 
 class Door {
     Pair position;
@@ -7,11 +10,13 @@ class Door {
     Color doorColor;
     int neededKeys[];
 
+    Image doorGraphic = null;
+
     // Fields to keep track of world door is located in and world it leads to
     World currentWorld;
     public World nextWorld;
 
-    // Default constructor
+    // Default constructor, used for homebase
     public Door(World currentWorld, World nextWorld, Pair position, int neededKeys[]) {
         this.position = position;
         this.currentWorld = currentWorld;
@@ -19,10 +24,17 @@ class Door {
         this.neededKeys = neededKeys;
     }
 
-    // Constructor if we want the door to have a special look
+    // Constructor for world doors
     public Door(Color doorColor, World currentWorld, World nextWorld, Pair position, int neededKeys[]) {
         this(currentWorld, nextWorld, position, neededKeys);
         this.doorColor = doorColor;
+        try {
+            doorGraphic = ImageIO.read(Main.class.getResource("Door.png"));
+            doorGraphic = doorGraphic.getScaledInstance((int)dimensions.x,(int)dimensions.y, 1);
+        } catch (IOException e) {
+            System.err.println("IOException");
+            System.exit(1);
+        }
     }
 
     // Checks if the needed keys are in the inventory
@@ -48,7 +60,7 @@ class Door {
             g.drawRect((int) position.x, (int) position.y, (int) dimensions.x, (int) dimensions.y);
         } else {
             g.setColor(doorColor);
-            g.fillRect((int) position.x, (int) position.y, (int) dimensions.x, (int) dimensions.y);
+            g.drawImage(doorGraphic, (int) position.x, (int) position.y, null);
         }
     }
 }
