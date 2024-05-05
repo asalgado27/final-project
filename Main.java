@@ -1,10 +1,8 @@
 
 import javax.swing.JPanel;
 import javax.swing.JFrame;
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Dimension;
-import java.util.Random;
 import java.awt.event.KeyListener;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
@@ -28,6 +26,9 @@ public class Main extends JPanel implements KeyListener{
     public static final int skyWidth = 1400;
     public static final int skyHeight = 768;
 
+    public static final int winWidth = 1400;
+    public static final int winHeight = 768;
+
     public char c = '0';
 
     World currentWorld;
@@ -47,12 +48,13 @@ public class Main extends JPanel implements KeyListener{
         this.person = new Person(this, null);
 
         // Establish array of worlds (0 is opener, 1 is homebase, 2 is lava biome, 3 is tree biome, 4 is sky biome)
-        worlds = new World[5];
+        worlds = new World[6];
         worlds[0] = new World(this, openerWidth, openerHeight, "Opener");
         worlds[1] = new World(this, HBWidth, HBHeight, "Homebase");
         worlds[2] = new World(this, lavaWidth, lavaHeight, "Lava Biome");
         worlds[3] = new World(this, treeWidth, treeHeight, "Tree Biome");
         worlds[4] = new World(this, skyWidth, skyHeight, "Sky Biome");
+        worlds[5] = new World(this, winWidth, winHeight, "Win Page");
 
         // Determine the world the person will begin in
         World startWorld = worlds[0];
@@ -165,6 +167,9 @@ public class Main extends JPanel implements KeyListener{
         } else if (worldType.equals("Sky Biome")) {
             this.setPreferredSize(new Dimension(skyWidth, skyHeight));
             frame.setTitle("Sky Biome");
+        } else if (worldType.equals("Win Page")) {
+            this.setPreferredSize(new Dimension(winWidth, winHeight));
+            frame.setTitle("WinPage");
         } else {
             // An invalid world attempted to be resized
             System.err.println("ERROR: Cannot resize an invalid world.");
