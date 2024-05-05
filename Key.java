@@ -20,6 +20,8 @@ public class Key extends Item {
 	
 	public Key(Platform platform, World world, int index) {
 		super(world.main, world.person);
+
+        main.uncollectedItems.add(this);
 		this.platform = platform;
 		this.person = world.person;
 		rand = new Random();
@@ -47,18 +49,20 @@ public class Key extends Item {
 
 	public void draw(Graphics g){
 		if (show == true) {
-			
         	g.drawImage(keyImage,  (int)position.x, (int)position.y, null);
 			g.drawString("" + index, (int)position.x, (int)position.y);
 		}
     }
 
+	// If the person comes into contact with the key, it will disappear and be stored in the person's keyInventory.
     public void checkAndCollect() {
     	super.checkAndCollect();
 		boolean sameYvalue = (person.position.y + person.dimensions.y / 2 - position.y < 10) && (person.position.y + person.dimensions.y / 2 - position.y > -10);
     	boolean sameXvalue = (person.position.x + person.dimensions.x / 2 - position.x < 10 && person.position.x + person.dimensions.x / 2 - position.x > -10);
     	if (sameYvalue && sameXvalue) {
     		show = false;
+			person.keyInventory.add(this.index);
+			main.uncollectedItems.remove(this);
     	}
     }
 		
