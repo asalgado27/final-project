@@ -183,7 +183,7 @@ public class Main extends JPanel implements KeyListener{
             frame.setTitle("Sky Biome");
         } else if (worldType.equals("Win Page")) {
             this.setPreferredSize(new Dimension(winWidth, winHeight));
-            frame.setTitle("WinPage");
+            frame.setTitle("Congratulations! You've won the game!");
         } else {
             // An invalid world attempted to be resized
             System.err.println("ERROR: Cannot resize an invalid world.");
