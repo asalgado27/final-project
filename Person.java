@@ -43,10 +43,12 @@ class Person{
     private Image walkL3 = null;
     private Image walkL4 = null;
 
+    // Constructs the Person object
     public Person(Main main, World world) {
         this.main = main;
         this.currentWorld = world;
 
+        // Establishes the initial characteristics of the person
         velocity = new Pair(0, 0);
         acceleration = new Pair(0, 300);
         radius = 5;
@@ -82,6 +84,7 @@ class Person{
 
     }
 
+    // Updates and performs certain checks on Person every frame
     public void update(double time){
         // Continually update person's position
         position = position.add(velocity.times(time));
@@ -130,6 +133,7 @@ class Person{
         checkIfOnPlatform();
     }
     
+    // Performs a function if Person is on a ladder
     public void checkIfOnLadder(int upwardVel) {
         // Only check if on ladder if platforms exist in the person's current world
         if (currentWorld.platforms != null) {
@@ -160,7 +164,7 @@ class Person{
         upwardVelocity = upwardVel;
     }
     
-
+    // Performs a function if Person is on a platform
     public void checkIfOnPlatform() {
         // Only check if on platform if platforms currently exist in the world
         if (currentWorld.platforms != null) {
@@ -225,6 +229,7 @@ class Person{
     	return this.velocity;
     }
     
+    // Draws Person
     public void draw(Graphics g){
         if (!horizontalRMotion && !horizontalLMotion){
             g.drawImage(avatar,  (int)position.x, (int)position.y, null);
@@ -331,24 +336,7 @@ class Person{
 
     // Changes the world the person is in and puts them at a new location
     public void changeWorld(World newWorld) {
-
-        // THE BELOW SECTION IS WORK IN PROGRESS 
-        /* if (newWorld.worldType.equals("Homebase")) {
-            if (currentWorld.worldType.equals("Lava Biome")) {
-                System.out.println("entering homebase from lava biome");
-                this.position = new Pair(100, 570 - 13 - this.dimensions.y);
-            }
-            else if (currentWorld.worldType.equals("Tree Biome")) {
-                System.out.println("entering homebase from lava biome");
-                this.position = new Pair(100, 388 - 13 - this.dimensions.y);
-            }
-            else if (currentWorld.worldType.equals("Sky Biome")) {
-                System.out.println("entering homebase from lava biome");
-                this.position = new Pair(100, 190 - 13 - this.dimensions.y);
-            }
-        }
-        */ // otherwise... set position as below
-
+        
         // Update the person's new platform and give error message if no platforms available
         if (newWorld.platforms == null) {
             System.err.println("ERROR: New world does not have any platforms for person to stand on.");
