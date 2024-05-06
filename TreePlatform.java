@@ -1,6 +1,7 @@
 import java.awt.Graphics;
 
 public class TreePlatform extends Platform {
+    boolean canDisappear;
     int counter = 0;
     //to store the position value for when the tree platform has to return to its normal position
     Pair positionHolder;
@@ -10,23 +11,38 @@ public class TreePlatform extends Platform {
         super(world, position, dimensions);
         positionHolder = position;
         positionGone = new Pair(50000,50000);
+        canDisappear = true;
+    }
+
+    public TreePlatform(World world, Pair position, Pair dimensions, boolean canDisappear){
+        super(world, position, dimensions);
+        positionHolder = position;
+        positionGone = new Pair(50000,50000);
+        canDisappear = false;
     }
 
     @Override
     public void draw(Graphics g) {
-        // Increases counter if it is a tree platform and if the person is on the platform.
-        if (personHere){
-            counterPlus();
-        }
-        if (counter >=80 && counter <= 249){
-            setVisibleFalse();
-        }
-        if (counter >=250){
-            setVisibleTrue();
+        // Increases counter if it is a tree platform, if it can disappear, and if the person is on the platform.
+        if (canDisappear){
+            if (personHere){
+                counterPlus();
+            }
+            if (!personHere && visible == false){
+                counterPlus();
+            }
+            if (counter >=80 && counter <= 249){
+                setVisibleFalse();
+            }
+            if (counter >=250){
+                setVisibleTrue();
+            }
         }
         if (visible){
             super.draw(g);
         }
+    
+        
     }
 
     // Counter should only increase if it is within a TreePlatform
