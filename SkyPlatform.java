@@ -6,11 +6,13 @@ public class SkyPlatform extends Platform {
     Pair acceleration = new Pair(0, 0); // constant acceleration
     Random rand = new Random();
 
+    // Constructs a Sky Platform
     public SkyPlatform(World world, Pair position, Pair dimensions) {
         super(world, position, dimensions);
     }
 
     @Override
+    // Updates the Sky Platform every frame
     public void update(double time){
         position = position.add(velocity.times(time));
     
