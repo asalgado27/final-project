@@ -8,6 +8,8 @@ class Door {
     Pair position;
     static Pair dimensions = new Pair(75, 110);
     Color doorColor;
+
+    // Keeps track of what keys are needed to open the door
     int neededKeys[];
 
     Image doorGraphic = null;
