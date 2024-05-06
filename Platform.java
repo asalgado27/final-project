@@ -49,6 +49,7 @@ class Platform {
         }
     }
 
+    // Constructor for platforms with ladders
     public Platform(World world, Pair position, Pair dimensions, int ladderPos, int ladderLength) {
         this(world, position, dimensions);
         this.ladderPos = ladderPos;
