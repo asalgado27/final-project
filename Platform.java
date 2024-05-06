@@ -79,10 +79,14 @@ class Platform {
             this.door.draw(g);
         }
     }
+
+    // Note that counterPlus is called for every single platform--whether it's a normal platform, tree platform, or sky platform
+    // In the case of normal platforms, nothing occurs
     public void counterPlus(){
         return;
     }
 
+    // Once again, update is called on every type of platform even if nothing occurs for normal platforms
     public void update(double time) {}
 
 }
