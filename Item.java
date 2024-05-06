@@ -2,6 +2,9 @@
 import java.awt.Color;
 import java.awt.Graphics;
 
+// This class was originally created because we wanted to have many types of Items, such as powerups as well as Keys.
+// Unfortunately, we only had time to fully implement Key, which is the sole child class of Item.
+
 public abstract class Item {
     Pair position;
     Color color;
@@ -19,9 +22,7 @@ public abstract class Item {
 
     public void draw(Graphics g) {}
 
-    public void checkAndCollect() {
-        visible = false;
-    }
+    public void checkAndCollect() {}
 	
     // Item disappears (or pops, or does some motion) when the person collects it
     public void use() {
