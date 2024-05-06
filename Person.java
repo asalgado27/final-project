@@ -32,7 +32,7 @@ class Person{
     Main main;
     private World currentWorld;
     public ArrayList<Integer> keyInventory;
-
+    // Frames for animation
     private Image avatar = null;
     private Image walkR1 = null;
     private Image walkR2 = null;
@@ -59,8 +59,6 @@ class Person{
         try {
             avatar = ImageIO.read(Main.class.getResource("avatar.png"));
             avatar = avatar.getScaledInstance((int)dimensions.x,(int)dimensions.y, 1);
-            //Image a = avatar.getScaledInstance(100,50, 1);
-            //avatar = (BufferedImage)a;
             walkR1 = ImageIO.read(Main.class.getResource("walkR1.png"));
             walkR1 = walkR1.getScaledInstance((int)dimensions.x,(int)dimensions.y, 1);
             walkR2 = ImageIO.read(Main.class.getResource("walkR2.png"));
@@ -259,7 +257,7 @@ class Person{
         }
         if (horizontalRMotion){
             animationCounter++;
-            //divided just stores an integer that tells the animation to change which one is being drawn every 10 frames
+            // Divided just stores an integer that tells the animation to change which one is being drawn every 10 frames
             int divided = animationCounter/10%4;
             if (divided==0){
                 g.drawImage(walkR1,  (int)position.x, (int)position.y, null);
