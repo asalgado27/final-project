@@ -18,6 +18,7 @@ public class Key extends Item {
 	boolean show = true;
 	private Image keyImage = null;
 	
+	// Constructs a Key object
 	public Key(Platform platform, World world, int index) {
 		super(world.main, world.person);
 
@@ -38,6 +39,7 @@ public class Key extends Item {
         }
 	}
 
+	// Draws the Key object
 	public void draw(Graphics g){
 		if (show == true) {
         	g.drawImage(keyImage,  (int)position.x, (int)position.y, null);
