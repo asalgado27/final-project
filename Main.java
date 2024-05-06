@@ -40,6 +40,9 @@ public class Main extends JPanel implements KeyListener{
     // Every time a key is created, it will be here and will only be removed if it is within a Person's inventory
     public ArrayList<Key> uncollectedItems = new ArrayList<Key>();
 
+    // Use this boolean to ensure only one jump per 'w' press
+    boolean isJumpKeyPressed = false;
+
     public Main(JFrame frame){
         this.frame = frame;
 
@@ -108,20 +111,28 @@ public class Main extends JPanel implements KeyListener{
  
     public void keyPressed(KeyEvent e) {
         char c = e.getKeyChar();
-        person.movement(c);
+        if (c == 'w') {
+            if (!isJumpKeyPressed) {
+                person.movement(c);
+                isJumpKeyPressed = true;
+            }
+        } else {
+            person.movement(c);
+        }
     }
     
 
     public void keyReleased(KeyEvent e) {
         char c = e.getKeyChar();
         person.antimovement(c);
+        if (c == 'w') {
+            isJumpKeyPressed = false;
+        }
     }
  
  
     public void keyTyped(KeyEvent e) {
     	char c = e.getKeyChar();
-        person.movement(c);
-        
     }
     
     public void addNotify() {
