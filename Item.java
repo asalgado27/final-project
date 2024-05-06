@@ -14,14 +14,17 @@ public abstract class Item {
 
     int index;
 
+    // Constructs the Item object
     public Item(Main main, Person person) {
         this.main = main;
         this.person = person;
         visible = true;
     }
 
+    // Requires that all classes that extends Item have a draw method
     public void draw(Graphics g) {}
 
+    // Requires that all classes that extends Item have a checkAndCollect method
     public void checkAndCollect() {}
 	
     // Item disappears (or pops, or does some motion) when the person collects it
