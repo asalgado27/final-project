@@ -19,6 +19,7 @@ class World{
     // Keep track of what type of world this is
     public String worldType;
     
+    
     public World(Main main, int width, int height, String worldType){
         this.main = main;
         this.width = width;
@@ -212,6 +213,7 @@ class World{
         platforms[5].key = new Key(platforms[5], this, 12);
     }
 
+    // Create background and platform within the Win screen
     private void createWinPage() {
         try{
             this.background = ImageIO.read(Main.class.getResource("winbackground.jpg"));
@@ -221,7 +223,6 @@ class World{
             System.exit(1);
         }
 
-        // Create platforms of lava biome
         platforms = new Platform[1];
         platforms[0] = new Platform(this, new Pair(0, this.height), new Pair(this.width, 13));
 
