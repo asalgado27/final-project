@@ -57,11 +57,8 @@ class Door {
 
     // Draws the platform
     public void draw(Graphics g) {
-        if (doorColor == null) {
-            g.setColor(new Color(150, 75, 0));
-            g.drawRect((int) position.x, (int) position.y, (int) dimensions.x, (int) dimensions.y);
-        } else {
-            g.setColor(doorColor);
+        // If door has been given a color (in other words, if we've taken a look at it)
+        if (doorColor != null) {
             g.drawImage(doorGraphic, (int) position.x, (int) position.y, null);
         }
     }
