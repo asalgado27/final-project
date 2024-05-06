@@ -251,7 +251,7 @@ class World{
         // Draw the background of the world
         g.drawImage(background, (int) 0, (int) 0, null);
 
-        if (platforms != null && (!worldType.equals("Opener") && !worldType.equals("Homebase"))) {
+        if (platforms != null) {
             // Draw the platforms in the world
             for (Platform platform : platforms) {
                 platform.draw(g);
