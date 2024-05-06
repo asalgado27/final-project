@@ -59,25 +59,13 @@ class Platform {
     // Draws the platform
     public void draw(Graphics g) {
         
-        // Draw color of platform based on which world it is
-        if (this.world.worldType.equals("Homebase")) {
-            g.setColor(Color.RED);
-            g.drawRect((int)position.x, (int)position.y, (int)dimensions.x, (int)dimensions.y);
-        
+        // Draw image of platform based on which world it is
+        if (this.world.worldType.equals("Lava Biome")) {
+            g.drawImage(lavaPlatform,  (int)position.x, (int)position.y, null);
         } else if (this instanceof TreePlatform){
             g.drawImage(treePlatform,  (int)position.x, (int)position.y, null);
         } else if (this instanceof SkyPlatform) {
             g.drawImage(skyPlatform,  (int)position.x, (int)position.y, null);
-        } else {
-            g.setColor(Color.black);
-            g.drawImage(lavaPlatform,  (int)position.x, (int)position.y, null);
-        }
-
-        // Draw any ladders (if it's not null)
-        // Note that ladders are drawn downward from the platform they are established on
-        if (ladderPos > 0) {
-            g.setColor(Color.blue);
-            g.drawRect(ladderPos, (int) position.y - 2, ladderWidth, ladderLength);
         }
 
         // Draw the key (if it's not null)
