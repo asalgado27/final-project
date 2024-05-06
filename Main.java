@@ -89,12 +89,14 @@ public class Main extends JPanel implements KeyListener{
         frame.setVisible(true);
     }
  
+    // Activates the draw methods of the program
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         currentWorld.draw(g);
         currentWorld.drawPerson(g);
     }
  
+    // Runs the world
     class Runner implements Runnable{
         public void run() {
             while(true){
@@ -109,6 +111,7 @@ public class Main extends JPanel implements KeyListener{
         }
     }
  
+    // Activates functionality of a key being pressed
     public void keyPressed(KeyEvent e) {
         char c = e.getKeyChar();
         if (c == 'w') {
@@ -121,7 +124,7 @@ public class Main extends JPanel implements KeyListener{
         }
     }
     
-
+    // Activates functionality of a key being released
     public void keyReleased(KeyEvent e) {
         char c = e.getKeyChar();
         person.antimovement(c);
@@ -130,7 +133,8 @@ public class Main extends JPanel implements KeyListener{
         }
     }
  
- 
+    // For the current state of the program, we do not utilize keyTyped
+    // However, we include the method so that Main can extend KeyListener
     public void keyTyped(KeyEvent e) {
     	char c = e.getKeyChar();
     }
