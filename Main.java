@@ -29,8 +29,6 @@ public class Main extends JPanel implements KeyListener{
     public static final int winWidth = 1400;
     public static final int winHeight = 768;
 
-    public char c = '0';
-
     World currentWorld;
 
     World[] worlds;
@@ -39,6 +37,7 @@ public class Main extends JPanel implements KeyListener{
 
     JFrame frame;
 
+    // Every time a key is created, it will be here and will only be removed if it is within a Person's inventory
     public ArrayList<Key> uncollectedItems = new ArrayList<Key>();
 
     public Main(JFrame frame){
@@ -47,7 +46,7 @@ public class Main extends JPanel implements KeyListener{
         // Create person
         this.person = new Person(this, null);
 
-        // Establish array of worlds (0 is opener, 1 is homebase, 2 is lava biome, 3 is tree biome, 4 is sky biome)
+        // Establish array of worlds (0 is opener, 1 is homebase, 2 is lava biome, 3 is tree biome, 4 is sky biome, 5 is the win screen)
         worlds = new World[6];
         worlds[0] = new World(this, openerWidth, openerHeight, "Opener");
         worlds[1] = new World(this, HBWidth, HBHeight, "Homebase");
@@ -180,6 +179,7 @@ public class Main extends JPanel implements KeyListener{
         frame.pack();
     }
 
+    // For every key in uncollectedItems, triggers checkAndCollect to constantly check if the key is in contact with Person
     public void checkForItems(Pair personPosition){
         for (int i = 0; i < uncollectedItems.size(); i++) {
             Key key = uncollectedItems.get(i);
