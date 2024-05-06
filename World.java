@@ -19,7 +19,7 @@ class World{
     // Keep track of what type of world this is
     public String worldType;
     
-    
+    // Constructs the instance of our World
     public World(Main main, int width, int height, String worldType){
         this.main = main;
         this.width = width;
@@ -29,7 +29,7 @@ class World{
         this.worldType = worldType;
     }
 
-    // Creates the world
+    // Actually creates the world and the objects within it
     public void createWorld(World[] worlds) {
         this.worlds = worlds;
         if (this.worldType.equals("Opener")) {
@@ -228,14 +228,17 @@ class World{
 
     }
 
+    // Draws the person
     public void drawPerson(Graphics g){
         person.draw(g);
     }
 
+    // Updates the person
     public void updatePerson(double time){
         person.update(time);
     }
 
+    // Updates the sky platforms
     public void updateSkyPlatforms(double time) {
         if (this.worldType.equals("Sky Biome")) {
             platforms[1].update(time);
