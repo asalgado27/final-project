@@ -38,19 +38,9 @@ public class Key extends Item {
         }
 	}
 
-	public Key(Platform platform, World world, int xPos, int index) {
-		super(world.main, world.person);
-		this.platform = platform;
-		this.person = world.person;
-		rand = new Random();
-		color = new Color(rand.nextFloat(), rand.nextFloat(), rand.nextFloat());
-		position = new Pair(xPos, platform.position.y - 52);
-	}
-
 	public void draw(Graphics g){
 		if (show == true) {
         	g.drawImage(keyImage,  (int)position.x, (int)position.y, null);
-			g.drawString("" + index, (int)position.x, (int)position.y);
 		}
     }
 
@@ -66,8 +56,5 @@ public class Key extends Item {
     	}
     }
 		
-	public void use() {
-		// semantically: inventory.pop(this);
-	}
 
 }
