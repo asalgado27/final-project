@@ -37,11 +37,6 @@ class Pair{
         y = xCopy;
     }
 
-    
-    public String toString() {
-        return "(" + x + ", " + y + ")";
-    }
-
     // Make a copy of Pair object
     public Pair copy() {
         return new Pair(this.x, this.y);
