@@ -3,7 +3,7 @@ COSC 112 Final Project
 
 Developers: Adrian Salgado, Sophia Xu, Alicia Xin
 
-7 billions years into the future, Earth is now dangerously close to the sun. The surface is no longer inhabitable for humans, but thankfully your ancestors from hundreds of generations ago built a bunker at the center of the earth. But now that the sun is too close and the bunker will not be safe for long. With the knowledge of the way out long lost, it is now up to you to find a way back through the Earth and into the cosmos.
+7 billions years into the future, Earth is now dangerously close to the sun. The surface is no longer inhabitable for humans, but thankfully, hundreds of generations ago, your ancestors built a bunker at the center of the earth. But now that the sun is so close, the bunker will not be safe for long. With the knowledge of a way out long lost, it is now up to you to find a way back through the Earth and into the cosmos.
 
 Your Journey
 
