@@ -105,10 +105,10 @@ class World{
         platforms[1].door = new Door(this, worlds[3], new Pair((int)(platforms[1].position.x + 335), (int)(platforms[1].position.y - Door.dimensions.y)), new int[]{4,5,6});
         platforms[2].door = new Door(this, worlds[2], new Pair((int)(platforms[2].position.x + 88), (int)(platforms[2].position.y - Door.dimensions.y)), new int[]{});
 
-        platforms[0].key = new Key(platforms[0], this, 3);
-        platforms[1].key = new Key(platforms[1], this, 2);
-        platforms[2].key = new Key(platforms[2], this, 1);
-        platforms[3].key = new Key(platforms[3], this, 0);
+        platforms[0].key = new Key(platforms[0], main, this, 3);
+        platforms[1].key = new Key(platforms[1], main, this, 2);
+        platforms[2].key = new Key(platforms[2], main, this, 1);
+        platforms[3].key = new Key(platforms[3], main, this, 0);
     }
 
     // Create objects within lava biome
@@ -141,9 +141,9 @@ class World{
         platforms[0].door = new Door(Color.orange, this, worlds[1], new Pair((int) (platforms[0].position.x + 62), (int)(platforms[0].position.y - Door.dimensions.y)), new int[]{4,5,6});
 
         // Note that the lava biome contains keys 4, 5, 6
-        platforms[4].key = new Key(platforms[4], this, 4);
-        platforms[8].key = new Key(platforms[8], this, 5);
-        platforms[5].key = new Key(platforms[5], this, 6);
+        platforms[4].key = new Key(platforms[4], main, this, 4);
+        platforms[8].key = new Key(platforms[8], main, this, 5);
+        platforms[5].key = new Key(platforms[5], main, this, 6);
     }
 
     // Create objects within tree biome
@@ -176,9 +176,9 @@ class World{
         platforms[0].door = new Door(Color.pink, this, worlds[1], new Pair((int) (platforms[0].position.x + 62), (int)(platforms[0].position.y - Door.dimensions.y)), new int[]{4,5,6,7,8,9});
         
         //the tree biome needs keys 7, 8, 9
-        platforms[4].key = new Key(platforms[4], this, 7);
-        platforms[8].key = new Key(platforms[8], this, 8);
-        platforms[5].key = new Key(platforms[5], this, 9);
+        platforms[4].key = new Key(platforms[4], main, this, 7);
+        platforms[8].key = new Key(platforms[8], main, this, 8);
+        platforms[5].key = new Key(platforms[5], main, this, 9);
     }
     
     // Create objects within sky biome
@@ -204,13 +204,13 @@ class World{
         platforms[8] = new SkyPlatform(this, new Pair(130, this.height - 80), new Pair(93, 20));
         platforms[9] = new SkyPlatform(this, new Pair(0, this.height), new Pair(this.width, 20));
 
-        // Add door to win page - this door needs keys from lava AND tree AND sky
+        // Add door to closer - this door needs keys from lava AND tree AND sky
         platforms[0].door = new Door(Color.blue, this, worlds[5], new Pair((int) (platforms[0].position.x + 62), (int)(platforms[0].position.y - Door.dimensions.y)), new int[]{4,5,6,7,8,9,10,11,12});
 
         // Sky biome contains keys 10, 11, 12
-        platforms[4].key = new Key(platforms[4], this, 10);
-        platforms[8].key = new Key(platforms[8], this, 11);
-        platforms[5].key = new Key(platforms[5], this, 12);
+        platforms[4].key = new Key(platforms[4], main, this, 10);
+        platforms[8].key = new Key(platforms[8], main, this, 11);
+        platforms[5].key = new Key(platforms[5], main, this, 12);
     }
 
     // Create background and platform within the Win screen
